@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="job_test.memory_joy.mapper.ScenesMapper">
+  
+  <resultMap id="BaseResultMap" type="job_test.memory_joy.pojo.Scenes">
+    <result column="scene_id" jdbcType="INTEGER" property="sceneId" />
+    <result column="scene_name" jdbcType="CHAR" property="sceneName" />
+    <result column="is_hide" jdbcType="BIT" property="isHide" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="job_test.memory_joy.pojo.Scenes">
+    insert into scenes (scene_id, scene_name, is_hide
+      )
+    values (#{sceneId,jdbcType=INTEGER}, #{sceneName,jdbcType=CHAR}, #{isHide,jdbcType=BIT}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="job_test.memory_joy.pojo.Scenes">
+    insert into scenes
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        scene_id,
+      </if>
+      <if test="sceneName != null">
+        scene_name,
+      </if>
+      <if test="isHide != null">
+        is_hide,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        #{sceneId,jdbcType=INTEGER},
+      </if>
+      <if test="sceneName != null">
+        #{sceneName,jdbcType=CHAR},
+      </if>
+      <if test="isHide != null">
+        #{isHide,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getSceneByName" resultMap="BaseResultMap">
+  	select
+  	  *
+  	from
+  	  scenes
+  	<where>
+  	  scenes_name in
+  	  <foreach item="sceneName" index="nameIndex" collection="sceneNameList" open="(" separator="," close=")">
+        #{"sceneName"}
+      </foreach>
+  	</where>
+  </select>
+  
+</mapper>

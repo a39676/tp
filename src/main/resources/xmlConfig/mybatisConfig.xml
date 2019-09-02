@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+   <typeAliases>
+      <typeAlias alias = "class_alias_Name" type = "absolute_clas_Name"/>
+   </typeAliases>
+	
+   <environments default = "default_environment _name">
+      <environment id = "environment_id">
+         <transactionManager type = "JDBC"/>  
+			
+            <dataSource type = "POOLED">
+               <property name = "driver" value = "com.mysql.jdbc.Driver"/>
+               <property name = "url" value = "jdbc:mysql://localhost:3306/financeclear"/>
+               <property name = "username" value = "root"/>
+               <property name = "password" value = "123456"/>
+            </dataSource>        
+				
+      </environment>
+   </environments>
+	
+   <mappers>
+      <mapper resource="demo.image.mapper.ImageCacheMapper.xml"/>
+      <mapper resource="demo.image.mapper.ImageStoreMapper.xml"/>
+      <mapper resource="demo.image.mapper.ImageTagMapper.xml"/>
+   </mappers>
+   
+</configuration>

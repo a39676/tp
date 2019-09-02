@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="job_test.memory_joy.mapper.MonsterRecordMapper">
+  <resultMap id="BaseResultMap" type="job_test.memory_joy.pojo.MonsterRecord">
+    <result column="cter_id" jdbcType="INTEGER" property="cterId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="cter_name" jdbcType="CHAR" property="cterName" />
+    <result column="monster_level" jdbcType="INTEGER" property="monsterLevel" />
+    <result column="title" jdbcType="CHAR" property="title" />
+    <result column="profession" jdbcType="INTEGER" property="profession" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="strength" jdbcType="INTEGER" property="strength" />
+    <result column="alacrity" jdbcType="INTEGER" property="alacrity" />
+    <result column="savvy" jdbcType="INTEGER" property="savvy" />
+    <result column="lucky" jdbcType="INTEGER" property="lucky" />
+    <result column="spirit" jdbcType="INTEGER" property="spirit" />
+    <result column="air_def" jdbcType="INTEGER" property="airDef" />
+    <result column="fire_def" jdbcType="INTEGER" property="fireDef" />
+    <result column="water_def" jdbcType="INTEGER" property="waterDef" />
+    <result column="spirit_def" jdbcType="INTEGER" property="spiritDef" />
+  </resultMap>
+  <insert id="insert" parameterType="job_test.memory_joy.pojo.MonsterRecord">
+    insert into monster_record (cter_id, user_id, cter_name, 
+      monster_level, title, profession, 
+      gender, strength, alacrity, 
+      savvy, lucky, spirit, 
+      air_def, fire_def, water_def, 
+      spirit_def)
+    values (#{cterId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{cterName,jdbcType=CHAR}, 
+      #{monsterLevel,jdbcType=INTEGER}, #{title,jdbcType=CHAR}, #{profession,jdbcType=INTEGER}, 
+      #{gender,jdbcType=INTEGER}, #{strength,jdbcType=INTEGER}, #{alacrity,jdbcType=INTEGER}, 
+      #{savvy,jdbcType=INTEGER}, #{lucky,jdbcType=INTEGER}, #{spirit,jdbcType=INTEGER}, 
+      #{airDef,jdbcType=INTEGER}, #{fireDef,jdbcType=INTEGER}, #{waterDef,jdbcType=INTEGER}, 
+      #{spiritDef,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="job_test.memory_joy.pojo.MonsterRecord">
+    insert into monster_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cterId != null">
+        cter_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="cterName != null">
+        cter_name,
+      </if>
+      <if test="monsterLevel != null">
+        monster_level,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="strength != null">
+        strength,
+      </if>
+      <if test="alacrity != null">
+        alacrity,
+      </if>
+      <if test="savvy != null">
+        savvy,
+      </if>
+      <if test="lucky != null">
+        lucky,
+      </if>
+      <if test="spirit != null">
+        spirit,
+      </if>
+      <if test="airDef != null">
+        air_def,
+      </if>
+      <if test="fireDef != null">
+        fire_def,
+      </if>
+      <if test="waterDef != null">
+        water_def,
+      </if>
+      <if test="spiritDef != null">
+        spirit_def,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cterId != null">
+        #{cterId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="cterName != null">
+        #{cterName,jdbcType=CHAR},
+      </if>
+      <if test="monsterLevel != null">
+        #{monsterLevel,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=CHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="strength != null">
+        #{strength,jdbcType=INTEGER},
+      </if>
+      <if test="alacrity != null">
+        #{alacrity,jdbcType=INTEGER},
+      </if>
+      <if test="savvy != null">
+        #{savvy,jdbcType=INTEGER},
+      </if>
+      <if test="lucky != null">
+        #{lucky,jdbcType=INTEGER},
+      </if>
+      <if test="spirit != null">
+        #{spirit,jdbcType=INTEGER},
+      </if>
+      <if test="airDef != null">
+        #{airDef,jdbcType=INTEGER},
+      </if>
+      <if test="fireDef != null">
+        #{fireDef,jdbcType=INTEGER},
+      </if>
+      <if test="waterDef != null">
+        #{waterDef,jdbcType=INTEGER},
+      </if>
+      <if test="spiritDef != null">
+        #{spiritDef,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
