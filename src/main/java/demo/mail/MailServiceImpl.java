@@ -13,7 +13,7 @@ import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SearchTerm;
 
-import dateHandle.DateUtilCustom;
+import dateTimeHandle.DateUtilCustom;
 import emailHandle.MailHandle;
 
 public class MailServiceImpl {

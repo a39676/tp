@@ -12,8 +12,8 @@ import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
-import com.sun.jersey.core.util.Base64;
 
 public class RsaTool01 {
 
@@ -71,8 +71,9 @@ public class RsaTool01 {
 //			String formatPublic = publicKey.getFormat(); // X.509
 
 //			System.out.println("Private Key : " + Base64.encode(String.valueOf(privateKeyBytes)));
-			System.out.println("Private Key : " + new String(Base64.encode(String.valueOf(privateKeyBytes))));
-			System.out.println("Public Key : " + Base64.encode(String.valueOf(publicKeyBytes)));
+			
+			System.out.println("Private Key : " + new String(Base64.getEncoder().encode(String.valueOf(privateKeyBytes).getBytes())));
+			System.out.println("Public Key : " + Base64.getEncoder().encode(String.valueOf(publicKeyBytes).getBytes()));
 
 			// The bytes can be converted back to public and private key objects
 			KeyFactory keyFactory = KeyFactory.getInstance(keyAlgorithm);

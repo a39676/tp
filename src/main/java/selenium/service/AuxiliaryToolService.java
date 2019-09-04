@@ -14,6 +14,7 @@ public class AuxiliaryToolService {
 		 * TODO testing
 		 */
 		String src = webElement.getAttribute("src");
+		src.toString();
 //		\.\w{3,4}($|\?)
 		
 //		String suffix = 
