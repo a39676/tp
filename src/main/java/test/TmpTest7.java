@@ -2,17 +2,9 @@ package test;
 
 public class TmpTest7  {
 
-	protected static int count = 0;
-	public TmpTest7() {count++;}
 	public static void main(String[] args) {
-		String s = "";
-		System.out.println(s);
+		String s = "0123456";
+		System.out.println(s.substring(3,4));
 	}
 	
-	void s() {
-		
-	}
-}
-
-class t7 extends TmpTest7 {
 }

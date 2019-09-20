@@ -109,6 +109,10 @@ dependencies {
 	
 	// mysql
 	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4' // 5.1.9
+
+	// sqlServer	
+	testCompile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
+	
 	// orms end
 	
     compile group: 'com.opencsv', name: 'opencsv', version: '4.6'
