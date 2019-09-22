@@ -11,16 +11,16 @@ public class BackUpDatabase {
 	public static void main(String[] args) throws Exception  {
 		SqlTool tool = new SqlTool();
 //		IOtools iot = new IOtools();
-		SqlTool.setPropertiesFilePath(LocalEnvironmentConstant.memoryJoyPropertiesFile);
+		SqlTool.setPropertiesFilePath(LocalEnvironmentConstant.ssmPropertiesFile);
 		
 		// 导出数据
 //		String outputPath = "d:/ssm/output";
-		String outputPath = "d:/joyxyData/output";
+		String outputPath = "d:/auxiliary/tmp/output";
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		File newFolder = new File(outputPath + format1.format(cal.getTime()) + "/");
 		newFolder.mkdir();
-		tool.backupInfoToExcl(newFolder.getAbsolutePath() + "/");
+//		tool.backupInfoToExcl(newFolder.getAbsolutePath() + "/");
 		tool.backupInfoToTxt(newFolder.getAbsolutePath() + "/");
 		
 	}
