@@ -162,6 +162,9 @@ dependencies {
 
 	compile group: 'io.appium', name: 'java-client', version: '7.1.0'
 	
+	// bit torrent
+	compile group: 'org.eclipse', name: 'bittorrent', version: '0.3.0-v20070627-1030'
+	
 }
 
 
