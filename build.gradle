@@ -1,3 +1,4 @@
+// tp
 apply plugin: 'java-library'
 apply plugin: 'java'
 version = '0.1.1.1'
@@ -108,11 +109,10 @@ dependencies {
 	compile group: 'org.mybatis', name: 'mybatis-typehandlers-jsr310', version: '1.0.2'
 	
 	// mysql
-	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4' // 5.1.9
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
 
 	// sqlServer	
 	testCompile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
-	
 	// orms end
 	
     compile group: 'com.opencsv', name: 'opencsv', version: '4.6'
@@ -155,11 +155,8 @@ dependencies {
 	// baidu ocr
 	compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.11.0'
 	
-	// web collector
-	// compile group: 'cn.edu.hfut.dmic.webcollector', name: 'WebCollector', version: '2.71'
-	
+	// selenium
 	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-
 	compile group: 'io.appium', name: 'java-client', version: '7.1.0'
 	
 	// bit torrent
@@ -178,7 +175,4 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
-
-
-
 
