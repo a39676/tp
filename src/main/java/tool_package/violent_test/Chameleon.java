@@ -9,7 +9,8 @@ import org.apache.poi.poifs.crypt.EncryptionInfo;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
-import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.ZipFile;
+//import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
@@ -159,14 +160,13 @@ class ChameleonZip extends Chameleon {
 	
 	ZipFile zipFile = null;
 	
-	@SuppressWarnings("unchecked")
 	public boolean matcher(String str) {
 		String tmpPath = "d:/auxiliary/tmp/";
 		File tmpFile = null;
 		
 		try {
 		    if (zipFile.isEncrypted()) {
-		        zipFile.setPassword(str);
+		        zipFile.setPassword(str.toCharArray());
 		        List<FileHeader> files = zipFile.getFileHeaders();
 		        System.out.println(files);
 		        tmpFile = new File(tmpPath + files.get(0).getFileName());
