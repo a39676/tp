@@ -3,28 +3,13 @@ package test;
 public class TmpTest7 {
 	
 	public static void main(String[] args) {
-		String reg = ".*((headtopic_\\d)|(anc)).gif$";
+		String longMovieTitle = "最长一枪";
+		String cnTitle = longMovieTitle.substring(0, longMovieTitle.indexOf(" "));
+		System.out.println(cnTitle);
 		
-		String s = "images/wind/file/headtopic_2.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/anc.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/headtopic_a.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/headtopic_n.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/anb.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/headtopic_b.gif";
-		System.out.println(s + " " + s.matches(reg));
-		
-		s = "images/wind/thread/headtopic_|.gif";
-		System.out.println(s + " " + s.matches(reg));
+		System.out.println(longMovieTitle.indexOf(" "));
+		System.out.println(longMovieTitle.substring(0, longMovieTitle.indexOf(" ")));
+		System.out.println(longMovieTitle.substring(longMovieTitle.indexOf(" ") + 1, longMovieTitle.length()));
 	}
 
 }

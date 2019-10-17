@@ -3,7 +3,6 @@ package tool_package.violent_test;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -54,7 +53,11 @@ public class DecryptAndEncrypt {
 	
 	public byte[] unhex(String strToUnhex) {
 		try {
-			return DatatypeConverter.parseHexBinary(strToUnhex);
+			/*
+			 * not test yet
+			 */
+			return Hex.decodeHex(strToUnhex.toCharArray());
+//			return DatatypeConverter.parseHexBinary(strToUnhex);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

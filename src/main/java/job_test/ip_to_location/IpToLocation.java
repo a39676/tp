@@ -30,6 +30,11 @@ public class IpToLocation{
 		
 		ArrayList<String> ipList = new ArrayList<String>();
 		ipList.add("114.247.50.2");
+		ipList.add("77.88.47.11");
+		ipList.add("66.249.79.179");
+		ipList.add("66.249.79.181");
+		ipList.add("66.249.79.183");
+		ipList.add("66.249.79.179");
 		String urlUse = null;
 		
 		int count = 0;
