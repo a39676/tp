@@ -46,6 +46,8 @@ public class Selenium {
 		FileUtils.copyFile(scrFile, new File("d:/auxiliary/tmp/screenshot.png"));
 
 		/*
+		 * https://www.guru99.com/xpath-selenium.html
+		 * 
 		 * xpath=/html/body/form[1] (3) - Absolute path (would break if the HTML was changed only slightly) 
 		 * //form[1] (3) - First form element in the HTML
 		 * xpath=//form[@id='loginForm'] (3) - The form element with attribute named ‘id’ and the value ‘loginForm’ xpath=//form[input/@name='username'] (3) - First form element with an input child element with attribute named ‘name’ and the value ‘username’ //input[@name='username'] (4) - First input element with attribute named ‘name’ and the value ‘username’
