@@ -200,6 +200,7 @@ public class OCRSpaceDemo {
 	public NameCard handleResult(String result) {
 		JSONObject json = null;
 		NameCard c = null;
+		NumericUtilCustom n = new NumericUtilCustom();
 		try {
 			json = JSONObject.fromObject(result);
 			JSONArray ja = json.getJSONArray("ParsedResults");
@@ -208,7 +209,7 @@ public class OCRSpaceDemo {
 			List<String> attrList = Arrays.asList(parsedText.split("\\r\\n"));
 			String name = null;
 			for (String attr : attrList) {
-				if (NumericUtilCustom.matchMobile(attr)) {
+				if (n.matchMobile(attr)) {
 					c.setPhone(attr);
 				} else if (StringUtils.isNotBlank(attr)) {
 					name += attr;

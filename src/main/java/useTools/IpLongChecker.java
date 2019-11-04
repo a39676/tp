@@ -47,9 +47,9 @@ public class IpLongChecker {
 				1123635123L
 		};
 		
-		
+		NumericUtilCustom n = new NumericUtilCustom();
 		for(Long l : checkList) {
-			System.out.println(hu.sendGet(baseUrl + NumericUtilCustom.longToIp(l) + "?access_key=" + tmpKey, null));
+			System.out.println(hu.sendGet(baseUrl + n.longToIp(l) + "?access_key=" + tmpKey, null));
 		}
 	}
 }

@@ -108,6 +108,7 @@ public class ImageCache {
 
 	public ImageCache createImageCacheFromJson(JSONObject json) {
 		ImageCache ic = new ImageCache();
+		NumericUtilCustom n = new NumericUtilCustom();
 		String isDownload;
 		if (json.containsKey("create_time")) {
 			ic.setCreateTime(new Date(json.getJSONObject("create_time").getLong("time")));
@@ -133,10 +134,10 @@ public class ImageCache {
 		if (json.containsKey("imageName")) {
 			ic.setImageName(json.getString("imageName"));
 		}
-		if (json.containsKey("article_id") && NumericUtilCustom.matchInteger(json.getString("article_id"))) {
+		if (json.containsKey("article_id") && n.matchInteger(json.getString("article_id"))) {
 			ic.setArticleId(Long.parseLong(json.getString("article_id")));
 		}
-		if (json.containsKey("articleId") && NumericUtilCustom.matchInteger(json.getString("articleId"))) {
+		if (json.containsKey("articleId") && n.matchInteger(json.getString("articleId"))) {
 			ic.setArticleId(Long.parseLong(json.getString("articleId")));
 		}
 		if (json.containsKey("image_url")) {
