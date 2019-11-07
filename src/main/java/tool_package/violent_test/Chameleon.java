@@ -1,12 +1,11 @@
 package tool_package.violent_test;
 
 import java.io.File;
-import java.util.List;
 import java.security.MessageDigest;
+import java.util.List;
 
 import org.apache.poi.poifs.crypt.Decryptor;
 import org.apache.poi.poifs.crypt.EncryptionInfo;
-import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import net.lingala.zip4j.ZipFile;
@@ -143,10 +142,14 @@ class ChameleonOffice97 extends Chameleon {
 				System.out.println("file not found");
 				return false;
 			}
-			NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(file);
-			EncryptionInfo info = new EncryptionInfo(npoifsFileSystem);
-			officeDecryptor = Decryptor.getInstance(info);
-			System.out.println("set decryptor office97");
+			/*
+			 * TODO
+			 * poi 版本更新后(3.15 ---> 4.1.1) 无法找到此类, 另寻解决方法
+			 */
+//			NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(file);
+//			EncryptionInfo info = new EncryptionInfo(npoifsFileSystem);
+//			officeDecryptor = Decryptor.getInstance(info);
+//			System.out.println("set decryptor office97");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
