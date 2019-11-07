@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import org.openqa.selenium.WebElement;
 
-import selenium.constant.RegexConstant;
+import at.pojo.constant.RegexConstant;
 
 public class AuxiliaryToolService {
 

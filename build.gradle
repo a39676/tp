@@ -19,7 +19,9 @@ repositories {
 
 dependencies {
     // tools
-    compile project(':toolPacksG')
+    compile project(':toolPacksG') 
+	compile project(':auxiliaryCommon')
+	compile project(':ATTool')
     
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
