@@ -6,7 +6,8 @@ import java.io.IOException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import demo.cloudinary.pojo.dto.CloudinaryUploadResult;
+import cloudinary.pojo.constant.CloudinaryConstant;
+import cloudinary.pojo.result.CloudinaryUploadResult;
 import net.sf.json.JSONObject;
 
 public class CloudinaryAPIUploader {
@@ -18,9 +19,9 @@ public class CloudinaryAPIUploader {
 		CloudinaryUploadResult result = null;
 
 		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-				  "cloud_name", "dy20bdekn",
-				  "api_key", "915927123645857",
-				  "api_secret", "k8483Du7gcUp49UrKKnm9RgXsiYf"));
+				CloudinaryConstant.cloudName, "dy20bdekn",
+				CloudinaryConstant.apiKey, "915927123645857",
+				CloudinaryConstant.apiSecret, "k8483Du7gcUp49UrKKnm9RgXsiYf"));
 		
 		if(f.length() > maxSize) {
 			System.out.println(f.getName() + " is too large, size: " + f.length());

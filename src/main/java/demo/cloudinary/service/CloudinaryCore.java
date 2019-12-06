@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import demo.cloudinary.pojo.dto.CloudinaryUploadResult;
+import cloudinary.pojo.result.CloudinaryUploadResult;
 import demo.cloudinary.pojo.type.ChannelType;
 import ioHandle.FileUtilCustom;
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import demo.cloudinary.pojo.dto.CloudinaryUploadResult;
+import cloudinary.pojo.result.CloudinaryUploadResult;
 import net.sf.json.JSONObject;
 
 public class CloudinaryAPIDeleter {

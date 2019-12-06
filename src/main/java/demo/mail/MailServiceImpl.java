@@ -13,7 +13,7 @@ import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SearchTerm;
 
-import dateTimeHandle.DateUtilCustom;
+import dateTimeHandle.DateHandler;
 import emailHandle.MailHandle;
 
 public class MailServiceImpl {
@@ -75,7 +75,8 @@ public class MailServiceImpl {
 					e1.printStackTrace();
 					return false;
 				}
-				if(receiveDate.before(DateUtilCustom.localDateTimeToDate(LocalDateTime.now().minusDays(50)))) {
+				DateHandler dateHandler = new DateHandler();
+				if(receiveDate.before(dateHandler.localDateTimeToDate(LocalDateTime.now().minusDays(50)))) {
 					return false;
 				}
 				
