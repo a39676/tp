@@ -1,9 +1,9 @@
 package demo.image.ocr.baidu;
 
 import demo.image.ocr.NameCard;
-import ioHandle.FileUtilCustom;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import toolPack.ioHandle.FileUtilCustom;
 
 public class TmpResultHandle {
 	

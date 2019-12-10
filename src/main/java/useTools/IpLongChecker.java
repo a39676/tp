@@ -1,7 +1,7 @@
 package useTools;
 
-import httpHandel.HttpUtil;
-import numericHandel.NumericUtilCustom;
+import toolPack.httpHandel.HttpUtil;
+import toolPack.numericHandel.NumericUtilCustom;
 
 public class IpLongChecker {
 

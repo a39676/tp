@@ -3,8 +3,8 @@ package useTools;
 import java.util.Arrays;
 import java.util.List;
 
-import ioHandle.FileUtilCustom;
-import stringHandle.StringUtilCustom;
+import toolPack.ioHandle.FileUtilCustom;
+import toolPack.stringHandle.StringUtilCustom;
 
 public class StringToolImpl {
 	

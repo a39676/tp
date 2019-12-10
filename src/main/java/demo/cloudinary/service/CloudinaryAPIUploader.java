@@ -6,9 +6,9 @@ import java.io.IOException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import cloudinary.pojo.constant.CloudinaryConstant;
-import cloudinary.pojo.result.CloudinaryUploadResult;
 import net.sf.json.JSONObject;
+import toolPack.cloudinary.pojo.constant.CloudinaryConstant;
+import toolPack.cloudinary.pojo.result.CloudinaryUploadResult;
 
 public class CloudinaryAPIUploader {
 	

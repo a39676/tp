@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import httpHandel.HttpUtil;
-import ioHandle.FileUtilCustom;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import numericHandel.NumericUtilCustom;
+import toolPack.httpHandel.HttpUtil;
+import toolPack.ioHandle.FileUtilCustom;
+import toolPack.numericHandel.NumericUtilCustom;
 
 public class OCRSpaceDemo {
 
