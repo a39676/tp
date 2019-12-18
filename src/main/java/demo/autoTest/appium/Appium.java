@@ -1,4 +1,4 @@
-package appium;
+package demo.autoTest.appium;
 
 import java.net.MalformedURLException;
 import java.net.URL;

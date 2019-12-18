@@ -1,4 +1,4 @@
-package selenium;
+package demo.autoTest.selenium;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,10 +9,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-import selenium.constant.ChromeConstant;
-import selenium.constant.FireFoxConstant;
-import selenium.constant.WebDriverGlobalOption;
-import selenium.type.BrowserConfigType;
+import demo.autoTest.selenium.constant.ChromeConstant;
+import demo.autoTest.selenium.constant.FireFoxConstant;
+import demo.autoTest.selenium.constant.WebDriverGlobalOption;
+import demo.autoTest.selenium.type.BrowserConfigType;
 
 public class WebDriverBuilder {
 

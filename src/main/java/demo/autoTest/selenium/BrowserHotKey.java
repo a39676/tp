@@ -1,4 +1,4 @@
-package selenium;
+package demo.autoTest.selenium;
 
 public class BrowserHotKey {
 	

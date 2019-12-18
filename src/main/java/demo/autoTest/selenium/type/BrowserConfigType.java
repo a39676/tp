@@ -1,4 +1,4 @@
-package selenium.type;
+package demo.autoTest.selenium.type;
 
 public enum BrowserConfigType {
 	

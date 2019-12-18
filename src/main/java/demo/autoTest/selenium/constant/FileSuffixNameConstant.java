@@ -1,4 +1,4 @@
-package selenium.constant;
+package demo.autoTest.selenium.constant;
 
 import java.util.ArrayList;
 import java.util.Arrays;

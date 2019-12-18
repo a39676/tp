@@ -1,4 +1,4 @@
-package selenium;
+package demo.autoTest.selenium;
 
 import java.awt.AWTException;
 import java.io.File;

@@ -1,4 +1,4 @@
-package selenium.service;
+package demo.autoTest.selenium.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
