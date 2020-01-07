@@ -1,85 +1,26 @@
 package test;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import toolPack.ioHandle.FileUtilCustom;
+
 public class TmpTest7 {
 	
+	private static final String sourceBinPath = "D:/Cnt/bin";
+	
+	private static final String sourceFilePath = "d:/tmp/updates.txt";
+	
+	private static final String localPathPrefix = "D:/work/合同系统/03实现/001程序代码";
+	
+	
 	public static void main(String[] args) {
-		String str = ""
-				+ "svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Base\\SignedObjectCreditLimit\\SignedObjectSelect.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\ChangesVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\EndVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\SettlementVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\ChangesController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\EndController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\SettlementController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Views\\Shared\\SubFlowApprove.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.ApplicationServices\\SysManage\\GenCodeService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Home\\WarningList.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.ApplicationServices\\Contract\\ReceivePayInfo\\PaymentApplyService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.ApplicationServices\\SysManage\\ParamValueService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\Services\\Contract\\IPaymentApplyService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\Services\\SysManage\\IParamValueService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\ReceivePayInfo\\PaymentApplyVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\Contract\\IPaymentApplyDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\Contract\\Impl\\ReceivePayInfo\\PaymentApplyDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\SysManage\\IParamValueDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\SysManage\\Impl\\ParamValueDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\PaymentApplyController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\ReceivePayInfo\\PaymentApplyEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Shared\\_PaymentApplyDetail.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.ApplicationServices\\Contract\\ReceivePayInfo\\PaymentApplyService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\Services\\Contract\\IPaymentApplyService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\Contract\\IPaymentApplyDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\Contract\\Impl\\ReceivePayInfo\\PaymentApplyDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\PaymentApplyController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\ReceivePayInfo\\PaymentApplyEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\ReceivePayInfo\\PaymentApplyEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\ReceivePayInfo\\PaymentApplyEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\ReceivePayInfo\\PaymentApplyEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Shared\\_PaymentApplyDetail.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Base\\SignedObject\\Edit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Base\\SignedObject\\SignedObjectExInfoEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Base\\SignedObject\\Edit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Base\\SignedObject\\SignedObjectExInfoEdit.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\ApplicationServices\\impl\\OpfOrgService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\DomainModel\\Company.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\DomainModel\\Department.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\DomainModel\\Employee.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\DomainModel\\PosiEmployee.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\Repository\\impl\\Mapping\\Company.hbm.xml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\Repository\\impl\\Mapping\\Department.hbm.xml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\Repository\\impl\\Mapping\\Employee.hbm.xml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF\\Org\\Repository\\impl\\Mapping\\ViewOrganize.hbm.xml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.OPF.IAPIs\\Services\\IOpfOrgService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Platform\\OT.WebSite\\Config\\Wf-Extend.xml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Workflow4\\OT.Workflow.IAPIs\\IWorkflowConfigureService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Workflow4\\OT.Workflow3.APIs\\ApplicationServices\\WorkflowAnalysisService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Workflow4\\OT.Workflow3.APIs\\ApplicationServices\\WorkflowConfigureService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\平台代码\\OT.Workflow4\\OT.Workflow3.APIs\\ApplicationServices\\WorkflowExecutionService.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\ContractVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\Contract\\ReceivePayInfo\\PaymentApplyVo.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\ChangesController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\SettlementController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractChange.rdlc\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractPayment.rdlc\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\BalanceModels.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\ContractChange.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractBalance.rdlc\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\Cancel\\Details.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Repository\\Contract\\Impl\\CancelDao.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.IAPIs\\ViewModels\\ContractEnd.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.Contract\\OT.CNT.Web\\Contract\\EndController.cs\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractEnd.rdlc\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractSign.rdlc\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\End\\Details.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Contract\\End\\EndView.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Views\\Shared\\_Cancling.cshtml\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Images\\yizuofei.png\r\n" + 
-				"svn update D:\\work\\合同系统\\03实现\\001程序代码\\OT.CNT\\OT.WebSite\\Areas\\CNT\\Reports\\ContractPayment_IsNotCnt.rdlc";
-		String[] sourceLines = str.split("svn update ");
+		List<String> targetFilePath = new ArrayList<String>();
+		
+		List<String> sourceLines = findSourceFile();
 		List<String> lines = new ArrayList<String>();
 		for(String l : sourceLines) {
 			if(!lines.contains(l)) {
@@ -90,9 +31,160 @@ public class TmpTest7 {
 		Collections.sort(lines);
 	
 		System.out.println(lines.size());
-		for(String s : lines) {
-			System.out.println(s);
+		List<String> svnCommondLines = buildSVNUpdateCommondLine(lines);
+		for(String l : svnCommondLines) {
+			System.out.println(l);
+		}
+		
+		List<String> filePathList = getLocalPathListFromSvnCommondLines(svnCommondLines);
+//		for(String l : filePathList) {
+//			System.out.println(l);
+//		}
+		
+		List<String> dllFileNames = findAllDllNames();
+		System.out.println(dllFileNames);
+		
+		String dllPath = null;
+		List<String> dllFilePathList = new ArrayList<String>();
+		List<String> pdbFilePathList = new ArrayList<String>();
+		List<String> frontSideFilePathList = new ArrayList<String>();
+		
+		String tmpPdbFilePath = null;
+		for(String l : filePathList) {
+			if(l.endsWith(".cs")) {
+				dllPath = findTargetDll(l, dllFileNames);
+				if(!dllFilePathList.contains(dllPath)) {
+					dllFilePathList.add(dllPath);
+					if(!l.contains("平台代码")) {
+						tmpPdbFilePath = findTargetPdbFile(dllPath);
+						if(tmpPdbFilePath != null && !pdbFilePathList.contains(tmpPdbFilePath)) {
+							pdbFilePathList.add(tmpPdbFilePath);
+						}
+					}
+				}
+			} else {
+				if(!frontSideFilePathList.contains(l)) {
+					frontSideFilePathList.add(l.replaceAll("\\\\", "/"));
+				}
+			}
+		}
+		
+		targetFilePath.addAll(dllFilePathList);
+		targetFilePath.addAll(pdbFilePathList);
+		targetFilePath.addAll(frontSideFilePathList);
+		
+		Collections.sort(targetFilePath);
+		for(String l : targetFilePath) {
+			if(l.endsWith("dll") || l.endsWith("pdb")) {
+				System.out.println(l.replaceAll(sourceBinPath, "/OT.WebSite/bin"));
+			} else if(l.startsWith(localPathPrefix)) {
+				System.out.println(l.replaceAll(localPathPrefix + "/OT.CNT", ""));
+			}
 		}
 	}
 
+	public static List<String> findSourceFile() {
+		FileUtilCustom io = new FileUtilCustom();
+		String sourceStr = io.getStringFromFile(sourceFilePath);
+		List<String> lines = Arrays.asList(sourceStr.split(System.lineSeparator()));
+		return lines;
+	}
+	
+	public static List<String> findAllDllNames() {
+		
+		File projectBinFolder = new File(sourceBinPath);
+		
+		List<File> sourceFiles = Arrays.asList(projectBinFolder.listFiles());
+		List<String> dllFileNameList = new ArrayList<String>();
+		for(File f : sourceFiles) {		
+			if(f.getName().endsWith("dll")) {
+				dllFileNameList.add(f.getName().replaceAll(".dll", ""));
+			}
+		}
+		
+		return dllFileNameList;
+	}
+	
+	public static String findTargetPdbFile(String dllFilePath) {
+		
+		File pdbFile = new File(dllFilePath.replaceAll(".dll", ".pdb"));
+		if(pdbFile.exists()) {
+			return pdbFile.getAbsolutePath().replaceAll("\\\\", "/");
+		}
+		return null;
+	}
+	
+	public static String findTargetDll(String filePath, List<String> dllNames) {
+		
+		File f = new File(filePath);
+		if("OT.CNT.Web".equals(f.getName())) {
+			return sourceBinPath + "/OT.CNT.WebController.dll";
+		}
+		if(f.getName().equals("OT.Workflow3.APIs")) {
+			System.out.println("");
+		}
+		if(dllNames.contains(f.getName())) {
+			return sourceBinPath + "/" + f.getName() + ".dll";
+		} else if(f.getParentFile() != null) {
+			return findTargetDll(f.getParentFile().getAbsolutePath(), dllNames);
+		}
+		
+		return null;
+	}
+	
+	public static List<String> buildSVNUpdateCommondLine(List<String> inputLines) {
+		List<String> resultLines = batchReplace(inputLines);
+		return resultLines;
+	}
+	
+	private static List<String> batchReplace(List<String> lines) {
+		List<String> resultLines = new ArrayList<String>();
+		String resultLine = null;
+		for (String sourceLine : lines) {
+			resultLine = replace(localPathPrefix, sourceLine);
+			resultLines.add(resultLine);
+		}
+		return resultLines;
+	}
+	
+	private static String replace(String localPath, String bugFreePath) {
+		List<String> localPathSplit = Arrays.asList(localPath.split("/"));
+		List<String> bugFreeSplit = Arrays.asList(bugFreePath.split("/"));
+		
+		int bugFreeTargetIndex = -1;
+		int localPathIndex = -1;
+		String targetWord = null;
+		for(int i = 0; i < localPathSplit.size() && bugFreeTargetIndex < 0; i++) {
+			targetWord = localPathSplit.get(i);
+			if(bugFreeSplit.contains(targetWord)) {
+				bugFreeTargetIndex = bugFreeSplit.indexOf(targetWord);
+				localPathIndex = i;
+			}
+		}
+		
+		if(bugFreeTargetIndex < 0) {
+			return "";
+		}
+		
+		StringBuffer sb = new StringBuffer("svn update ");
+		for(int i = 0; i < localPathIndex; i++) {
+			sb.append(localPathSplit.get(i) + File.separator);
+		}
+		
+		for(int i = bugFreeTargetIndex; i < bugFreeSplit.size(); i++) {
+			sb.append(bugFreeSplit.get(i) + File.separator);
+		}
+		
+		String result = sb.substring(0, sb.length() - 1);
+		
+		return result;
+	}
+
+	public static List<String> getLocalPathListFromSvnCommondLines(List<String> svnCommondLines) {
+		List<String> result = new ArrayList<String>();
+		for(String s : svnCommondLines) {
+			result.add(s.replaceAll("svn update ", ""));
+		}
+		return result;
+	}
 }
