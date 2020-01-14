@@ -8,14 +8,15 @@ import java.util.List;
 
 import toolPack.ioHandle.FileUtilCustom;
 
-public class TmpTest7 {
+public class DfswHeTongTool {
 	
 	private static final String sourceBinPath = "D:/Cnt/bin";
 	
-	private static final String sourceFilePath = "d:/tmp/updates.txt";
+	private static final String updateFilePath = "d:/tmp/updates.txt";
 	
 	private static final String localPathPrefix = "D:/work/合同系统/03实现/001程序代码";
 	
+	private static final String copyToTargetFolderPath = "d:/tmp/copyTarget2";
 	
 	public static void main(String[] args) {
 		List<String> targetFilePath = new ArrayList<String>();
@@ -36,7 +37,7 @@ public class TmpTest7 {
 			System.out.println(l);
 		}
 		
-		List<String> filePathList = getLocalPathListFromSvnCommondLines(svnCommondLines);
+		List<String> localSourceCodeFilePathList = getLocalPathListFromSvnCommondLines(svnCommondLines);
 //		for(String l : filePathList) {
 //			System.out.println(l);
 //		}
@@ -50,7 +51,7 @@ public class TmpTest7 {
 		List<String> frontSideFilePathList = new ArrayList<String>();
 		
 		String tmpPdbFilePath = null;
-		for(String l : filePathList) {
+		for(String l : localSourceCodeFilePathList) {
 			if(l.endsWith(".cs")) {
 				dllPath = findTargetDll(l, dllFileNames);
 				if(!dllFilePathList.contains(dllPath)) {
@@ -74,18 +75,30 @@ public class TmpTest7 {
 		targetFilePath.addAll(frontSideFilePathList);
 		
 		Collections.sort(targetFilePath);
+		List<String> copyTargetList = new ArrayList<String>();
 		for(String l : targetFilePath) {
 			if(l.endsWith("dll") || l.endsWith("pdb")) {
 				System.out.println(l.replaceAll(sourceBinPath, "/OT.WebSite/bin"));
+				copyTargetList.add(copyToTargetFolderPath + l.replaceAll(sourceBinPath, "/OT.WebSite/bin"));
 			} else if(l.startsWith(localPathPrefix)) {
 				System.out.println(l.replaceAll(localPathPrefix + "/OT.CNT", ""));
+				copyTargetList.add(copyToTargetFolderPath + l.replaceAll(localPathPrefix + "/OT.CNT", ""));
 			}
+		}
+		
+		File f = null;
+		for(String l : copyTargetList) {
+			f = new File(l);
+			if(!f.getParentFile().exists()) {
+				f.getParentFile().mkdirs();
+			}
+			System.out.println(l);
 		}
 	}
 
 	public static List<String> findSourceFile() {
 		FileUtilCustom io = new FileUtilCustom();
-		String sourceStr = io.getStringFromFile(sourceFilePath);
+		String sourceStr = io.getStringFromFile(updateFilePath);
 		List<String> lines = Arrays.asList(sourceStr.split(System.lineSeparator()));
 		return lines;
 	}
@@ -133,21 +146,21 @@ public class TmpTest7 {
 	}
 	
 	public static List<String> buildSVNUpdateCommondLine(List<String> inputLines) {
-		List<String> resultLines = batchReplace(inputLines);
+		List<String> resultLines = batchReplaceToSVNUpdateCommondLine(inputLines);
 		return resultLines;
 	}
 	
-	private static List<String> batchReplace(List<String> lines) {
+	private static List<String> batchReplaceToSVNUpdateCommondLine(List<String> lines) {
 		List<String> resultLines = new ArrayList<String>();
 		String resultLine = null;
 		for (String sourceLine : lines) {
-			resultLine = replace(localPathPrefix, sourceLine);
+			resultLine = replaceToSVNUpdateCommondLine(localPathPrefix, sourceLine);
 			resultLines.add(resultLine);
 		}
 		return resultLines;
 	}
 	
-	private static String replace(String localPath, String bugFreePath) {
+	private static String replaceToSVNUpdateCommondLine(String localPath, String bugFreePath) {
 		List<String> localPathSplit = Arrays.asList(localPath.split("/"));
 		List<String> bugFreeSplit = Arrays.asList(bugFreePath.split("/"));
 		
