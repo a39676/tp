@@ -35,11 +35,14 @@ public class DfswHeTongTool {
 		for(String s : localSourceCodeUpdateFilePathList) {
 			System.out.println(s);
 		}
+		System.out.println();
 	
 		List<String> svnCommondLines = buildSVNUpdateCommondLine(localSourceCodeUpdateFilePathList);
 		for(String s : svnCommondLines) {
 			System.out.println(s);
 		}
+		System.out.println();
+		
 		List<String> allDLLFileNames = findAllDllNames();
 		
 		List<String> dllFilePathList = filterTargetDLLFilePath(localSourceCodeUpdateFilePathList, allDLLFileNames);
@@ -88,6 +91,7 @@ public class DfswHeTongTool {
 		for(String s : copyCommondLine) {
 			System.out.println(s);
 		}
+		System.out.println();
 		
 		String numberStr = null;
 		for(int i = 0; i < subPathList.size(); i++) {
