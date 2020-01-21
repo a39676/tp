@@ -14,10 +14,13 @@ public class DfswHeTongTool {
 	private static final String outputPackPath = "d:/Cnt2";
 	// 输出路径的 bin 目录
 	private static final String outputBinPath = outputPackPath + "/bin";
-	// 此txt文档内, 需要输入 bugFree / Jira 中 需要更新的文件路径, 每行一个
-	private static final String updateFilePath = "d:/tmp/updates.txt";
 	// 合同项目本地源码路径
 	private static final String localPathPrefix = "D:/work/合同系统/03实现/001程序代码";
+	// 此txt文档内, 需要输入 bugFree / Jira 中 需要更新的文件路径, 每行一个
+	// bugFree / Jira 中的路径, 需要与 合同项目本地源码路径 有一定重合, 如:
+	// D:/work/合同系统/03实现/001程序代码
+	//           工程类/03实现/001程序代码/OT.CNT/OT.WebSite/Scripts/jOpf.js
+	private static final String updateFilePath = "d:/tmp/updates.txt";
 	// 增量更新文件目标路径
 	private static final String copyToTargetFolderPath = "d:/ht/newFiles";
 	
