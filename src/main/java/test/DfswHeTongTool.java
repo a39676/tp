@@ -10,11 +10,16 @@ import toolPack.ioHandle.FileUtilCustom;
 
 public class DfswHeTongTool {
 	
-	private static final String outputPackPath = "d:/Cnt";
+	// 打包完成的输出路径
+	private static final String outputPackPath = "d:/Cnt2";
+	// 输出路径的 bin 目录
 	private static final String outputBinPath = outputPackPath + "/bin";
+	// 此txt文档内, 需要输入 bugFree / Jira 中 需要更新的文件路径, 每行一个
 	private static final String updateFilePath = "d:/tmp/updates.txt";
+	// 合同项目本地源码路径
 	private static final String localPathPrefix = "D:/work/合同系统/03实现/001程序代码";
-	private static final String copyToTargetFolderPath = "d:/tmp/copyTarget2";
+	// 增量更新文件目标路径
+	private static final String copyToTargetFolderPath = "d:/ht/newFiles";
 	
 	public static void main(String[] args) {
 		
@@ -32,11 +37,13 @@ public class DfswHeTongTool {
 		for(String s : lines) {
 			localSourceCodeUpdateFilePathList.add(buildLocalFilePathFromBugFreeSource(localPathPrefix, s));
 		}
+		System.out.println("本次更新的源码文件: ");
 		for(String s : localSourceCodeUpdateFilePathList) {
 			System.out.println(s);
 		}
 		System.out.println();
-	
+		
+		System.out.println("本次更新 svn 指令行: ");
 		List<String> svnCommondLines = buildSVNUpdateCommondLine(localSourceCodeUpdateFilePathList);
 		for(String s : svnCommondLines) {
 			System.out.println(s);
@@ -66,9 +73,14 @@ public class DfswHeTongTool {
 		String subPath = null;
 		List<String> subPathList = new ArrayList<String>();
 		
+		File tmpFile = null;
 		for(String l : backGroundFilePath) {
 			subPath = l.replaceAll(outputBinPath, "/OT.WebSite/bin");
 			copyTargetList.add(copyToTargetFolderPath + subPath);
+			tmpFile = new File(l);
+			if(!tmpFile.exists()) {
+				copyCommondLine.add("文件: " + l + " 不存在, 请检查更新输入, 或在 vs2010 执行 \"发布\" 后再重新执行本程序");
+			}
 			copyCommondLine.add("cp " + l + " " + copyToTargetFolderPath + subPath);
 			subPathList.add(subPath);
 		}
@@ -88,11 +100,13 @@ public class DfswHeTongTool {
 			}
 		}
 		
+		System.out.println("本次更新 复制用 指令行: ");
 		for(String s : copyCommondLine) {
 			System.out.println(s);
 		}
 		System.out.println();
 		
+		System.out.println("本次更新影响文件: ");
 		String numberStr = null;
 		for(int i = 0; i < subPathList.size(); i++) {
 			if(i < 10) {
@@ -102,6 +116,7 @@ public class DfswHeTongTool {
 			}
 			System.out.println(numberStr + ": " + subPathList.get(i));
 		}
+		System.out.println();
 	}
 
 	private static List<String> findSourceFile() {
