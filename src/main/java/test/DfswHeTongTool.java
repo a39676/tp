@@ -1,12 +1,17 @@
 package test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import toolPack.ioHandle.FileUtilCustom;
 
 public class DfswHeTongTool {
 	
@@ -123,10 +128,38 @@ public class DfswHeTongTool {
 	}
 
 	private static List<String> findSourceFile() {
-		FileUtilCustom io = new FileUtilCustom();
-		String sourceStr = io.getStringFromFile(updateFilePath);
-		List<String> lines = Arrays.asList(sourceStr.split(System.lineSeparator()));
+		Path path = Paths.get(updateFilePath);
+		StringBuffer result = new StringBuffer();
+		try {
+			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+			String currentLine = null;
+			while ((currentLine = reader.readLine()) != null) {
+				result.append(currentLine + System.lineSeparator());
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		List<String> lines = Arrays.asList(result.toString().split(System.lineSeparator()));
 		return lines;
+	}
+	
+	public String getStringFromFile(String filePath, String encodeType) {
+		Path path = Paths.get(filePath);
+		StringBuffer result = new StringBuffer();
+		try {
+			BufferedReader reader = Files.newBufferedReader(path, Charset.forName(encodeType));
+			String currentLine = null;
+			while ((currentLine = reader.readLine()) != null) {// while there is content on the current line
+				result.append(currentLine + System.lineSeparator());
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace(); // handle an exception here
+		}
+		return result.toString();
+	}
+
+	public String getStringFromFile(String filePath) {
+		return getStringFromFile(filePath, StandardCharsets.UTF_8.displayName());
 	}
 	
 	private static List<String> findAllDllNames() {
