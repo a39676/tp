@@ -1,19 +1,13 @@
 package test;
 
-import java.math.BigDecimal;
-
 public class TmpTest8 {
 	
 	public static void main(String[] args) throws Exception {
 		
-		BigDecimal c = new BigDecimal("0.01");
-		BigDecimal total = BigDecimal.ZERO;
-		
-		for(int i = 1; i < 31; i++) {
-			c = c.multiply(new BigDecimal(2));
-			total = total.add(c);
-			
-			System.out.println(i + " : " + c + " : " + total);
+		String desc = "12500000（含加奖2500000）";
+		String[] s = desc.split("[^0-9]");
+		for(String i : s) {
+			System.out.println(i);
 		}
 	}
 
