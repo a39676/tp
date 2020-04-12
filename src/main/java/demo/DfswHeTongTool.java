@@ -25,7 +25,7 @@ public class DfswHeTongTool {
 	// bugFree / Jira 中的路径, 需要与 合同项目本地源码路径 有一定重合, 如:
 	// D:/work/合同系统/03实现/001程序代码
 	//           工程类/03实现/001程序代码/OT.CNT/OT.WebSite/Scripts/jOpf.js
-	private static final String updateFilePath = "d:/tmp/updates.txt";
+	private static final String updateFilePath = "tmp.txt";
 	// 增量更新文件目标路径
 	private static final String copyToTargetFolderPath = "d:/ht/newFiles";
 	
@@ -128,7 +128,11 @@ public class DfswHeTongTool {
 	}
 
 	private static List<String> findSourceFile() {
-		Path path = Paths.get(updateFilePath);
+		
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		File file = new File(classLoader.getResource(updateFilePath).getFile());
+		
+		Path path = Paths.get(file.getAbsolutePath());
 		StringBuffer result = new StringBuffer();
 		try {
 			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
