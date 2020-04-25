@@ -128,9 +128,6 @@ dependencies {
     
     compile group: 'redis.clients', name: 'jedis', version: '3.0.0'
     
-    // // baidu ocr
-    compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.11.0'
-    
     // selenium
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     // appium
