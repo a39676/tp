@@ -4,8 +4,8 @@ apply plugin: 'java'
 version = '0.1.1.1'
 
 compileJava {
-    sourceCompatibility = '12'
-    targetCompatibility = '12'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 }
 
 repositories {
@@ -135,6 +135,9 @@ dependencies {
     
     // bit torrent
     compile group: 'org.eclipse', name: 'bittorrent', version: '0.3.0-v20070627-1030'
+    
+    // netty socket
+	compile group: 'io.netty', name: 'netty-all', version: '4.1.10.Final'
     
 }
 
