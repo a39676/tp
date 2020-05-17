@@ -1,6 +1,12 @@
-package test;
+package littleTool;
 
-public class TmpTest8 {
+/**
+ *
+ * 数字转罗马数字
+ * Number to Roman numeral
+ *
+ */
+public class BuildRomanNumeral {
 
 	static int sub_digit(char num1, char num2, int i, char[] c) { 
         c[i++] = num1; 
