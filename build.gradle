@@ -126,7 +126,8 @@ dependencies {
     // bit torrent
     compile group: 'org.eclipse', name: 'bittorrent', version: '0.3.0-v20070627-1030'
     
-
+	// ssh
+	compile group: 'com.jcraft', name: 'jsch', version: '0.1.55'
 }
 
 
