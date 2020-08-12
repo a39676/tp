@@ -6,7 +6,6 @@ public class MyThreadFactory implements ThreadFactory {
 
 	@Override
 	public Thread newThread(Runnable r) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
