@@ -77,7 +77,8 @@ dependencies {
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
     
-    compile group: 'org.apache.maven.plugins', name: 'maven-resources-plugin', version: '3.1.0'
+    compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
+
     
     // orms start
     // mybatis
@@ -132,9 +133,10 @@ dependencies {
 	// 公历 农历 转换
 	compile group: 'com.github.heqiao2010', name: 'lunar', version: '1.4'
 	
-	
 	// jmeter
 	// compile group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.3'
+	// compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
+	compile group: 'com.neovisionaries', name: 'nv-websocket-client', version: '2.10'
 	
 }
 
