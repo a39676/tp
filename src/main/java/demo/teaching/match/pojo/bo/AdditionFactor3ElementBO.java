@@ -1,9 +1,18 @@
 package demo.teaching.match.pojo.bo;
 
-public class AdditionFactorBO {
+public class AdditionFactor3ElementBO {
 
 	private Double factor1;
 	private Double factor2;
+	private Double factor3;
+
+	public Double getFactor3() {
+		return factor3;
+	}
+
+	public void setFactor3(Double factor3) {
+		this.factor3 = factor3;
+	}
 
 	public Double getFactor1() {
 		return factor1;
@@ -23,7 +32,7 @@ public class AdditionFactorBO {
 
 	@Override
 	public String toString() {
-		return "AdditionFactorBO [factor1=" + factor1 + ", factor2=" + factor2 + "]";
+		return "AdditionFactor3ElementBO [factor1=" + factor1 + ", factor2=" + factor2 + ", factor3=" + factor3 + "]";
 	}
 
 	@Override
@@ -32,6 +41,7 @@ public class AdditionFactorBO {
 		int result = 1;
 		result = prime * result + ((factor1 == null) ? 0 : factor1.hashCode());
 		result = prime * result + ((factor2 == null) ? 0 : factor2.hashCode());
+		result = prime * result + ((factor3 == null) ? 0 : factor3.hashCode());
 		return result;
 	}
 
@@ -43,7 +53,7 @@ public class AdditionFactorBO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdditionFactorBO other = (AdditionFactorBO) obj;
+		AdditionFactor3ElementBO other = (AdditionFactor3ElementBO) obj;
 		if (factor1 == null) {
 			if (other.factor1 != null)
 				return false;
@@ -54,11 +64,15 @@ public class AdditionFactorBO {
 				return false;
 		} else if (!factor2.equals(other.factor2))
 			return false;
+		if (factor3 == null) {
+			if (other.factor3 != null)
+				return false;
+		} else if (!factor3.equals(other.factor3))
+			return false;
 		return true;
 	}
-	
-	public String getEquationString() {
-		return this.getFactor1().intValue() + " + " + this.getFactor2().intValue() + " = ";
-	}
 
+	public String getEquationString() {
+		return this.getFactor1().intValue() + " + " + this.getFactor2().intValue() + " + " + this.getFactor3().intValue() + " = ";
+	}
 }

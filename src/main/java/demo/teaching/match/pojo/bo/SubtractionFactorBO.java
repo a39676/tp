@@ -1,6 +1,6 @@
 package demo.teaching.match.pojo.bo;
 
-public class AdditionFactorBO {
+public class SubtractionFactorBO {
 
 	private Double factor1;
 	private Double factor2;
@@ -43,7 +43,7 @@ public class AdditionFactorBO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdditionFactorBO other = (AdditionFactorBO) obj;
+		SubtractionFactorBO other = (SubtractionFactorBO) obj;
 		if (factor1 == null) {
 			if (other.factor1 != null)
 				return false;
@@ -58,7 +58,7 @@ public class AdditionFactorBO {
 	}
 	
 	public String getEquationString() {
-		return this.getFactor1().intValue() + " + " + this.getFactor2().intValue() + " = ";
+		return this.getFactor1().intValue() + " - " + this.getFactor2().intValue() + " = ";
 	}
 
 }
