@@ -10,11 +10,19 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 
+import net.sf.json.JSONArray;
+
 public class WSClient {
 
 	public static void main(String[] args) throws IOException {
-		String uriStr = "wss://streamer.cryptocompare.com/v2?api_key=";
-		String addSub = "{\"action\": \"SubAdd\",\"subs\": [\"5~CCCAGG~BTC~USD\", \"0~Coinbase~ETH~USD\", \"2~Binance~BTC~USDT\"]}";
+		String apiKey = "";
+		String uriStr = "wss://streamer.cryptocompare.com/v2?api_key=" + apiKey;
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add("5~CCCAGG~BTC~USD");
+		jsonArray.add("5~CCCAGG~ETH~USD");
+		jsonArray.add("5~CCCAGG~FIL~USD");
+//		String addSub = "{\"action\": \"SubAdd\",\"subs\": [\"5~CCCAGG~BTC~USD\", \"0~Coinbase~ETH~USD\", \"2~Binance~BTC~USDT\"]}";
+		String addSub = "{\"action\": \"SubAdd\",\"subs\":" + jsonArray.toString() + "}";
 
 		WebSocket wss = new WebSocketFactory().createSocket(uriStr);
 
