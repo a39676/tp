@@ -24,7 +24,7 @@ public class WSClient {
 //		String addSub = "{\"action\": \"SubAdd\",\"subs\": [\"5~CCCAGG~BTC~USD\", \"0~Coinbase~ETH~USD\", \"2~Binance~BTC~USDT\"]}";
 		String addSub = "{\"action\": \"SubAdd\",\"subs\":" + jsonArray.toString() + "}";
 
-		WebSocket wss = new WebSocketFactory().createSocket(uriStr);
+		WebSocket wss = new WebSocketFactory().setVerifyHostname(false).createSocket(uriStr);
 
 		wss.addListener(new WebSocketAdapter() {
 			@Override
