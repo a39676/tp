@@ -17,7 +17,7 @@ public class CreateAddtionFactorServiceImpl {
 			System.out.println(ele.getEquationString());
 		}
 		
-		Set<AdditionFactor3ElementBO> resultSet2 = t.createRandomAddtion3Element(3, 11, 10);
+		Set<AdditionFactor3ElementBO> resultSet2 = t.createRandomAddtion3Element(1, 5, 10);
 		for(AdditionFactor3ElementBO ele: resultSet2) {
 			System.out.println(ele.getEquationString());
 		}
