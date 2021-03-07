@@ -12,17 +12,17 @@ public class CreateAddtionFactorServiceImpl {
 	
 	public static void main(String[] args) {
 		CreateAddtionFactorServiceImpl t = new CreateAddtionFactorServiceImpl();
-		Set<AdditionFactorBO> resultSet = t.createRandomAddtion(3, 11, 15);
+		Set<AdditionFactorBO> resultSet = t.createRandomAddtion(3, 8, 15);
 		for(AdditionFactorBO ele : resultSet) {
 			System.out.println(ele.getEquationString());
 		}
 		
-		Set<AdditionFactor3ElementBO> resultSet2 = t.createRandomAddtion3Element(1, 5, 10);
+		Set<AdditionFactor3ElementBO> resultSet2 = t.createRandomAddtion3Element(3, 8, 10);
 		for(AdditionFactor3ElementBO ele: resultSet2) {
 			System.out.println(ele.getEquationString());
 		}
 		
-		Set<SubtractionFactorBO> resultSet3 = t.createRandomSubtraction(1, 11, 5);
+		Set<SubtractionFactorBO> resultSet3 = t.createRandomSubtraction(3, 8, 5);
 		for(SubtractionFactorBO ele: resultSet3) {
 			System.out.println(ele.getEquationString());
 		}
