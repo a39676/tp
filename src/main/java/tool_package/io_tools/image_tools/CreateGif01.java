@@ -130,7 +130,6 @@ public class CreateGif01 {
 
 	// Add an extra Application Extension node if the user wants it to be loopable
 	// I am not sure about this part, got the code from StackOverflow
-	// TODO: Study about this
 	private static void makeLoopy(IIOMetadataNode root) {
 		IIOMetadataNode app_extensions = getNode("ApplicationExtensions", root);
 		IIOMetadataNode app_node = getNode("ApplicationExtension", app_extensions);
