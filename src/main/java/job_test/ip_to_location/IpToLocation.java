@@ -26,7 +26,7 @@ public class IpToLocation{
 		String mainUrl = "http://restapi.amap.com/v3/ip";
 		
 		List<String> keys = new ArrayList<String>();
-		keys.add("e8d4b812a4c5c57f75d8488007d62c8b");
+		keys.add("");
 		
 		ArrayList<String> ipList = new ArrayList<String>();
 		ipList.add("114.247.50.2");

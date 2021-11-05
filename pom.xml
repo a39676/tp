@@ -309,14 +309,6 @@
 			<version>2.14</version>
 		</dependency>
 
-		<!-- 公历 农历 转换 -->
-		<dependency>
-			<groupId>com.github.heqiao2010</groupId>
-			<artifactId>lunar</artifactId>
-			<version>1.5</version>
-		</dependency>
-
-
 		<dependency>
 			<groupId>com.demo</groupId>
 			<artifactId>ToolPacks</artifactId>
