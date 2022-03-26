@@ -1,15 +1,16 @@
 package test;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 public class TmpTest13 {
 
 	public static void main(String[] args) throws ScriptException {
-		ScriptEngineManager mgr = new ScriptEngineManager();
-		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		String foo = "40+2*3";
-		System.out.println(engine.eval(foo));
+		String exp1 = "9*9";
+		Expression expression1 = new ExpressionBuilder(exp1).build();
+		Double result1 = expression1.evaluate();
+		System.out.println(result1.intValue());
 	}
 }
