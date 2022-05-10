@@ -76,7 +76,7 @@ public class IOToolWithExcl {
 		Iterator<Row> rowIterator = sheet.iterator();
 
 //		String tableCommentMather = "(\\d.\\d.\\d.)(?:\\s*)(\\S{1,40})";
-//		String tableNameMather = "表名：(?:\\s{0,3})(?:\\w{1,40})";
+//		String tableNameMather = "表名:(?:\\s{0,3})(?:\\w{1,40})";
 
 		while (rowIterator.hasNext()) {
 			Row nextRow = rowIterator.next();

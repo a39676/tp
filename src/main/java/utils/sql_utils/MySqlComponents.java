@@ -35,7 +35,7 @@ public class MySqlComponents {
 		mateDateMatchRefence.put(7, "");
 		mateDateMatchRefence.put(8, "描述");
 		mateDateMatchRefence.put(9, "(\\d\\.\\d{1,2}\\.\\d{1,2}\\.)(?:\\s*)(\\S{1,40})");
-		mateDateMatchRefence.put(10, "表名：(?:\\S{1,40})");
+		mateDateMatchRefence.put(10, "表名:(?:\\S{1,40})");
 	}
 	
 	// 判断是否 metaData
@@ -113,7 +113,7 @@ public class MySqlComponents {
 				allList.get(9).add(cellInfo);
 			} else if (cellInfo.matches(mateDateMatchRefence.get(10))) {
 //				indexRecord.put(10, 10);
-				cellInfo = cellInfo.replaceAll("表名：", "");
+				cellInfo = cellInfo.replaceAll("表名:", "");
 				allList.get(10).add(cellInfo);
 			} 
 		}
