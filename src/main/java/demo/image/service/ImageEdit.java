@@ -12,7 +12,7 @@ public class ImageEdit {
 
 	private static String mazePath = "d:/z2/经常打印/mazeTmp*.png";
 	private static String mazeResultPath = "d:/z2/经常打印/mazeResult*.png";
-	private static String rainbowImg = "d:/z2/经常打印/rainbow.png";
+	private static String rainbowImg = "d:/z2/经常打印/rainbow2.png";
 	private static int start = 1;
 	private static int end = 4;
 
@@ -108,6 +108,9 @@ public class ImageEdit {
 					
 					rainRate = (widthDistance * widthDistance + heightDistance * heightDistance) / (longestDistance * longestDistance.doubleValue()) * 2;
 					rainbowIndex = rainbowRgbList.size() * rainRate;
+					if(rainbowIndex >= rainbowRgbList.size()) {
+						rainbowIndex = rainbowRgbList.size() - 1D;
+					}
 					mazeBufferImage.setRGB(w, h, rainbowRgbList.get(rainbowIndex.intValue()));
 				}
 			}
@@ -122,8 +125,8 @@ public class ImageEdit {
 
 	public static void main(String[] args) {
 		ImageEdit t = new ImageEdit();
-//		t.loadRainbowList();
-		t.loadRainbowListDouble();
+		t.loadRainbowList();
+//		t.loadRainbowListDouble();
 
 		BufferedImage mazeBufferImage = null;
 
