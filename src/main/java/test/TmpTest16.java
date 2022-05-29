@@ -1,16 +1,26 @@
 package test;
 
+import java.io.File;
+
 public class TmpTest16 {
 
 	public static void main(String[] args) throws Exception {
 
-		String str = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAA";
+		String mainFolderPathStr = "D:/tmp/test";
 		
-		System.out.println(str.contains("base64,"));
+		File mainFolder = new File(mainFolderPathStr);
 		
-		System.out.println(str.indexOf("base64,"));
-		System.out.println(str.indexOf("data:image/"));
-		
-		System.out.println(str.substring(11, str.indexOf("base64,") - 1));
+		for(File subFolder : mainFolder.listFiles()) {
+			File[] subSubFiles = subFolder.listFiles();
+			for(File file : subSubFiles) {
+				if(file.getName().endsWith("txt")) {
+					try {
+						file.delete();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 }

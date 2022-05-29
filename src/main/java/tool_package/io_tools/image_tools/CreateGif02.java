@@ -12,6 +12,9 @@ import javax.imageio.ImageIO;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 
 public class CreateGif02 {
+	
+	private String outputPathStr = "D:/tmp/output";
+	private String mainSourceFolderPathStr = "D:/joyxy/joyxyImgSource/MotionData_Monster";
 
 	/**
 	 * 把多张jpg图片合成一张
@@ -21,16 +24,22 @@ public class CreateGif02 {
 	 * @param newPic
 	 *            String 生成的gif文件名 包含路径
 	 */
-	public static void jpgToGif(List<String> filePaths, String newPic) {
+	public void jpgToGif(List<String> filePaths, String newPic, Integer xStart, Integer yStart, Integer width, Integer height) {
 		try {
 			AnimatedGifEncoder e = new AnimatedGifEncoder();
 			e.setRepeat(0);
 			e.start(newPic);
+			e.setQuality(1);
 			e.setTransparent(Color.WHITE);
 			BufferedImage src[] = new BufferedImage[filePaths.size()];
+			BufferedImage tmpBufferedImage = null;
 			for (int i = 0; i < src.length; i++) {
 				e.setDelay(100);
-				src[i] = ImageIO.read(new File(filePaths.get(i))); 
+				tmpBufferedImage = ImageIO.read(new File(filePaths.get(i)));
+				if(xStart != null) {
+					tmpBufferedImage = tmpBufferedImage.getSubimage(xStart, yStart, width, height);
+				}
+				src[i] = tmpBufferedImage;
 				e.addFrame(src[i]); 
 			}
 			e.finish();
@@ -41,16 +50,41 @@ public class CreateGif02 {
 	}
 	
 	public static void main(String[] args) {
-		List<String> filePaths = new ArrayList<String>();
-		String mainFolderPathStr = "D:/joyxy/joyxyImgSourceBackup/MotionData_Monster/BODY_monster_000004a-1";
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-1.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-2.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-3.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-4.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-5.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-6.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-7.png");
-		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-8.png");
-		jpgToGif(filePaths, "D:/tmp/output/output1.gif");
+		CreateGif02 t = new CreateGif02();
+		String monsterFolderName = "BODY_monster_158-2";
+		int exceptNumber = 1;
+		t.createMonsterGif(monsterFolderName, exceptNumber,176, 119, 50, 80);
 	}
+	
+	public void createMonsterGif(String monsterFolderName, Integer exceptNumber, Integer xStart, Integer yStart, Integer width, Integer height) {
+		String monsterName = monsterFolderName;
+		String mainFolderPathStr = mainSourceFolderPathStr + "/" + monsterName;
+		
+		File monsterFolder = new File(mainFolderPathStr);
+		File[] files = monsterFolder.listFiles();
+		List<String> filePaths = new ArrayList<String>();
+		for(File file : files) {
+			String filename = file.getName();
+			if(exceptNumber != null) {
+				try {
+					Integer num = Integer.parseInt(String.valueOf(filename.charAt(monsterName.length() + 1)));
+					if(num != exceptNumber) {
+						System.out.println(filename);
+						filePaths.add(file.getAbsolutePath());
+					}
+				} catch (Exception e) {
+				}
+			} else {
+				filePaths.add(file.getAbsolutePath());
+			}
+		}
+		
+		jpgToGif(filePaths, outputPathStr + "/" + monsterName + ".gif", xStart, yStart, width, height);
+		
+	}
+	
+	public void createNpcGif(String monsterFolderName, Integer xStart, Integer yStart, Integer width, Integer height) {
+		createMonsterGif(monsterFolderName, null, xStart, yStart, width, height);
+	}
+
 }
