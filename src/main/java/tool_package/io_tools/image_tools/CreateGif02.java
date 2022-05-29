@@ -42,14 +42,15 @@ public class CreateGif02 {
 	
 	public static void main(String[] args) {
 		List<String> filePaths = new ArrayList<String>();
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-1.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-2.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-3.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-4.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-5.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-6.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-7.png");
-		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-8.png");
+		String mainFolderPathStr = "D:/joyxy/joyxyImgSourceBackup/MotionData_Monster/BODY_monster_000004a-1";
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-1.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-2.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-3.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-4.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-5.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-6.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-7.png");
+		filePaths.add(mainFolderPathStr + "/BODY_monster_000004a-1_6-8.png");
 		jpgToGif(filePaths, "D:/tmp/output/output1.gif");
 	}
 }
