@@ -1,5 +1,6 @@
 package tool_package.io_tools.image_tools;
 
+import java.awt.Color;
 //import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,9 +26,10 @@ public class CreateGif02 {
 			AnimatedGifEncoder e = new AnimatedGifEncoder();
 			e.setRepeat(0);
 			e.start(newPic);
+			e.setTransparent(Color.WHITE);
 			BufferedImage src[] = new BufferedImage[filePaths.size()];
 			for (int i = 0; i < src.length; i++) {
-				e.setDelay(200); 
+				e.setDelay(100);
 				src[i] = ImageIO.read(new File(filePaths.get(i))); 
 				e.addFrame(src[i]); 
 			}
@@ -40,15 +42,14 @@ public class CreateGif02 {
 	
 	public static void main(String[] args) {
 		List<String> filePaths = new ArrayList<String>();
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-1.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-2.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-3.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-4.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-5.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-6.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-7.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-8.png");
-		filePaths.add("D:/auxiliary/tmp/01/BODY_monster_000001a_1-9.png");
-		jpgToGif(filePaths, "D:/auxiliary/tmp/01/output1.gif");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-1.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-2.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-3.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-4.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-5.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-6.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-7.png");
+		filePaths.add("D:\\joyxy\\joyxyImgSourceBackup\\MotionData_Monster\\BODY_monster_000004a-1/BODY_monster_000004a-1_6-8.png");
+		jpgToGif(filePaths, "D:/tmp/output/output1.gif");
 	}
 }
