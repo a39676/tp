@@ -51,9 +51,10 @@ public class CreateGif02 {
 	
 	public static void main(String[] args) {
 		CreateGif02 t = new CreateGif02();
-		String monsterFolderName = "BODY_monster_158-2";
-		int exceptNumber = 1;
-		t.createMonsterGif(monsterFolderName, exceptNumber,176, 119, 50, 80);
+		String monsterFolderName = "BODY_monster_000115";
+//		int exceptNumber = 1;
+//		t.createMonsterGif(monsterFolderName, exceptNumber,176, 119, 50, 80);
+		t.createNpcGif(monsterFolderName, 164, 83, 62, 116);
 	}
 	
 	public void createMonsterGif(String monsterFolderName, Integer exceptNumber, Integer xStart, Integer yStart, Integer width, Integer height) {
