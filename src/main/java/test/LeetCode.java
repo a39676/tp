@@ -1,14 +1,67 @@
 package test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LeetCode {
 
 	public static void main(String[] args) {
 		LeetCode t = new LeetCode();
-		int result = t.numberOfSteps(18);
-		System.out.println(result);
+		int[] result = t.twoSum(new int[] {3, 2, 4}, 6);
+//		System.out.println(result);
+		for(int i = 0; i< result.length; i++) {
+			System.out.print(result[i]);
+		}
+	}
+
+	public int[] twoSum(int[] nums, int target) {
+		for (int i = 0; i < nums.length; i++) {
+			for (int j = i + 1; j < nums.length; j++) {
+				if (nums[i] + nums[j] == target) {
+					return new int[] { i, j };
+				}
+			}
+		}
+		return null;
+	}
+
+	public int[] kWeakestRows(int[][] mat, int k) {
+		int tmpSummary = 0;
+		int tmpIndex = 0;
+		int lineLength = mat[0].length;
+		List<Integer> summary = new ArrayList<>();
+
+		for (int i = 0; i < mat.length; i++) {
+			int[] line = mat[i];
+			tmpSummary = 0;
+			for (int j = 0; j < lineLength; j++) {
+				tmpSummary = tmpSummary + line[j];
+			}
+			summary.add(tmpSummary);
+		}
+
+		List<Integer> resultList = new ArrayList<>();
+		while (resultList.size() < k) {
+			tmpSummary = 0;
+			tmpIndex = 0;
+			for (int i = 0; i < summary.size(); i++) {
+				if (tmpSummary < summary.get(i)) {
+					tmpSummary = summary.get(i);
+					tmpIndex = i;
+				}
+			}
+			resultList.add(tmpIndex);
+			summary.set(tmpIndex, 0);
+		}
+
+		int[] result = new int[k];
+		for (int i = 0; i < resultList.size(); i++) {
+			result[i] = resultList.get(i);
+		}
+
+		return result;
 	}
 
 	public int numberOfSteps(int num) {
@@ -25,7 +78,7 @@ public class LeetCode {
 
 		return step;
 	}
-	
+
 	public int romanToInt(String s) {
 		Map<String, Integer> map = new HashMap<>();
 		map.put("I", 1);
