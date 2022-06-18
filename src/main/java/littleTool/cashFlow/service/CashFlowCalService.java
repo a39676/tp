@@ -14,7 +14,7 @@ public class CashFlowCalService {
 	private static List<CashFlowDTO> incomeList = new ArrayList<>();
 	private static BigDecimal cnyUsdRate = new BigDecimal(6.5);
 	private static BigDecimal filOutput = new BigDecimal(150);
-	private static BigDecimal filPrice = new BigDecimal(17);
+	private static BigDecimal filPrice = new BigDecimal(3);
 
 	public static BigDecimal listResult(List<CashFlowDTO> list) {
 		BigDecimal dailyTotal = BigDecimal.ZERO;
@@ -118,7 +118,49 @@ public class CashFlowCalService {
 		dto.setTimeUnit(TimeUnitType.year);
 		dto.setAmount(new BigDecimal(-3200 * 9));
 		addFlow(dto);
-
+		
+		dto = new CashFlowDTO();
+		dto.setFlowName("138 月租");
+		dto.setTimeUnit(TimeUnitType.month);
+		dto.setAmount(new BigDecimal(-25));
+		addFlow(dto);
+		
+		dto = new CashFlowDTO();
+		dto.setFlowName("189 月租");
+		dto.setTimeUnit(TimeUnitType.month);
+		dto.setAmount(new BigDecimal(-250));
+		addFlow(dto);
+		
+		dto = new CashFlowDTO();
+		dto.setFlowName("过年高铁票");
+		dto.setTimeUnit(TimeUnitType.year);
+		dto.setAmount(new BigDecimal(-213.5 * 2.5 * 2));
+		addFlow(dto);
+		
+		dto = new CashFlowDTO();
+		dto.setFlowName("过年使费");
+		dto.setTimeUnit(TimeUnitType.year);
+		dto.setAmount(new BigDecimal(-5000));
+		addFlow(dto);
+		
+//		dto = new CashFlowDTO();
+//		dto.setFlowName("跳槽收入");
+//		dto.setTimeUnit(TimeUnitType.month);
+//		dto.setAmount(new BigDecimal(3500));
+//		addFlow(dto);
+//		
+//		dto = new CashFlowDTO();
+//		dto.setFlowName("现场办公通勤");
+//		dto.setTimeUnit(TimeUnitType.month);
+//		dto.setAmount(new BigDecimal(-16 * 22));
+//		addFlow(dto);
+//		
+//		dto = new CashFlowDTO();
+//		dto.setFlowName("现场办公午餐");
+//		dto.setTimeUnit(TimeUnitType.month);
+//		dto.setAmount(new BigDecimal(-20 * 22));
+//		addFlow(dto);
+		
 		BigDecimal incomeDaily = listResult(incomeList);
 		BigDecimal paymentDaily = listResult(paymentList);
 

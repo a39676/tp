@@ -9,11 +9,29 @@ public class LeetCode {
 
 	public static void main(String[] args) {
 		LeetCode t = new LeetCode();
-		int[] result = t.twoSum(new int[] {3, 2, 4}, 6);
+		int[] result = t.twoSum(new int[] { 3, 2, 4 }, 6);
 //		System.out.println(result);
-		for(int i = 0; i< result.length; i++) {
+		for (int i = 0; i < result.length; i++) {
 			System.out.print(result[i]);
 		}
+	}
+
+	public int[] runningSum(int[] nums) {
+		int[] result = new int[nums.length];
+		int tmp = 0;
+		for (int i = 0; i < nums.length; i++) {
+			tmp = tmp + nums[i];
+			result[i] = tmp;
+		}
+		return result;
+	}
+
+	public int[] buildArray(int[] nums) {
+		int[] result = new int[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			result[i] = nums[nums[i]];
+		}
+		return result;
 	}
 
 	public int[] twoSum(int[] nums, int target) {
