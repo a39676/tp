@@ -1,4 +1,4 @@
-package test;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,11 +9,64 @@ public class LeetCode {
 
 	public static void main(String[] args) {
 		LeetCode t = new LeetCode();
-		int[] result = t.twoSum(new int[] { 3, 2, 4 }, 6);
-//		System.out.println(result);
-		for (int i = 0; i < result.length; i++) {
-			System.out.print(result[i]);
+		int[] result = t.shuffle(new int[] { 2, 5, 1, 3, 4, 7 }, 3);
+		for(int i : result) {
+			System.out.print(i);
 		}
+	}
+
+	public int[] shuffle(int[] nums, int n) {
+		int[] result = new int[nums.length];
+		int[] x = new int[n];
+		int[] y = new int[n];
+		for (int i = 0; i < nums.length; i++) {
+			if(i < n) {
+				x[i] = nums[i];
+			} else {
+				y[i - n] = nums[i];
+			}
+		}
+		
+		for(int i = 0; i < x.length; i++) {
+			result[i * 2] = x[i];
+		}
+		
+		for(int i = 0; i < y.length; i++) {
+			result[i * 2 + 1] = y[i];
+		}
+		return result;
+	}
+
+	public int mostWordsFound(String[] sentences) {
+		int max = 0;
+		int tmpLength;
+		for (String sentence : sentences) {
+			tmpLength = sentence.split(" ").length;
+			if (max < tmpLength) {
+				max = tmpLength;
+			}
+		}
+		return max;
+	}
+
+	public String defangIPaddr(String address) {
+		return address.replaceAll("\\.", "[.]");
+	}
+
+	public int finalValueAfterOperations(String[] operations) {
+		int x = 0;
+		for (String op : operations) {
+			if (op.contains("+")) {
+				x++;
+			} else {
+				x--;
+			}
+		}
+		return x;
+	}
+
+	public boolean checkTree(TreeNode root) {
+		return root.val == root.left.val + root.right.val;
 	}
 
 	public int[] runningSum(int[] nums) {
