@@ -10,9 +10,9 @@ import javax.imageio.ImageIO;
 
 public class ImageEdit {
 
-	private static String mazePath = "d:/z2/经常打印/mazeTmp*.png";
-	private static String mazeResultPath = "d:/z2/经常打印/mazeResult*.png";
-	private static String rainbowImg = "d:/z2/经常打印/rainbow2.png";
+	private static String mazePath = "d:/z2/打印材料/mazeTmp*.png";
+	private static String mazeResultPath = "d:/z2/打印材料/mazeResult*.png";
+	private static String rainbowImg = "d:/z2/打印材料/rainbow2.png";
 	private static int start = 1;
 	private static int end = 4;
 
@@ -126,14 +126,15 @@ public class ImageEdit {
 	public static void main(String[] args) {
 		ImageEdit t = new ImageEdit();
 		t.loadRainbowList();
-//		t.loadRainbowListDouble();
+		t.loadRainbowListDouble();
 
 		BufferedImage mazeBufferImage = null;
 
 		for (Integer i = start; i <= end; i++) {
 			mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", i.toString()));
 
-			t.colorReplaceCenterOfCircle(mazeBufferImage, i);
+//			t.colorReplaceCenterOfCircle(mazeBufferImage, i);
+			t.colorReplaceSlash(mazeBufferImage, i);
 		}
 	}
 }
