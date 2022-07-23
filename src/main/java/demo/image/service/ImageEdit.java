@@ -14,14 +14,13 @@ public class ImageEdit {
 	private static String mazeResultPath = "d:/z2/打印材料/mazeResult*.png";
 	private static String rainbowImg = "d:/z2/打印材料/rainbow2.png";
 	private static int start = 1;
-	private static int end = 4;
+	private static int end = 1;
 
 	private static List<Integer> rainbowRgbList;
 
 	private static Integer rainbowWidth = null;
 	private static Integer black = -16777216;
-	@SuppressWarnings("unused")
-	private static Integer white = -0;
+	private static Integer white = -1;
 	private static Integer target = black;
 
 	public BufferedImage readImage(String filePathStr) {
@@ -123,6 +122,27 @@ public class ImageEdit {
 		}
 	}
 
+	public void printXiaoFangGe(BufferedImage mazeBufferImage, Integer index) {
+		int imgWidth = mazeBufferImage.getWidth();
+		int imgHeight = mazeBufferImage.getHeight();
+
+		for (Integer w = 0; w < imgWidth; w++) {
+			for (Integer h = 0; h < imgHeight; h++) {
+				if (w % 39 == 0 || h % 39 == 0) {
+					mazeBufferImage.setRGB(w, h, black);
+				} else {
+					mazeBufferImage.setRGB(w, h, white);
+				}
+			}
+		}
+
+		try {
+			ImageIO.write(mazeBufferImage, "PNG", new File(mazeResultPath.replaceAll("\\*", index.toString())));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		ImageEdit t = new ImageEdit();
 		t.loadRainbowList();
@@ -135,6 +155,7 @@ public class ImageEdit {
 
 //			t.colorReplaceCenterOfCircle(mazeBufferImage, i);
 			t.colorReplaceSlash(mazeBufferImage, i);
+//			t.printXiaoFangGe(mazeBufferImage, i);
 		}
 	}
 }
