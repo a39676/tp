@@ -1,4 +1,4 @@
-package education;
+package education.chinese;
 
 import java.util.ArrayList;
 import java.util.Arrays;

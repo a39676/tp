@@ -1,4 +1,4 @@
-package education;
+package education.other;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
