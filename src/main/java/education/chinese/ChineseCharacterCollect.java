@@ -12,27 +12,40 @@ public class ChineseCharacterCollect {
 
 	public static void main(String[] args) {
 		FileUtilCustom io = new FileUtilCustom();
-		String str = io.getStringFromFile("D:\\myMavenPacks\\tp\\src\\main\\java\\education\\chinese\\ChineseCharacterCollect.json");
+		String str = io.getStringFromFile(
+				"D:\\myMavenPacks\\tp\\src\\main\\java\\education\\chinese\\ChineseCharacterCollect.json");
 		JSONObject json = JSONObject.fromObject(str);
-		
+
 		List<String> result = new ArrayList<>();
 		JSONArray jsonArray = json.getJSONArray("g1_1");
-		for(Object s : jsonArray.toArray()) {
+		for (Object s : jsonArray.toArray()) {
 			result.add(String.valueOf(s));
 		}
-		
+
 		jsonArray = json.getJSONArray("g1_2");
-		for(Object s : jsonArray.toArray()) {
+		for (Object s : jsonArray.toArray()) {
 			result.add(String.valueOf(s));
 		}
 		
+		jsonArray = json.getJSONArray("g2_1");
+		for (Object s : jsonArray.toArray()) {
+			result.add(String.valueOf(s));
+		}
+		
+		jsonArray = json.getJSONArray("g2_2");
+		for (Object s : jsonArray.toArray()) {
+			result.add(String.valueOf(s));
+		}
+
 		jsonArray = json.getJSONArray("other");
-		for(Object s : jsonArray.toArray()) {
+		for (Object s : jsonArray.toArray()) {
 			result.add(String.valueOf(s));
 		}
-		
+
 		Collections.shuffle(result);
-		System.out.println(result);
+		for (int i = 0; i < result.size() && i < 50; i++) {
+			System.out.print(result.get(i) + ",");
+		}
 	}
 
 }
