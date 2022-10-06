@@ -2,8 +2,8 @@ package education.chinese;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class PinYinRandom {
 
@@ -39,15 +39,26 @@ public class PinYinRandom {
 				"kuan", "huan", "zhuan", "chuan", "shuan", "ruan", "zuan", "cuan", "suan", "guang", "kuang", "huang",
 				"zhuang", "chuang", "shuang", "juan", "quan", "xuan", "yuan");
 		List<String> allPinYin = new ArrayList<>();
-		allPinYin.addAll(tmp);
-		Random r = new Random();
-		String tmpPinYin = null;
-		int tmpInt = 0;
-		for (int i = 0; i < 50 && !allPinYin.isEmpty(); i++) {
-			tmpInt = r.nextInt(0, allPinYin.size());
-			tmpPinYin = allPinYin.get(tmpInt);
-			allPinYin.remove(tmpInt);
-			System.out.print(tmpPinYin + ", ");
+//		Random r = new Random();
+//		String tmpPinYin = null;
+//		int tmpInt = 0;
+//		for (int i = 0; i < 50 && !allPinYin.isEmpty(); i++) {
+//			tmpInt = r.nextInt(0, allPinYin.size());
+//			tmpPinYin = allPinYin.get(tmpInt);
+//			allPinYin.remove(tmpInt);
+//			System.out.print(tmpPinYin + ", ");
+//		}
+		
+		
+		for(int j = 0; j < 11; j++) {
+			allPinYin.clear();
+			allPinYin.addAll(tmp);
+			Collections.shuffle(allPinYin);
+			for(int i = 0; i < 50; i++) {
+				System.out.print(allPinYin.get(i) + ", ");
+			}
+			System.out.println();
+			System.out.println();
 		}
 	}
 }
