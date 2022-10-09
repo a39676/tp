@@ -17,7 +17,9 @@ public class ChineseCharacterCollect {
 		JSONObject json = JSONObject.fromObject(str);
 
 		List<String> result = new ArrayList<>();
-		JSONArray jsonArray = json.getJSONArray("g1_1");
+		JSONArray jsonArray = null;
+		
+		jsonArray = json.getJSONArray("g1_1");
 		for (Object s : jsonArray.toArray()) {
 			result.add(String.valueOf(s));
 		}
