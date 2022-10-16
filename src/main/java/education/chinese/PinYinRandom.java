@@ -7,8 +7,9 @@ import java.util.List;
 
 public class PinYinRandom {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
-		List<String> tmp = Arrays.asList("ai", "bai", "pai", "mai", "dai", "tai", "nai", "lai", "gai", "kai", "hai",
+		List<String> allCombination = Arrays.asList("ai", "bai", "pai", "mai", "dai", "tai", "nai", "lai", "gai", "kai", "hai",
 				"zhai", "chai", "shai", "zai", "sai", "wai", "ei", "bei", "pei", "mei", "fei", "dei", "tei", "nei",
 				"lei", "gei", "kei", "nei", "zhei", "shei", "zei", "cei", "wei", "dui", "tui", "gui", "kui", "hui",
 				"zhui", "chui", "shui", "rui", "zui", "cui", "sui", "ao", "bao", "pao", "mao", "dao", "tao", "nao",
@@ -26,36 +27,29 @@ public class PinYinRandom {
 				"zheng", "cheng", "sheng", "reng", "zeng", "ceng", "seng", "weng", "bing", "ping", "ming", "ding",
 				"ting", "ning", "ling", "jing", "qing", "xing", "ying", "dong", "tong", "nong", "long", "gong", "kong",
 				"hong", "zhong", "chong", "rong", "zong", "cong", "song", "yong", "a", "ba", "pa", "ma", "fa", "da",
-				"ta", "na", "la", "ga", "ka", "ha", "zha", "cha", "sha", "ra", "za", "ca", "sa", "ya", "wa", "o", "bo",
+				"ta", "na", "la", "ga", "ka", "ha", "zha", "cha", "sha", "za", "ca", "sa", "ya", "wa", "o", "bo",
 				"po", "mo", "fo", "lo", "yo", "wo", "e", "me", "de", "te", "ne", "le", "ge", "ke", "he", "zhe", "che",
 				"she", "re", "ze", "ce", "se", "ye", "bi", "pi", "mi", "di", "ti", "ni", "li", "ji", "qi", "xi", "zhi",
 				"chi", "shi", "ri", "zi", "ci", "si", "yi", "bu", "pu", "mu", "fu", "du", "tu", "nu", "lu", "gu", "ku",
 				"hu", "zhu", "chu", "shu", "ru", "zu", "cu", "su", "wu", "nü", "lü", "ju", "qu", "xu", "yu", "dia",
 				"lia", "jia", "qia", "xia", "biao", "piao", "miao", "diao", "tiao", "niao", "liao", "jiao", "qiao",
 				"xiao", "bian", "pian", "mian", "dian", "tian", "nian", "lian", "jian", "qian", "xian", "niang",
-				"liang", "jiang", "qiang", "xiang", "jiong", "qiong", "xiong", "gua", "kua", "hua", "zhua", "chua",
-				"shua", "rua", "duo", "tuo", "nuo", "luo", "guo", "kuo", "huo", "zhuo", "chuo", "shuo", "ruo", "zuo",
+				"liang", "jiang", "qiang", "xiang", "jiong", "qiong", "xiong", "gua", "kua", "hua", "zhua",
+				"shua", "duo", "tuo", "nuo", "luo", "guo", "kuo", "huo", "zhuo", "chuo", "shuo", "ruo", "zuo",
 				"cuo", "suo", "guai", "kuai", "huai", "zhuai", "chuai", "shuai", "duan", "tuan", "nuan", "luan", "guan",
 				"kuan", "huan", "zhuan", "chuan", "shuan", "ruan", "zuan", "cuan", "suan", "guang", "kuang", "huang",
 				"zhuang", "chuang", "shuang", "juan", "quan", "xuan", "yuan");
-		List<String> allPinYin = new ArrayList<>();
-//		Random r = new Random();
-//		String tmpPinYin = null;
-//		int tmpInt = 0;
-//		for (int i = 0; i < 50 && !allPinYin.isEmpty(); i++) {
-//			tmpInt = r.nextInt(0, allPinYin.size());
-//			tmpPinYin = allPinYin.get(tmpInt);
-//			allPinYin.remove(tmpInt);
-//			System.out.print(tmpPinYin + ", ");
-//		}
 		
+		List<String> allInitials = Arrays.asList("b","p","m","f","d","t","n","l","g","k","h","j","q","x","zh","ch","sh","r","z","c","s","y","w");
+		
+		List<String> tmp = new ArrayList<>();
 		
 		for(int j = 0; j < 11; j++) {
-			allPinYin.clear();
-			allPinYin.addAll(tmp);
-			Collections.shuffle(allPinYin);
-			for(int i = 0; i < 50; i++) {
-				System.out.print(allPinYin.get(i) + ", ");
+			tmp.clear();
+			tmp.addAll(allInitials);
+			Collections.shuffle(tmp);
+			for(int i = 0; i < 50 && i < tmp.size(); i++) {
+				System.out.print(tmp.get(i) + ", ");
 			}
 			System.out.println();
 			System.out.println();
