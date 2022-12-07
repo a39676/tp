@@ -10,11 +10,12 @@ import javax.imageio.ImageIO;
 
 public class ImageEdit {
 
-	private static String mazePath = "d:/z2/打印材料/mazeTmp*.png";
-	private static String mazeResultPath = "d:/z2/打印材料/mazeResult*.png";
+	private static String folderPath = "D:/tmp/一年级数学上学期复习册_FIT/";
+	private static String mazePath = folderPath + "一年级数学上学期复习册_FIT-*.jpg";
+	private static String mazeResultPath = folderPath + "*.jpg";
 	private static String rainbowImg = "d:/z2/打印材料/rainbow2.png";
 	private static int start = 1;
-	private static int end = 1;
+	private static int end = 10;
 
 	private static List<Integer> rainbowRgbList;
 
@@ -44,13 +45,13 @@ public class ImageEdit {
 		}
 		return rainbowRgbList;
 	}
-	
+
 	public List<Integer> loadRainbowListDouble() {
 		rainbowRgbList = loadRainbowList();
 		rainbowRgbList.addAll(rainbowRgbList);
 		return rainbowRgbList;
 	}
-	
+
 	public void colorReplaceSlash(BufferedImage mazeBufferImage, Integer index) {
 		Double rainbowIndex = null;
 		Double rainRate = null;
@@ -60,7 +61,7 @@ public class ImageEdit {
 
 		for (Integer w = 0; w < imgWidth; w++) {
 			for (Integer h = 0; h < imgHeight; h++) {
-				if (target.equals(mazeBufferImage.getRGB(w, h))) {
+				if (!target.equals(mazeBufferImage.getRGB(w, h))) {
 					rainRate = (w.doubleValue() + h) / (imgWidth + imgHeight);
 					rainbowIndex = rainbowRgbList.size() * rainRate;
 					mazeBufferImage.setRGB(w, h, rainbowRgbList.get(rainbowIndex.intValue()));
@@ -90,7 +91,8 @@ public class ImageEdit {
 
 		for (Integer w = 0; w < imgWidth; w++) {
 			for (Integer h = 0; h < imgHeight; h++) {
-				if (target.equals(mazeBufferImage.getRGB(w, h))) {
+//				if (target.equals(mazeBufferImage.getRGB(w, h))) {
+				if (mazeBufferImage.getRGB(w, h) >= black && mazeBufferImage.getRGB(w, h) <= -13000000) {
 					if (w > widthCenter) {
 						widthDistance = w - widthCenter;
 					} else {
@@ -102,12 +104,13 @@ public class ImageEdit {
 					} else {
 						heightDistance = heightCenter - h;
 					}
-					
+
 					Integer longestDistance = widthCenter + heightCenter;
-					
-					rainRate = (widthDistance * widthDistance + heightDistance * heightDistance) / (longestDistance * longestDistance.doubleValue()) * 2;
+
+					rainRate = (widthDistance * widthDistance + heightDistance * heightDistance)
+							/ (longestDistance * longestDistance.doubleValue()) * 2;
 					rainbowIndex = rainbowRgbList.size() * rainRate;
-					if(rainbowIndex >= rainbowRgbList.size()) {
+					if (rainbowIndex >= rainbowRgbList.size()) {
 						rainbowIndex = rainbowRgbList.size() - 1D;
 					}
 					mazeBufferImage.setRGB(w, h, rainbowRgbList.get(rainbowIndex.intValue()));
@@ -116,7 +119,12 @@ public class ImageEdit {
 		}
 
 		try {
-			ImageIO.write(mazeBufferImage, "PNG", new File(mazeResultPath.replaceAll("\\*", index.toString())));
+			if (index < 10) {
+				ImageIO.write(mazeBufferImage, "PNG",
+						new File(mazeResultPath.replaceAll("\\*", "0" + index.toString())));
+			} else {
+				ImageIO.write(mazeBufferImage, "PNG", new File(mazeResultPath.replaceAll("\\*", index.toString())));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -142,7 +150,7 @@ public class ImageEdit {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		ImageEdit t = new ImageEdit();
 		t.loadRainbowList();
@@ -151,10 +159,14 @@ public class ImageEdit {
 		BufferedImage mazeBufferImage = null;
 
 		for (Integer i = start; i <= end; i++) {
-			mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", i.toString()));
+			if (i < 10) {
+				mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", "0" + i.toString()));
+			} else {
+				mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", i.toString()));
+			}
 
-//			t.colorReplaceCenterOfCircle(mazeBufferImage, i);
-			t.colorReplaceSlash(mazeBufferImage, i);
+			t.colorReplaceCenterOfCircle(mazeBufferImage, i);
+//			t.colorReplaceSlash(mazeBufferImage, i);
 //			t.printXiaoFangGe(mazeBufferImage, i);
 		}
 	}
