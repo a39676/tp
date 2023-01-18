@@ -1,28 +1,16 @@
 package test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class TmpTest17 {
 
 	public static void main(String[] args) throws IOException {
 		
-		
-		t("3");
-		
+		LocalDateTime startTime = LocalDateTime.now().minusMinutes(3);
+		long minutes = ChronoUnit.MINUTES.between(startTime, LocalDateTime.now());
+		System.out.println(minutes);
 	}
 	
-	public static String t(String key) {
-		switch (key) {
-		case "1": {
-			System.out.println("1");
-			return "1";
-		}
-		case "2": {
-			System.out.println("2");
-			return "2";
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + key);
-		}
-	}
 }
