@@ -10,12 +10,12 @@ import javax.imageio.ImageIO;
 
 public class ImageEdit {
 
-	private static String folderPath = "D:/tmp/一年级数学上学期复习册_FIT/";
-	private static String mazePath = folderPath + "一年级数学上学期复习册_FIT-*.jpg";
-	private static String mazeResultPath = folderPath + "*.jpg";
-	private static String rainbowImg = "d:/z2/打印材料/rainbow2.png";
+	private static String folderPath = "D:/z2/打印材料";
+	private static String mazePath = folderPath + "/mazeTmp*.png";
+	private static String mazeResultPath = folderPath + "/mazeResult*.png";
+	private static String rainbowImg = folderPath + "/rainbow2.png";
 	private static int start = 1;
-	private static int end = 10;
+	private static int end = 6;
 
 	private static List<Integer> rainbowRgbList;
 
@@ -121,7 +121,7 @@ public class ImageEdit {
 		try {
 			if (index < 10) {
 				ImageIO.write(mazeBufferImage, "PNG",
-						new File(mazeResultPath.replaceAll("\\*", "0" + index.toString())));
+						new File(mazeResultPath.replaceAll("\\*", index.toString())));
 			} else {
 				ImageIO.write(mazeBufferImage, "PNG", new File(mazeResultPath.replaceAll("\\*", index.toString())));
 			}
@@ -160,7 +160,7 @@ public class ImageEdit {
 
 		for (Integer i = start; i <= end; i++) {
 			if (i < 10) {
-				mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", "0" + i.toString()));
+				mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", i.toString()));
 			} else {
 				mazeBufferImage = t.readImage(mazePath.replaceAll("\\*", i.toString()));
 			}
