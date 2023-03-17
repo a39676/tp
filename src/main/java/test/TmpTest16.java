@@ -1,30 +1,27 @@
 package test;
 
-import java.time.LocalDate;
-import java.util.Base64;
-import java.util.UUID;
+import com.google.gson.Gson;
 
-import toolPack.complexTool.ChinaMainLandIdNumGenerator;
+import wechatApi.pojo.result.GetWechatUserInfoOrUidAccessTokenByCodeResult;
 
 public class TmpTest16 {
 
 	public static void main(String[] args) throws Exception {
 
-		String encodedString = "Z3VvcnVpMjMzMzMz";
-		byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-		String decodedString = new String(decodedBytes);
-		System.out.println(decodedString);
-
-		encodedString = "MTgyMjE1MDg5MjE=";
-		decodedBytes = Base64.getDecoder().decode(encodedString);
-		decodedString = new String(decodedBytes);
-		System.out.println(decodedString);
+//		System.out.println(UUID.randomUUID());
 		
-		System.out.println(UUID.randomUUID());
-
-		ChinaMainLandIdNumGenerator ig = new ChinaMainLandIdNumGenerator();
-		LocalDate startDate = LocalDate.now().minusYears(6).minusMonths(2);
-		LocalDate endDate = LocalDate.now().minusYears(6);
-		System.out.println(ig.getRandomId(startDate, endDate));
+		String str = "{\"success\":true,\"error-codes\":[],\"challenge_ts\":\"2023-03-11T11:48:48.361Z\",\"hostname\":\"localhost\",\"action\":\"\",\"cdata\":\"\"}";
+//		str = "{\n"
+//				+ "    \"access_token\": \"ACCESS_TOKEN\",\n"
+//				+ "    \"expires_in\": 7200,\n"
+//				+ "    \"refresh_token\": \"REFRESH_TOKEN\",\n"
+//				+ "    \"openid\": \"OPENID\",\n"
+//				+ "    \"scope\": \"SCOPE\",\n"
+//				+ "    \"is_snapshotuser\": 1,\n"
+//				+ "    \"unionid\": \"UNIONID\"\n"
+//				+ "}";
+		str = "{\"errcode\":40029,\"errmsg\":\"invalid code\"}";
+		GetWechatUserInfoOrUidAccessTokenByCodeResult r = new Gson().fromJson(str, GetWechatUserInfoOrUidAccessTokenByCodeResult.class);
+		System.out.println(r.toString());
 	}
 }
