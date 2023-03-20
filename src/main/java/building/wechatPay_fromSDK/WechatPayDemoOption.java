@@ -3,7 +3,7 @@ package building.wechatPay_fromSDK;
 import net.sf.json.JSONObject;
 import toolPack.ioHandle.FileUtilCustom;
 
-public class WechatPayOption {
+public class WechatPayDemoOption {
 	/** 商户号 */
 	private String merchantId = "";
 	/** 商户API私钥路径 */

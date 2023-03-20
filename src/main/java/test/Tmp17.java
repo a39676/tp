@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class TmpTest17 {
+public class Tmp17 {
 
 	public static void main(String[] args) throws Exception {
 

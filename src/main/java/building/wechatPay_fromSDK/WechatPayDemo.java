@@ -16,11 +16,11 @@ import wechatPayApi.jsApi.pojo.result.WechatPayJsApiPrepayResult;
 
 public class WechatPayDemo {
 
-	private static WechatPayOption option;
+	private static WechatPayDemoOption option;
 	private static SnowFlake snowFlake = new SnowFlake();
 
 	static {
-		option = new WechatPayOption();
+		option = new WechatPayDemoOption();
 		option.loadOption();
 	}
 
