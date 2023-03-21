@@ -11,8 +11,8 @@ import net.sf.json.JSONObject;
 
 public class AuthService {
 	
-	public static String apiKey = "agfe0prCBcIT8IXxZBOlyNlq";
-	public static String secretKey = "P6AGj0wjROgXMtGekgUt4xtXP6rPn5Z1";
+	public static String apiKey = "agfe0prCBcIT8IXxZBOlyNlq_";
+	public static String secretKey = "P6AGj0wjROgXMtGekgUt4xtXP6rPn5Z1_";
 	/**
 	 * 获取权限token
 	 * 

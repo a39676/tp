@@ -25,9 +25,9 @@ public class WechatPayDemo {
 	}
 
 	public WechatPayJsApiPrepayResult prepay(WechatPayJsApiPrepayDTO dto) {
-		Config config = new RSAAutoCertificateConfig.Builder().merchantId(dto.getMerchantId())
-				.privateKey(dto.getPrivateKey()).merchantSerialNumber(dto.getMerchantSerialNumber())
-				.apiV3Key(dto.getApiV3Key()).build();
+		Config config = new RSAAutoCertificateConfig.Builder().merchantId(option.getMerchantId())
+				.privateKey(option.getPrivateKey()).merchantSerialNumber(option.getMerchantSerialNumber())
+				.apiV3Key(option.getApiV3key()).build();
 		JsapiService service = new JsapiService.Builder().config(config).build();
 
 		PrepayRequest request = new PrepayRequest();
@@ -35,11 +35,10 @@ public class WechatPayDemo {
 		amount.setTotal(dto.getAmount());
 
 		request.setAmount(amount);
-		request.setAppid(dto.getAppId());
-		request.setMchid(dto.getMerchantId());
+		request.setAppid(option.getAppId());
+		request.setMchid(option.getMerchantId());
 		request.setDescription(dto.getDescription());
 		request.setNotifyUrl(dto.getNotifyUrl());
-		request.setOutTradeNo(dto.getOutOrderNum());
 		Payer payer = new Payer();
 		payer.setOpenid(dto.getPayerOpenId());
 		request.setPayer(payer);
@@ -71,15 +70,10 @@ public class WechatPayDemo {
 
 	private WechatPayJsApiPrepayDTO createWechatPayJsApiPrepayDTO() {
 		WechatPayJsApiPrepayDTO prepayDTO = new WechatPayJsApiPrepayDTO();
-		prepayDTO.setAppId(option.getAppId());
-		prepayDTO.setMerchantId(option.getMerchantId());
-		prepayDTO.setPrivateKey(option.getPrivateKey());
-		prepayDTO.setMerchantSerialNumber(option.getMerchantSerialNumber());
-		prepayDTO.setApiV3Key(option.getApiV3key());
 		prepayDTO.setPayerOpenId("oXt5d5l_w5Fjl7IyaQ1SF7fTjS1gs");
 		prepayDTO.setDescription("testing jsapi prepay");
 		prepayDTO.setNotifyUrl("https://demo.com");
-		prepayDTO.setOutOrderNum(String.valueOf(snowFlake.getNextId()));
+		prepayDTO.setOutTradeNo(String.valueOf(snowFlake.getNextId()));
 		prepayDTO.setExpireTimeStr("2023-03-15T18:00:00Z");
 		prepayDTO.setAttach("testing attach");
 		prepayDTO.setAmount(1);
