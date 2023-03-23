@@ -53,7 +53,7 @@ public class WechatPayDemo {
 			response = service.prepay(request);
 			System.out.println("response: " + response);
 			prepayId = response.getPrepayId();
-			r.setPrepay_id(prepayId);
+			r.setPrepayId(prepayId);
 			r.setIsSuccess();
 		} catch (ServiceException e1) {
 			System.out.println(e1);
@@ -84,6 +84,6 @@ public class WechatPayDemo {
 		WechatPayDemo o = new WechatPayDemo();
 		WechatPayJsApiPrepayDTO prepayDTO = o.createWechatPayJsApiPrepayDTO();
 		WechatPayJsApiPrepayResult r = o.prepay(prepayDTO);
-		System.err.println("feed back: " + r.getPrepay_id() + ", error msg: " + r.getMessage());
+		System.err.println("feed back: " + r.getPrepayId() + ", error msg: " + r.getMessage());
 	}
 }
