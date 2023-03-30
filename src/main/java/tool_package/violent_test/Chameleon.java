@@ -143,8 +143,7 @@ class ChameleonOffice97 extends Chameleon {
 				return false;
 			}
 			/*
-			 * TODO
-			 * poi 版本更新后(3.15 ---> 4.1.1) 无法找到此类, 另寻解决方法
+			 * TODO poi 版本更新后(3.15 ---> 4.1.1) 无法找到此类, 另寻解决方法
 			 */
 //			NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(file);
 //			EncryptionInfo info = new EncryptionInfo(npoifsFileSystem);

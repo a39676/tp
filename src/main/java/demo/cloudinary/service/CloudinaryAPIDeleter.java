@@ -18,9 +18,9 @@ public class CloudinaryAPIDeleter {
 		CloudinaryUploadResult result = null;
 
 		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-				  "cloud_name", "dy20bdekn",
-				  "api_key", "915927123645857",
-				  "api_secret", "k8483Du7gcUp49UrKKnm9RgXsiYf"));
+				  "cloud_name", "",
+				  "api_key", "",
+				  "api_secret", ""));
 		
 		if(f.length() > maxSize) {
 			System.out.println(f.getName() + " is too large, size: " + f.length());
@@ -30,7 +30,6 @@ public class CloudinaryAPIDeleter {
 		
 		JSONObject resultJson = null;
 		try {
-//			TODO
 			resultJson = JSONObject.fromObject(cloudinary.uploader().upload(f, ObjectUtils.emptyMap()));
 //			cloudinary.uploader().destroy(publicId, options);
 		} catch (IOException e) {
