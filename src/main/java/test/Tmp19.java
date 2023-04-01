@@ -11,7 +11,12 @@ import toolPack.httpHandel.HttpUtil;
 
 public class Tmp19 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
+		Tmp19 t = new Tmp19();
+		t.sending();
+	}
+
+	private void sending() throws IOException, InterruptedException {
 		String mainUrl = "https://chat.xianshenglu.xyz/api/chat-stream";
 		HttpUtil h = new HttpUtil();
 
@@ -33,7 +38,7 @@ public class Tmp19 {
 //				+ "    \"max_tokens\": 2000,\n"
 //				+ "    \"presence_penalty\": 0\n"
 //				+ "}";
-		
+
 		JSONObject json = new JSONObject();
 		json.put("model", "gpt-3.5-turbo");
 		json.put("stream", true);
@@ -43,12 +48,64 @@ public class Tmp19 {
 		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
 		OpanAiChatCompletionMessageDTO dto = new OpanAiChatCompletionMessageDTO();
 		dto.setRole(OpenAiChatCompletionMessageRoleType.USER.getName());
-		dto.setContent("你是 ChatGPT 吗? 用的是哪个 model?");
+		dto.setContent("Can you act as a history teacher and told me US Modern History?");
 		msgList.add(dto);
 		json.put("messages", msgList);
-		System.out.println(json.toString());
-		
+
 		String response = h.sendPostRestful(mainUrl, json.toString());
 		System.out.println(response);
+
+		int count = 0;
+		int totalCount = 0;
+		boolean flag = true;
+		while (count < 500) {
+			dto = new OpanAiChatCompletionMessageDTO();
+			dto.setRole(OpenAiChatCompletionMessageRoleType.ASSISTANT.getName());
+			dto.setContent(response);
+			msgList.add(dto);
+
+			msgList = roleChange(msgList);
+
+			while (msgList.size() > 30) {
+				msgList.remove(3);
+			}
+
+			randomSleep();
+
+			json.put("messages", msgList);
+			while (!flag) {
+				try {
+					response = h.sendPostRestful(mainUrl, json.toString());
+					flag = true;
+				} catch (Exception e) {
+					flag = false;
+				}
+
+			}
+			System.out.println(response);
+
+			// cut list
+			count++;
+			totalCount++;
+			System.out.println(totalCount);
+		}
+	}
+
+	private List<OpanAiChatCompletionMessageDTO> roleChange(List<OpanAiChatCompletionMessageDTO> inputMsgList) {
+		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
+		for (OpanAiChatCompletionMessageDTO msg : inputMsgList) {
+			if (OpenAiChatCompletionMessageRoleType.USER.getName().equals(msg.getRole())) {
+				msg.setRole(OpenAiChatCompletionMessageRoleType.ASSISTANT.getName());
+			} else {
+				msg.setRole(OpenAiChatCompletionMessageRoleType.USER.getName());
+			}
+			msgList.add(msg);
+		}
+		return msgList;
+	}
+
+	private void randomSleep() throws InterruptedException {
+		Double i = ((Math.random() * (2000L - 100L)) + 100L);
+		Thread.sleep(i.longValue());
 	}
 }
