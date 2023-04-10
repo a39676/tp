@@ -11,13 +11,15 @@ import toolPack.httpHandel.HttpUtil;
 
 public class Tmp19 {
 
+	private String mainUrl = "";
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Tmp19 t = new Tmp19();
-		t.sending();
+		t.sedning();
 	}
-
-	private void sending() throws IOException, InterruptedException {
-		String mainUrl = "https://chat.xianshenglu.xyz/api/chat-stream";
+	
+	public void sedning() throws IOException, InterruptedException {
+		
 		HttpUtil h = new HttpUtil();
 
 //		String str = "{\n"
@@ -38,6 +40,27 @@ public class Tmp19 {
 //				+ "    \"max_tokens\": 2000,\n"
 //				+ "    \"presence_penalty\": 0\n"
 //				+ "}";
+
+		JSONObject json = new JSONObject();
+		json.put("model", "gpt-3.5-turbo");
+		json.put("stream", true);
+		json.put("temperature", 1);
+		json.put("max_tokens", 2000);
+		json.put("presence_penalty", 0);
+		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
+		OpanAiChatCompletionMessageDTO dto = new OpanAiChatCompletionMessageDTO();
+		dto.setRole(OpenAiChatCompletionMessageRoleType.USER.getName());
+		dto.setContent("Testing?");
+		msgList.add(dto);
+		json.put("messages", msgList);
+		System.out.println(json);
+
+		String response = h.sendPostRestful(mainUrl, json.toString());
+		System.out.println(response);
+	}
+
+	public void burning() throws IOException, InterruptedException {
+		HttpUtil h = new HttpUtil();
 
 		JSONObject json = new JSONObject();
 		json.put("model", "gpt-3.5-turbo");

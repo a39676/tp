@@ -32,9 +32,9 @@ public class QrCodeToString {
 		for (Integer h = 0; h < imgHeight; h = h + 5) {
 			for (Integer w = 0; w < imgWidth; w = w + 5) {
 				if (target.equals(mazeBufferImage.getRGB(w, h))) {
-					System.out.print("■");
+					System.out.print("■"); //■□
 				} else {
-					System.out.print("  ");
+					System.out.print("□");
 				}
 			}
 			System.out.println();
