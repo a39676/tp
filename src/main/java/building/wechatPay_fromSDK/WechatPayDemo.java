@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
 import tool_package.SnowFlake;
 import wechatPayApi.jsApi.pojo.dto.WechatPayJsApiPrepayDTO;
 import wechatPayApi.jsApi.pojo.result.WechatPayJsApiPrepayResult;
-import wechatSdk.pojo.dto.BuyMembershipFromWechatAttachmentDTO;
+import wechatSdk.pojo.dto.AiServiceBuyMembershipFromWechatAttachmentDTO;
 
 public class WechatPayDemo {
 
@@ -77,7 +77,7 @@ public class WechatPayDemo {
 		prepayDTO.setNotifyUrl("https://demo.com");
 		prepayDTO.setOutTradeNo(String.valueOf(snowFlake.getNextId()));
 		prepayDTO.setExpireTimeStr("2023-03-15T18:00:00Z");
-		prepayDTO.setAttach(new BuyMembershipFromWechatAttachmentDTO());
+		prepayDTO.setAttach(new AiServiceBuyMembershipFromWechatAttachmentDTO());
 		prepayDTO.setAmount(1);
 		return prepayDTO;
 	}
