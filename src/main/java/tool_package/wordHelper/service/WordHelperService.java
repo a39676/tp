@@ -17,8 +17,11 @@ import tool_package.wordHelper.pojo.dto.WordDayLineDTO;
 
 public class WordHelperService {
 
-	private String customerDictionaryPathStr = "D:/home/u2/wordHelper/milaDictionary.json";
-//	private String customerDictionaryPathStr = "D:/home/u2/wordHelper/customerDictionary.json";
+//	private String customerDictionaryPathStr = "D:/home/u2/wordHelper/milaDictionary.json";
+	private String customerDictionaryPathStr = "D:/home/u2/wordHelper/customerDictionary.json";
+
+	private boolean printEn = true;
+	private boolean printCn = false;
 
 	public static void main(String[] args) {
 		WordHelperService s = new WordHelperService();
@@ -127,7 +130,14 @@ public class WordHelperService {
 			randomIndex = random.nextInt(dictionary.getWordDateLineList().size());
 			WordDayLineDTO wordRecord = dictionary.getWordDateLineList().get(randomIndex);
 			randomIndex = random.nextInt(wordRecord.getWordList().size());
-			System.out.println(wordRecord.getWordList().get(randomIndex));
+			WordDTO word = wordRecord.getWordList().get(randomIndex);
+			if (printEn) {
+				System.out.print(word.getEn() + ", ");
+			}
+			if (printCn) {
+				System.out.print(word.getCn() + "; ");
+			}
+			System.out.println();
 		}
 	}
 }
