@@ -8,7 +8,7 @@ import java.util.Map;
 
 import ai.aiChat.pojo.dto.AiChatSendNewMsgFromApiDTO;
 import net.sf.json.JSONObject;
-import openAi.pojo.dto.OpanAiChatCompletionMessageDTO;
+import openAi.pojo.dto.OpenAiChatCompletionMessageDTO;
 import toolPack.httpHandel.HttpUtil;
 
 public class Tmp21 {
@@ -16,12 +16,12 @@ public class Tmp21 {
 	public static void main(String[] args) throws IOException {
 		AiChatSendNewMsgFromApiDTO dto = new AiChatSendNewMsgFromApiDTO();
 		dto.setApiKey("mWpUQTtU5n5O9Zw5HecLVIqLYKQOCapxJf5zqoIn9PM=");
-		List<OpanAiChatCompletionMessageDTO> messages = new ArrayList<>();
-		OpanAiChatCompletionMessageDTO msgDto = new OpanAiChatCompletionMessageDTO();
+		List<OpenAiChatCompletionMessageDTO> messages = new ArrayList<>();
+		OpenAiChatCompletionMessageDTO msgDto = new OpenAiChatCompletionMessageDTO();
 		msgDto.setRole("system");
 		msgDto.setContent("content from system");
 		messages.add(msgDto);
-		msgDto = new OpanAiChatCompletionMessageDTO();
+		msgDto = new OpenAiChatCompletionMessageDTO();
 		msgDto.setRole("user");
 		msgDto.setContent("content from user");
 		messages.add(msgDto);

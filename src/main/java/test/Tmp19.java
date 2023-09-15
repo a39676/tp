@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONObject;
-import openAi.pojo.dto.OpanAiChatCompletionMessageDTO;
+import openAi.pojo.dto.OpenAiChatCompletionMessageDTO;
 import openAi.pojo.type.OpenAiChatCompletionMessageRoleType;
 import toolPack.httpHandel.HttpUtil;
 
 public class Tmp19 {
 
-	private String mainUrl = "";
+	private String mainUrl = "https://chat.xianshenglu.xyz/api/chat-stream";
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Tmp19 t = new Tmp19();
-		t.sedning();
+		t.burning();
 	}
 	
-	public void sedning() throws IOException, InterruptedException {
+	public void sending() throws IOException, InterruptedException {
 		
 		HttpUtil h = new HttpUtil();
 
@@ -47,8 +47,8 @@ public class Tmp19 {
 		json.put("temperature", 1);
 		json.put("max_tokens", 2000);
 		json.put("presence_penalty", 0);
-		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
-		OpanAiChatCompletionMessageDTO dto = new OpanAiChatCompletionMessageDTO();
+		List<OpenAiChatCompletionMessageDTO> msgList = new ArrayList<>();
+		OpenAiChatCompletionMessageDTO dto = new OpenAiChatCompletionMessageDTO();
 		dto.setRole(OpenAiChatCompletionMessageRoleType.USER.getName());
 		dto.setContent("Testing?");
 		msgList.add(dto);
@@ -68,8 +68,8 @@ public class Tmp19 {
 		json.put("temperature", 1);
 		json.put("max_tokens", 2000);
 		json.put("presence_penalty", 0);
-		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
-		OpanAiChatCompletionMessageDTO dto = new OpanAiChatCompletionMessageDTO();
+		List<OpenAiChatCompletionMessageDTO> msgList = new ArrayList<>();
+		OpenAiChatCompletionMessageDTO dto = new OpenAiChatCompletionMessageDTO();
 		dto.setRole(OpenAiChatCompletionMessageRoleType.USER.getName());
 		dto.setContent("Can you act as a history teacher and told me US Modern History?");
 		msgList.add(dto);
@@ -82,7 +82,7 @@ public class Tmp19 {
 		int totalCount = 0;
 		boolean flag = true;
 		while (count < 500) {
-			dto = new OpanAiChatCompletionMessageDTO();
+			dto = new OpenAiChatCompletionMessageDTO();
 			dto.setRole(OpenAiChatCompletionMessageRoleType.ASSISTANT.getName());
 			dto.setContent(response);
 			msgList.add(dto);
@@ -114,9 +114,9 @@ public class Tmp19 {
 		}
 	}
 
-	private List<OpanAiChatCompletionMessageDTO> roleChange(List<OpanAiChatCompletionMessageDTO> inputMsgList) {
-		List<OpanAiChatCompletionMessageDTO> msgList = new ArrayList<>();
-		for (OpanAiChatCompletionMessageDTO msg : inputMsgList) {
+	private List<OpenAiChatCompletionMessageDTO> roleChange(List<OpenAiChatCompletionMessageDTO> inputMsgList) {
+		List<OpenAiChatCompletionMessageDTO> msgList = new ArrayList<>();
+		for (OpenAiChatCompletionMessageDTO msg : inputMsgList) {
 			if (OpenAiChatCompletionMessageRoleType.USER.getName().equals(msg.getRole())) {
 				msg.setRole(OpenAiChatCompletionMessageRoleType.ASSISTANT.getName());
 			} else {
