@@ -1,35 +1,52 @@
 package test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.xml.bind.DatatypeConverter;
+import ai.aiChat.pojo.dto.AiChatSendNewMsgFromApiDTO;
+import net.sf.json.JSONObject;
+import openAi.pojo.dto.OpenAiChatCompletionMessageDTO;
+import toolPack.httpHandel.HttpUtil;
 
 public class Tmp21 {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-		givenFile_generatingChecksum_thenVerifying();
-	}
+	public static void main(String[] args) throws IOException {
+		AiChatSendNewMsgFromApiDTO dto = new AiChatSendNewMsgFromApiDTO();
+		dto.setApiKey("mWpUQTtU5n5O9Zw5HecLVIqLYKQOCapxJf5zqoIn9PM=");
+		List<OpenAiChatCompletionMessageDTO> messages = new ArrayList<>();
+		OpenAiChatCompletionMessageDTO msgDto = new OpenAiChatCompletionMessageDTO();
+		msgDto.setRole("system");
+		msgDto.setContent("content from system");
+		messages.add(msgDto);
+		msgDto = new OpenAiChatCompletionMessageDTO();
+		msgDto.setRole("user");
+		msgDto.setContent("content from user");
+		messages.add(msgDto);
+		dto.setMessages(messages);
+		dto.setTemperature(1D);
+		dto.setTop_p(1D);
+		dto.setN(1);
+		List<String> stopWords = new ArrayList<>();
+		stopWords.add("stop word 1");
+		stopWords.add("stop word 2");
+		stopWords.add("stop word 3");
+		dto.setStop(stopWords);
+		dto.setMax_tokens(4000);
+		dto.setPresence_penalty(1D);
+		dto.setFrequency_penalty(1D);
+		Map<String, Integer> loginBiasMap = new HashMap<>();
+		loginBiasMap.put("WordNeed", 100);
+		loginBiasMap.put("WordDoNotNeed", -100);
+		dto.setLogit_bias(loginBiasMap);
 
-	public static void givenFile_generatingChecksum_thenVerifying() throws NoSuchAlgorithmException, IOException {
-		String mainFolder = "D:/aiArt/stable-diffusion-webui/models/Lora";
-		String f1 = mainFolder + "/girlAndShadow_v2.safetensors";
-		String f2 = mainFolder + "/girlAndShadow_v10.safetensors";
+		JSONObject j = JSONObject.fromObject(dto);
+		System.out.println(j.toString());
 
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(Files.readAllBytes(Paths.get(f1)));
-		byte[] digest = md.digest();
-		String myChecksum = DatatypeConverter.printHexBinary(digest).toUpperCase();
-		System.out.println(myChecksum);
-
-		md = MessageDigest.getInstance("MD5");
-		md.update(Files.readAllBytes(Paths.get(f2)));
-		digest = md.digest();
-		myChecksum = DatatypeConverter.printHexBinary(digest).toUpperCase();
-		System.out.println(myChecksum);
-
+		HttpUtil h = new HttpUtil();
+		String response = h.sendPostRestful("http://localhost:10001/aiChatApi/sendChatCompletion", j.toString());
+		System.out.println(response);
 	}
 }

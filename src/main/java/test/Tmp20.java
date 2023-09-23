@@ -15,19 +15,25 @@ import tool_package.SnowFlake;
 public class Tmp20 {
 
 	private static SnowFlake snowFlake = new SnowFlake();
-	private static String savingFolder = "d:/tmp/txtToImg";
-	private static String mainUrl = " http://lmin53hivnamlwaejpcilcoom7kgil7jcjmu5dmovjmm64wnijmq.remote.moe";
+	private static String savingFolder = "d:/aiArt/txtToImg";
+	private static String mainUrl = "http://6s3qsjoz5ajigsolccvicb5ejdsgtoyh4o6rudihw5i2kp5jfixq.remote.moe";
 
-	private static String prompts = "";
-	private static String negativePrompts = "";
+	private static String prompts = "ultra realistic 8k cg, picture-perfect face, flawless, clean, masterpiece, professional artwork, famous artwork, cinematic lighting, cinematic bloom, perfect face, beautiful face, beautiful eyes, ((perfect female body, narrow waist)), black hair, gorgeous queen, royal, divine, goddess, godlike, (royal palace), fantasy, dreamlike, unreal, science fiction, huge breasts, beautiful clothes, lace, lace trim, lace-trimmed legwear, nsfw, breasts out, absurdly long hair, very long hair, (rich:1.4), prestige, luxury, jewelry, diamond, gold, pearl, gem, sapphire, ruby, emerald, intricate detail, delicate pattern, sexy, charming, alluring, seductive, erotic, enchanting, hair ornament, necklace, earrings, bracelet, armlet, <lora:koreanDollLikeness_v15:0.8>";
+//	 professional modelshoot style photo elegant woman, classy bedroom, kneeling on ground, wet, water on body, wet body, drops on face realistic, sharp focus, 8k high definition, insanely detailed, intricate, elegant, sunrays through window, curtains, wing eyeliner, eyeliner wings, hyper-realistic, ultra detailed, full body, long hair, detailed lingerie, stockings, showing tongue, open mouth, (kissing:1.15), horny, 2girls, (Kpop idol), ((lesbians)), doggystyle, perfect hand, <lora:koreanDollLikeness_v15:0.45>, <lora:taiwanDollLikeness_v10:0.15>
+	private static String negativePrompts = "(worst quality, low quality:1.3), simple background, logo, watermark, text";
+//	 paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,
 
 	private static Integer width = 300;
 	private static Integer height = 600;
-	private static Integer steps = 35;
+	private static Integer steps = 30;
 	private static String sampler = "DPM++ 2M Karras";
 	private static Integer cfgScale = 7;
 	private static Integer batchSize = 1;
 	private static Long seed = Long.parseLong("-1");
+
+	private static int round = 1;
+	private static int maxExcepitonCount = 5;
+	private static int excepitonCount = 0;
 
 	static {
 		String proxyHost = "127.0.0.1";
@@ -68,7 +74,8 @@ public class Tmp20 {
 		String uri = "/sdapi/v1/txt2img";
 		HttpUtil h = new HttpUtil();
 		String url = mainUrl + uri;
-		System.out.println("Send request");
+		System.out.println("Send request, url: " + url);
+		System.out.println("JSON: " + json);
 		String response = h.sendPostRestful(url, json.toString());
 		System.out.println("Response receive");
 		JSONObject responseJson = JSONObject.fromObject(response);
@@ -90,6 +97,10 @@ public class Tmp20 {
 		byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(data);
 		BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
 
+		File outputFolder = new File(savingFolder);
+		if (!outputFolder.exists()) {
+			outputFolder.mkdirs();
+		}
 		File outputfile = new File(savingFolder + "/" + snowFlake.getNextId() + ".jpg");
 		ImageIO.write(img, "jpg", outputfile);
 	}
@@ -97,10 +108,14 @@ public class Tmp20 {
 	public static void main(String[] args) throws IOException {
 		Tmp20 t = new Tmp20();
 
-		int round = 5;
-		for (int i = 0; i < round; i++) {
-			System.out.println("Round: " + round);
-			t.sendTxtToImgRequest();
+		for (int i = 0; i < round && excepitonCount < maxExcepitonCount; i++) {
+			System.out.println("Round: " + i + " of " + round);
+			try {
+				t.sendTxtToImgRequest();
+			} catch (Exception e) {
+				e.printStackTrace();
+				excepitonCount += 1;
+			}
 		}
 	}
 }
