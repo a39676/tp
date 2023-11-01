@@ -3,6 +3,9 @@ package demo.education.other;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -29,7 +32,12 @@ public class NewMathTextBookDownload {
 	}
 
 	public static String saveImg(String url, String newFileName, String folderPath) throws IOException {
-		URL imageURL = new URL(url);
+		URL imageURL = null;
+		try {
+			imageURL = new URI(url).toURL();
+		} catch (MalformedURLException | URISyntaxException e) {
+			e.printStackTrace();
+		}
 		BufferedImage saveImage = ImageIO.read(imageURL);
 		String suffix = "jpg";
 

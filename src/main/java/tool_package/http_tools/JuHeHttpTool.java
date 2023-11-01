@@ -1,6 +1,7 @@
 package tool_package.http_tools;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -51,7 +52,7 @@ public class JuHeHttpTool {
 	public String get(String targetUrl) {
 			
 		try {
-			URL url = new URL(targetUrl);
+			URL url = new URI(targetUrl).toURL();
 			URLConnection con = url.openConnection();
 			InputStream in = con.getInputStream();
 			String encoding = con.getContentEncoding();

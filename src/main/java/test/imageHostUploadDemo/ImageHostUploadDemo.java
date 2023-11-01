@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.net.URLConnection;
 import java.nio.file.Files;
 
@@ -25,7 +25,7 @@ public class ImageHostUploadDemo {
 		String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
 		String CRLF = "\r\n"; // Line separator required by multipart/form-data.
 
-		URLConnection connection = new URL(uploadUrl).openConnection();
+		URLConnection connection = new URI(uploadUrl).toURL().openConnection();
 		connection.setDoOutput(true);
 		connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 

@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,12 @@ public class Tmp19 {
 
 	private String mainUrl = "https://chat.xianshenglu.xyz/api/chat-stream";
 	
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
 		Tmp19 t = new Tmp19();
 		t.burning();
 	}
 	
-	public void sending() throws IOException, InterruptedException {
+	public void sending() throws IOException, InterruptedException, URISyntaxException {
 		
 		HttpUtil h = new HttpUtil();
 
@@ -59,7 +60,7 @@ public class Tmp19 {
 		System.out.println(response);
 	}
 
-	public void burning() throws IOException, InterruptedException {
+	public void burning() throws IOException, InterruptedException, URISyntaxException {
 		HttpUtil h = new HttpUtil();
 
 		JSONObject json = new JSONObject();

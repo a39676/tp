@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -13,7 +15,7 @@ import java.util.Map.Entry;
 
 public class Tmp26 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, URISyntaxException {
 
 		String str = "{\n" + "    \"coursewareId\": \"aa724f2f-3d68-4030-b2db-aecfdab1c6a5\",\n"
 				+ "    \"learnSecond\": 360,\n" + "    \"trainProjectId\": \"de6c897e-b130-4e0a-a2d9-afad04cb7e95\",\n"
@@ -37,7 +39,7 @@ public class Tmp26 {
 
 		try {
 
-			URL myurl = new URL(urlStr);
+			URL myurl = new URI(urlStr).toURL();
 			con = (HttpURLConnection) myurl.openConnection();
 
 			con.setDoOutput(true);

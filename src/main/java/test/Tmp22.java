@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import net.sf.json.JSONObject;
 import toolPack.httpHandel.HttpUtil;
@@ -10,7 +11,7 @@ public class Tmp22 {
 
 	private static String mainUrl = "http://localhost:10001";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, URISyntaxException {
 
 //		System.out.println(Byte.MAX_VALUE);
 //		System.out.println(Byte.MIN_VALUE);
@@ -31,11 +32,11 @@ public class Tmp22 {
 //		queryJob(jobPk);
 	}
 
-	public static String sendRequest() throws IOException {
+	public static String sendRequest() throws IOException, URISyntaxException {
 		return sendRequest(null);
 	}
 	
-	public static String sendRequest(Integer i) throws IOException {
+	public static String sendRequest(Integer i) throws IOException, URISyntaxException {
 		FileUtilCustom f = new FileUtilCustom();
 		String content = f.getStringFromFile("d:/tmp/tmp.json");
 
@@ -54,7 +55,7 @@ public class Tmp22 {
 		return json.getString("jobPk");
 	}
 
-	public static void queryJob(String jobPk) throws IOException {
+	public static void queryJob(String jobPk) throws IOException, URISyntaxException {
 		HttpUtil h = new HttpUtil();
 		JSONObject json = new JSONObject();
 		json.put("pk", jobPk);

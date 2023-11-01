@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import toolPack.httpHandel.HttpUtil;
 
 public class Tmp21 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, URISyntaxException {
 		AiChatSendNewMsgFromApiDTO dto = new AiChatSendNewMsgFromApiDTO();
 		dto.setApiKey("mWpUQTtU5n5O9Zw5HecLVIqLYKQOCapxJf5zqoIn9PM=");
 		List<OpenAiChatCompletionMessageDTO> messages = new ArrayList<>();

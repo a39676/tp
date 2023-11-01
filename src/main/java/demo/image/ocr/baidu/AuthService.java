@@ -3,6 +3,7 @@ package demo.image.ocr.baidu;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class AuthService {
 				// 3. 官网获取的 Secret Key
 				+ "&client_secret=" + sk;
 		try {
-			URL realUrl = new URL(getAccessTokenUrl);
+			URL realUrl = new URI(getAccessTokenUrl).toURL();
 			// 打开和URL之间的连接
 			HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
 			connection.setRequestMethod("GET");

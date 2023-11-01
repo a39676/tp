@@ -4,13 +4,14 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
-public class Tmp27 {
+public class StoryberriesDownloader {
 
 	public static void main(String[] args) throws Exception {
-		Tmp27 t = new Tmp27();
-		for (int i = 1; i < 46; i++) {
+		StoryberriesDownloader t = new StoryberriesDownloader();
+		for (int i = 1; i < 48; i++) {
 			try {
 				t.d(i);
 			} catch (Exception e) {
@@ -20,10 +21,11 @@ public class Tmp27 {
 	}
 
 	public void d(int i) throws Exception {
-		String imageUrl = "https://www.storyberries.com/wp-content/uploads/2023/03/Bedtime-Stories-I-Can-Try-I-Can-Fly-by-Prarthana-Gururaj-short-stories-for-kids-page_"
+		String host = "https://www.storyberries.com";
+		String imageUrl = host + "/wp-content/uploads/2023/10/Bedtime-stories-The-Witchs-Notebook-Halloween-stories-for-kids-page_"
 				+ i + ".jpg";
 
-		URL url = new URL(imageUrl);
+		URL url = new URI(imageUrl).toURL();
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 		InputStream input = connection.getInputStream();
@@ -38,6 +40,6 @@ public class Tmp27 {
 		input.close();
 		output.close();
 
-		System.out.println(i + "Image downloaded successfully!");
+		System.out.println(i + ", Image downloaded successfully!");
 	}
 }

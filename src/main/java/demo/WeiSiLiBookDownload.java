@@ -3,6 +3,7 @@ package demo;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class WeiSiLiBookDownload {
 	}
 
 	public static String getContent(String url) throws Exception {
-		URL obj = new URL(url);
+		URL obj = new URI(url).toURL();
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 		con.setRequestMethod("GET");

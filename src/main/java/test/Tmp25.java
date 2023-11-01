@@ -11,7 +11,6 @@ import toolPack.httpHandel.HttpUtil;
 
 public class Tmp25 {
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
 		ImageToImageFromApiDTO dto = new ImageToImageFromApiDTO();
 
