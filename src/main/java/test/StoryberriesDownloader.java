@@ -11,8 +11,8 @@ public class StoryberriesDownloader {
 
 	private static String host = "https://www.storyberries.com";
 	private static String imageUrl = host
-			+ "/wp-content/uploads/2018/02/Why-Is-There-A-Hole-In-The-Wall-short-story-for-kids-%d.jpg";
-	private static Integer size = 28;
+			+ "/wp-content/uploads/2022/03/Bedtime-stories-Dont-Wake-The-Baby-short-stories-for-kids-page-%d.jpg";
+	private static Integer size = 22;
 
 	public static void main(String[] args) throws Exception {
 		StoryberriesDownloader t = new StoryberriesDownloader();
