@@ -20,6 +20,7 @@ public class Tmp26 {
 		String str = "{\n" + "    \"coursewareId\": \"aa724f2f-3d68-4030-b2db-aecfdab1c6a5\",\n"
 				+ "    \"learnSecond\": 360,\n" + "    \"trainProjectId\": \"de6c897e-b130-4e0a-a2d9-afad04cb7e95\",\n"
 				+ "    \"inputDataType\": \"pc\",\n" + "    \"inputDataDevice\": \"pc\"\n" + "}";
+		
 //		String urlStr = "https://edu.gzmtr.cc/bingosoft-train-courseonline-api/pc/userLearnNew?access_token=08b00d42-1f18-483a-9168-b1165739b94b&_=1687343566478";
 //		String urlStr = "https://edu.gzmtr.cc/bingosoft-train-courseonline-api/pc/userLearnNew?access_token=08b00d42-1f18-483a-9168-b1165739b94b";
 //		String urlStr = "https://edu.gzmtr.cc/bingosoft-train-courseonline-api/pc/userLearnNew?access_token=b97cd049-c751-4e96-9b95-ef07f33fe04e&_=1687358246236";
