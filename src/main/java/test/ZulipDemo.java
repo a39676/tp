@@ -1,11 +1,11 @@
 package test;
 
+import java.time.ZoneId;
 import java.util.List;
 
 import com.github.jamesnetherton.zulip.client.Zulip;
 import com.github.jamesnetherton.zulip.client.api.message.Message;
 import com.github.jamesnetherton.zulip.client.api.message.MessageRecipient;
-import com.github.jamesnetherton.zulip.client.api.message.request.DeleteMessageApiRequest;
 import com.github.jamesnetherton.zulip.client.api.message.request.GetMessagesApiRequest;
 import com.github.jamesnetherton.zulip.client.exception.ZulipClientException;
 
@@ -40,6 +40,7 @@ public class ZulipDemo {
 				msg = history.get(i);
 				System.out.println(msg.getId());
 				System.out.println(msg.getContent());
+				System.out.println(msg.getTimestamp().atZone(ZoneId.of("UTC")));
 				List<MessageRecipient> recipients = msg.getRecipients();
 				if (recipients != null && !recipients.isEmpty()) {
 					for (int j = 0; j < recipients.size(); j++) {
@@ -58,7 +59,7 @@ public class ZulipDemo {
 	}
 
 	private void deleteMsg(Zulip z, long msgId) throws ZulipClientException {
-		DeleteMessageApiRequest req = z.messages().deleteMessage(msgId);
-		req.execute();
+//		DeleteMessageApiRequest req = z.messages().deleteMessage(msgId);
+//		req.execute();
 	}
 }
