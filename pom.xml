@@ -353,6 +353,11 @@
 			<artifactId>zulip-java-client</artifactId>
 			<version>0.5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>io.taliox</groupId>
+			<artifactId>zulip-java-rest</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>lc.kra.system</groupId>
