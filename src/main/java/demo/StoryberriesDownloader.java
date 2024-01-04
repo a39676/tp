@@ -1,5 +1,6 @@
-package test;
+package demo;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,12 +12,15 @@ public class StoryberriesDownloader {
 
 	private static String host = "https://www.storyberries.com";
 	private static String imageUrl = host
-			+ "/wp-content/uploads/2022/03/Bedtime-stories-Dont-Wake-The-Baby-short-stories-for-kids-page-%d.jpg";
-	private static Integer size = 22;
+			+ "/wp-content/uploads/2023/12/Bedtime-Stories-Monicas-Xmas-Adventure-christmas-stories-for-kids-page_%d.jpg";
+	private static Integer start = 1;
+	private static Integer end = 48;
+	private static String title = "MonicasXmasAdventure";
+	private static String mainFolder = "D:/tmp/englishBook";
 
 	public static void main(String[] args) throws Exception {
 		StoryberriesDownloader t = new StoryberriesDownloader();
-		for (int i = 1; i < size; i++) {
+		for (int i = start; i <= end; i++) {
 			try {
 				t.d(i);
 			} catch (Exception e) {
@@ -30,8 +34,13 @@ public class StoryberriesDownloader {
 		URL url = new URI(targetImageUrl).toURL();
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+		File folder = new File(mainFolder + "/" + title);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
 		InputStream input = connection.getInputStream();
-		OutputStream output = new FileOutputStream("d:/tmp/tmp1/" + i + ".jpg");
+		OutputStream output = new FileOutputStream(folder + "/" + i + ".jpg");
 
 		int b;
 		byte[] buffer = new byte[2048];
