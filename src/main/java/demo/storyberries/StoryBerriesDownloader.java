@@ -1,4 +1,4 @@
-package demo;
+package demo.storyberries;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,18 +8,18 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 
-public class StoryberriesDownloader {
+public class StoryBerriesDownloader {
 
 	private static String host = "https://www.storyberries.com";
 	private static String imageUrl = host
-			+ "/wp-content/uploads/2023/12/Bedtime-Stories-Monicas-Xmas-Adventure-christmas-stories-for-kids-page_%d.jpg";
+			+ "/wp-content/uploads/2022/07/Bedtime-stories-Ollie-the-Octopus-and-Sukey-the-Spider-short-stories-for-kids-page_%d.jpg";
 	private static Integer start = 1;
-	private static Integer end = 48;
-	private static String title = "MonicasXmasAdventure";
+	private static Integer end = 44;
+	private static String title = "OllieTheOctopusAndSukeyTheSpider";
 	private static String mainFolder = "D:/tmp/englishBook";
 
 	public static void main(String[] args) throws Exception {
-		StoryberriesDownloader t = new StoryberriesDownloader();
+		StoryBerriesDownloader t = new StoryBerriesDownloader();
 		for (int i = start; i <= end; i++) {
 			try {
 				t.d(i);
