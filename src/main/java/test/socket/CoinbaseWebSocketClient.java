@@ -14,21 +14,19 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
-public class MEcxWebSocketClient {
+public class CoinbaseWebSocketClient {
 
 	public static void main(String[] args) throws IOException {
-//		setProxy();
-		String uriStr = "wss://wbs.mexc.com/ws";
-		String module = "spot@public.deals.v3.api@%s";
+		setProxy();
+		String uriStr = "wss://advanced-trade-ws.coinbase.com";
 		JSONArray jsonArray = new JSONArray();
-		jsonArray.add(String.format(module, "BTCUSDT"));
-		jsonArray.add(String.format(module, "ETHUSDT"));
-		jsonArray.add(String.format(module, "DOGEUSDT"));
+		jsonArray.add("BTC-USD");
+		jsonArray.add("ETH-USD");
+		jsonArray.add("DOGE-USD");
 		JSONObject json = new JSONObject();
-		json.put("method", "SUBSCRIPTION");
-		json.put("params", jsonArray);
-////		String addSub = "{\"action\": \"SubAdd\",\"subs\": [\"5~CCCAGG~BTC~USD\", \"0~Coinbase~ETH~USD\", \"2~Binance~BTC~USDT\"]}";
-//		String addSub = "{\"action\": \"SubAdd\",\"subs\":" + jsonArray.toString() + "}";
+		json.put("type", "subscribe");
+		json.put("channel", "level2");
+		json.put("product_ids", jsonArray);
 
 		WebSocket wss = new WebSocketFactory().setVerifyHostname(false).createSocket(uriStr);
 
