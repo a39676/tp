@@ -14,7 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
-public class CoinbaseWebSocketClient {
+public class CoinBaseWebSocketClient {
 
 	public static void main(String[] args) throws IOException {
 		setProxy();
