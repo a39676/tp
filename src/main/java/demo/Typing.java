@@ -63,6 +63,7 @@ public class Typing {
 			while ((currentLine = reader.readLine()) != null) {// while there is content on the current line
 				result.append(currentLine + System.lineSeparator());
 			}
+			reader.close();
 		} catch (IOException ex) {
 			ex.printStackTrace(); // handle an exception here
 		}

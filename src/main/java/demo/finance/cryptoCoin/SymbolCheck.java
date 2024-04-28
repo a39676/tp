@@ -19,10 +19,10 @@ public class SymbolCheck {
 		List<String> result = new ArrayList<>();
 		for (int i = 0; i < gateFullList.size(); i++) {
 			if (binanceFullList.contains(gateFullList.get(i))) {
-				result.add(gateFullList.get(i));
+				result.add(gateFullList.get(i) + "_USDT");
 			}
 		}
-		
+
 		System.out.println(result.size());
 		System.out.println(result);
 	}
