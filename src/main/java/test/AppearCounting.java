@@ -31,6 +31,7 @@ public class AppearCounting {
 					map.put(currentLine, 1);
 				}
 			}
+			reader.close();
 		} catch (IOException ex) {
 			System.out.println("File reading error");
 			ex.printStackTrace(); // handle an exception here

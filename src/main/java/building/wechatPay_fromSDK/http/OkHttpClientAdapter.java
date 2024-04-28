@@ -82,12 +82,14 @@ public final class OkHttpClientAdapter extends AbstractHttpClient {
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	private okhttp3.RequestBody createRequestBody(String content, okhttp3.MediaType mediaType) {
 		// use an OkHttp3.x compatible method
 		// see https://github.com/wechatpay-apiv3/wechatpay-java/issues/70
 		return okhttp3.RequestBody.create(mediaType, content);
 	}
 
+	@SuppressWarnings("deprecation")
 	private okhttp3.RequestBody createRequestBody(byte[] content, okhttp3.MediaType mediaType) {
 		return okhttp3.RequestBody.create(mediaType, content);
 	}
