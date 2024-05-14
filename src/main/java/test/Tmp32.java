@@ -1,14 +1,22 @@
 package test;
 
-import java.util.Date;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Tmp32 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		Date d = new Date(1714476180000L);
-		System.out.println(d);
-		d = new Date(1714476239999L);
-		System.out.println(d);
+		List<String> l = new ArrayList<>();
+		l.add("a");
+		l.add("b");
+		Map<String, List<String>> m = new HashMap<>();
+		m.put("k", l);
+		l = m.get("k");
+		l.add("c");
+		System.out.println(m);
 	}
 }
