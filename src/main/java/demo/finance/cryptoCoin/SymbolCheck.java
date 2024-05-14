@@ -26,9 +26,6 @@ public class SymbolCheck {
 		List<String> except = new ArrayList<>();
 		except.addAll(Arrays.asList(exceptFull.split(", ")));
 
-		List<String> binanceSubscriptList = new ArrayList<>();
-		List<String> gateIoSubscriptList = new ArrayList<>();
-
 		List<String> crossResult = new ArrayList<>();
 		for (int i = 0; i < binanceFullList.size(); i++) {
 			tmpSymbol = binanceFullList.get(i);
@@ -40,6 +37,8 @@ public class SymbolCheck {
 		System.out.println(crossResult.size());
 		System.out.println(crossResult);
 
+		List<String> binanceSubscriptList = new ArrayList<>();
+		List<String> gateIoSubscriptList = new ArrayList<>();
 		binanceSubscriptList.addAll(custom);
 		for (int i = 0; i < crossResult.size(); i++) {
 			if (except.contains(crossResult.get(i))) {
