@@ -1,22 +1,24 @@
 package test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import demo.finance.cryptoCoin.BinanceDataApiUnit;
+import finance.cryptoCoin.pojo.bo.CryptoCoinPriceCommonDataBO;
 
 public class Tmp32 {
 
 	public static void main(String[] args) throws IOException {
+		String proxyHost = "127.0.0.1";
+		String proxyPort = "10809";
+		System.setProperty("http.proxyHost", proxyHost);
+		System.setProperty("http.proxyPort", proxyPort);
+		System.setProperty("https.proxyHost", proxyHost);
+		System.setProperty("https.proxyPort", proxyPort);
+		System.out.println("Had set proxy");
 
-		List<String> l = new ArrayList<>();
-		l.add("a");
-		l.add("b");
-		Map<String, List<String>> m = new HashMap<>();
-		m.put("k", l);
-		l = m.get("k");
-		l.add("c");
-		System.out.println(m);
+		BinanceDataApiUnit binanceDataApiUnit = new BinanceDataApiUnit();
+		List<CryptoCoinPriceCommonDataBO> tmpDataList = binanceDataApiUnit.getKLine1MinuteDataFromApi("TON" + "USDT");
+		System.out.println(tmpDataList);
 	}
 }
