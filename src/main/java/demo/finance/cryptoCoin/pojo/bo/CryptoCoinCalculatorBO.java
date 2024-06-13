@@ -1,4 +1,4 @@
-package demo.cryptoCoin.pojo.bo;
+package demo.finance.cryptoCoin.pojo.bo;
 
 public class CryptoCoinCalculatorBO {
 

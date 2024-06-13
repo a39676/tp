@@ -1,4 +1,4 @@
-package demo.cryptoCoin;
+package demo.finance.cryptoCoin;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import demo.cryptoCoin.pojo.bo.CryptoCoinCalculatorBO;
+import demo.finance.cryptoCoin.pojo.bo.CryptoCoinCalculatorBO;
 
 public class CryptoCoinCalculator {
 
