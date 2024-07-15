@@ -13,7 +13,8 @@ public class SymbolCheckComplex {
 
 	public static void main(String[] args) {
 		SymbolCheckComplex c = new SymbolCheckComplex();
-		c.splitIntoGroup();
+//		c.splitIntoGroup();
+		c.checkForFuture();
 	}
 
 	public void splitIntoGroup() {
@@ -64,16 +65,18 @@ public class SymbolCheckComplex {
 	public void checkForFuture() {
 		String spotStr = oldListStr.replaceAll(" ", "");
 		String futureStr = "SUSHI,INJ,BNT,SAGA,RDNT,ZRX,HIGH,XAI,SPELL,XTZ,BNB,DAR,MEW,JOE,PENDLE,XMR,ETC,ALICE,HOOK,ACE,REZ,BNBUSDC,REEF,BAT,DOGE,1000BONK,TRX,STORJ,SNX,1000BONKUSDC,DOGEUSDC,XLM,MATICUSDC,IOTX,ARK,OMNI,UMA,DASH,KAVA,OXT,RUNE,APE,BNX,LTCUSDC,OP,KEY,SKL,GLM,ALT,MTL,LTC,ETHBTC,KSM,MANA,TRB,FLOW,CHR,W,ONDO,AEVO,GAL,USDC,RNDR,OGN,ENA,STMX,BLUR,KNC,ENJ,XRPUSDC,ATOM,NMR,ENS,GAS,ATA,IOST,HBAR,ZEC,POLYX,ETHUSDT_240927,GALA,EDU,GTC,ALGO,MANTA,LISTA,BSV,LRC,PYTH,ENAUSDC,ORBS,STG,STX,ARPA,CELO,QNT,AI,1INCH,T,IO,PIXEL,SOLUSDC,TAO,LINA,AR,FIL,STRK,ZETA,DODOX,SOL,AXL,LOOM,RONIN,BLZ,1000SATS,COMBO,FILUSDC,GMT,XVS,GMX,BAND,LDO,XRP,PORTAL,CRV,BEL,BOND,DOT,ONE,MAVIA,APT,FRONT,SEI,CRVUSDC,ANKR,MAV,MEME,API3,ASTR,HOT,QTUM,IOTA,ETHUSDC,ADA,JTO,LSK,LIT,ZRO,STEEM,BIGTIME,ETHFI,BTCUSDT_240927,YFI,USTC,ETH,MYRO,ORDI,ALPHA,WOO,SFP,ETHFIUSDC,RLC,ORDIUSDC,1000XEC,CFX,FXS,BADGER,ID,HFT,ETHUSDT_241227,UNFI,NEO,POWR,SAND,WAXP,LINK,MINA,RIF,CELR,AGLD,RSR,REN,LPT,JASMY,NOT,PHB,ARBUSDC,YGG,BTCUSDT_241227,EGLD,LUNA2,DYM,ONT,IMX,VET,NFP,LQTY,NEOUSDC,COTI,VANRY,ARB,LINKUSDC,BAKE,GRT,AUCTION,FLM,MASK,EOS,WIFUSDC,ZK,NEARUSDC,BAL,BB,SUI,METIS,BCHUSDC,DENT,TRU,CKB,SSV,TOKEN,CYBER,C98,ZEN,NEAR,TWT,BEAMX,SUIUSDC,BCH,BOME,1000SHIB,TLM,AVAXUSDC,ETHW,HIFI,BICO,AAVE,TON,ICP,1000SHIBUSDC,WIF,BOMEUSDC,1000LUNC,TURBO,AVAX,CAKE,NTRN,JUP,MAGIC,ROSE,MOVR,MATIC,OM,ONG,XVG,TIA,PEOPLE,MKR,BTCUSDC,THETA,1000PEPEUSDC,UNI,PERP,RVN,ARKM,NKN,KLAY,DEFI,TIAUSDC,TNSR,COMP,BTCDOM,BTC,OMG,ICX,1000PEPE,SUPER,FET,1000RATS,LEVER,1000FLOKI,FTM,AMB,SXP,XEM,WLD,ZIL,DYDX,AXS,WLDUSDC,CHZ,ILV,DUSK,ACH,CTSI,KAS";
-		String exceptStr = "BNX,NOT,BTC,ETH,SOL,BNB,BOND,GLM";
-		
+		String exceptStr = "BNX,NOT,BTC,ETH,SOL,BNB,BOND,GLM,WBETH,WBTC";
+		String inputStr = "TIA,PEPE,BONK,AR,FLOKI,BNB,TRX,AVAX,RNDR,ARB,WBETH,LTC,FIL,SEI,ATOM,FET,FTM,UNI,WBTC,MATIC,STX,INJ,JASMY,SUI,GRT,DOGE,DOTPYTH,SHIB,OP,TAO,BCH,THETA,NEAR,SOL,LINK,RUNE,HBAR,LDO,WIF";
+
 		List<String> spot = new ArrayList<>();
 		List<String> future = new ArrayList<>();
 		List<String> except = new ArrayList<>();
-		
+		List<String> input = new ArrayList<>();
+
 		spot.addAll(Arrays.asList(spotStr.split(",")));
 		future.addAll(Arrays.asList(futureStr.split(",")));
 		except.addAll(Arrays.asList(exceptStr.split(",")));
-		except.addAll(Arrays.asList(exceptStr.split(",")));
+		input.addAll(Arrays.asList(inputStr.split(",")));
 
 		List<String> cross = new ArrayList<>();
 		List<String> spotOnly = new ArrayList<>();
@@ -97,13 +100,15 @@ public class SymbolCheckComplex {
 		System.out.println(spotOnly);
 		System.out.println(kList);
 
-		List<String> input = new ArrayList<>();
-		String inputStr = "HOT,MKR,APT,KNC,GMT,LOOM,ANKR,NTRN,STORJ,ICX,BCH,PORTAL,ENS,CFX,NEAR,FTM,ETHFI,BONK,SAGA,FIL,ADA,PEOPLE,FLM,HIFI,TAO,POLYX,ACH,ILV,RONIN,DYM,VET,AAVE,SUI,TRU,OP,STX,SEI,OM,ZEN,ZEC,TIA";
-		input.addAll(Arrays.asList(inputStr.split(",")));
 		for (int i = 0; i < input.size(); i++) {
 			String symbol = input.get(i);
+			if (except.contains(symbol)) {
+				input.remove(i);
+				i--;
+				continue;
+			}
 			if (kList.contains(symbol)) {
-				input.set(i, "1000" + symbol);
+				input.set(i, "1000" + symbol + "USDT");
 			} else {
 				input.set(i, symbol + "USDT");
 			}
