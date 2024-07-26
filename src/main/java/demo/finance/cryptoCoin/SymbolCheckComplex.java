@@ -14,7 +14,8 @@ public class SymbolCheckComplex {
 	public static void main(String[] args) {
 		SymbolCheckComplex c = new SymbolCheckComplex();
 //		c.splitIntoGroup();
-		c.checkForFuture();
+//		c.checkForFuture();
+		c.findDifferent();
 	}
 
 	public void splitIntoGroup() {
@@ -123,10 +124,18 @@ public class SymbolCheckComplex {
 	public void findDifferent() {
 		String str1 = "DUSKUSDT,FETUSDT,ARKMUSDT,DYMUSDT,CHRUSDT,PORTALUSDT,RLCUSDT,TIAUSDT,AMBUSDT,LDOUSDT,PIXELUSDT,PENDLEUSDT,BICOUSDT,AXLUSDT,TNSRUSDT,WUSDT,PHBUSDT,AIUSDT,CTSIUSDT,RIFUSDT,WLDUSDT,MAVUSDT,LEVERUSDT,TRUUSDT,LITUSDT,NTRNUSDT,1000BONKUSDT,NMRUSDT,IOTXUSDT,PERPUSDT,HIGHUSDT,FTMUSDT,BAKEUSDT,OXTUSDT,CYBERUSDT,AVAXUSDT,SKLUSDT,KSMUSDT,MAGICUSDT,KEYUSDT";
 		String str2 = "EDUUSDT,SAGAUSDT,ETHFIUSDT,AEVOUSDT,ARBUSDT,FTMUSDT,ENSUSDT,SSVUSDT,LDOUSDT,HOOKUSDT,OMNIUSDT,TIAUSDT,RONINUSDT,ALTUSDT,WUSDT,PENDLEUSDT,BLURUSDT,BALUSDT,METISUSDT,GMXUSDT,OPUSDT,STRKUSDT,C98USDT,SUIUSDT,RDNTUSDT,ACEUSDT,1INCHUSDT,AVAXUSDT,PIXELUSDT,ONEUSDT,ETCUSDT,PORTALUSDT,BNTUSDT,BICOUSDT,STORJUSDT,ATAUSDT,HFTUSDT,CRVUSDT,LINKUSDT,RSRUSDT";
-		
+
 		List<String> l1 = Arrays.asList(str1.split(","));
 		List<String> l2 = Arrays.asList(str2.split(","));
-		
-		
+
+		List<String> deleted = new ArrayList<>();
+		for (int i = 0; i < l1.size(); i++) {
+			String tmp = l1.get(i);
+			if (!l2.contains(tmp)) {
+				deleted.add(tmp);
+			}
+		}
+		System.out.println(deleted.size());
+		System.out.println(deleted);
 	}
 }
