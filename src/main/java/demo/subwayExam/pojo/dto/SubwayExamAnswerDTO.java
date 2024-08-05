@@ -1,4 +1,4 @@
-package demo.subwayExam;
+package demo.subwayExam.pojo.dto;
 
 import java.util.List;
 
