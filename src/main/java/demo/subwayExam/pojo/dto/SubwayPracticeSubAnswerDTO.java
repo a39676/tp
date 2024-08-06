@@ -2,7 +2,7 @@ package demo.subwayExam.pojo.dto;
 
 import java.util.List;
 
-public class SubwayExamSubAnswerDTO {
+public class SubwayPracticeSubAnswerDTO {
 
 	private String quesId;
 	private Long lastSubmitTime;

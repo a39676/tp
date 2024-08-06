@@ -2,12 +2,12 @@ package demo.subwayExam.pojo.dto;
 
 import java.util.List;
 
-public class SubwayExamAnswerDTO {
+public class SubwayPracticeAnswerDTO {
 
 	private String uniqueId;
 	private String pumId;
 	private String puId;
-	private List<SubwayExamSubAnswerDTO> answers;
+	private List<SubwayPracticeSubAnswerDTO> answers;
 
 	public String getUniqueId() {
 		return uniqueId;
@@ -33,11 +33,11 @@ public class SubwayExamAnswerDTO {
 		this.puId = puId;
 	}
 
-	public List<SubwayExamSubAnswerDTO> getAnswers() {
+	public List<SubwayPracticeSubAnswerDTO> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<SubwayExamSubAnswerDTO> answers) {
+	public void setAnswers(List<SubwayPracticeSubAnswerDTO> answers) {
 		this.answers = answers;
 	}
 
