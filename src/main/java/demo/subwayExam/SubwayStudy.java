@@ -146,6 +146,7 @@ public class SubwayStudy {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void kngPlay(SubwayStudyTaskDetailDTO taskDetail, String projectId) {
 		String url = mainUrl + "/kng/study/kngPlay";
 

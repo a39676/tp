@@ -36,7 +36,9 @@ import toolPack.ioHandle.FileUtilCustom;
 public class SubwayPractice {
 
 	private static String mainUrl = "https://api-phx-hw02.yunxuetang.cn";
+	@SuppressWarnings("unused")
 	private static final int SINGLE_CHOICE = 0;
+	@SuppressWarnings("unused")
 	private static final int MULTIPLE_CHOICE = 1;
 	private static final int JUDGE = 2;
 
