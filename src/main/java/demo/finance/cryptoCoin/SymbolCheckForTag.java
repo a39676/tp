@@ -53,6 +53,16 @@ public class SymbolCheckForTag {
 		keywordsStr = "nft";
 		l.addAll(Arrays.asList(keywordsStr.split(",")));
 		tagMap.put(CryptoCoinTagType.NFT, l);
+		
+		l = new ArrayList<>();
+		keywordsStr = "exchange,pay";
+		l.addAll(Arrays.asList(keywordsStr.split(",")));
+		tagMap.put(CryptoCoinTagType.EXCHANGE, l);
+		
+		l = new ArrayList<>();
+		keywordsStr = "game,football,";
+		l.addAll(Arrays.asList(keywordsStr.split(",")));
+		tagMap.put(CryptoCoinTagType.FUN, l);
 
 		String proxyHost = "127.0.0.1";
 		String proxyPort = "10809";
@@ -67,6 +77,7 @@ public class SymbolCheckForTag {
 //		t.saveDesc();
 		JSONObject symbolTagJson = t.getSymbolTagJson();
 		List<String> symbolList = t.filterByTags(symbolTagJson, tagMap.get(CryptoCoinTagType.ETH));
+//		List<String> symbolList = t.filterByTags(symbolTagJson, Arrays.asList("sport","game"));
 		System.out.println(symbolList);
 	}
 

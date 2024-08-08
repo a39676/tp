@@ -6,6 +6,8 @@ public enum CryptoCoinTagType {
 	ETH("ETH",2),
 	SOL("SOL",3),
 	NFT("NFT",4),
+	EXCHANGE("exchange",5),
+	FUN("FUN",6),
 	;
 
 	private String name;
