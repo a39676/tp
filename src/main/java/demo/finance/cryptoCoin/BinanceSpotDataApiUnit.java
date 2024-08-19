@@ -15,7 +15,7 @@ import net.sf.json.JSONArray;
 import test.aiArt.CommonService;
 import toolPack.httpHandel.HttpUtil;
 
-public class BinanceDataApiUnit extends CommonService {
+public class BinanceSpotDataApiUnit extends CommonService {
 
 	private static final int BINANCE_DATA_FIELD_COUNT = 12;
 
