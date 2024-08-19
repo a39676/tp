@@ -1,4 +1,4 @@
-package demo.finance.cryptoCoin;
+package demo.finance.cryptoCoin.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

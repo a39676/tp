@@ -1,4 +1,4 @@
-package demo.finance.cryptoCoin;
+package demo.finance.cryptoCoin.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,6 +25,7 @@ public class BinanceFutureUmDataApiUnit extends CommonService {
 
 	private static final String BASE_URL = "https://fapi.binance.com";
 	private static final int BINANCE_DATA_FIELD_COUNT = 12;
+	private static LocalDateTimeHandler localDateTimeHandler = new LocalDateTimeHandler();
 
 	public CryptoCoinBinanceFutureUmPriceResult getLastPrice() {
 		CryptoCoinBinanceFutureUmPriceResult r = new CryptoCoinBinanceFutureUmPriceResult();
@@ -52,7 +53,7 @@ public class BinanceFutureUmDataApiUnit extends CommonService {
 		r.setIsSuccess();
 		return r;
 	}
-	
+
 	public List<CryptoCoinPriceCommonDataBO> getKLineDataFromApi(String symbol, IntervalType intervalType,
 			Integer limit) {
 
@@ -166,8 +167,13 @@ public class BinanceFutureUmDataApiUnit extends CommonService {
 			JSONArray jsonArray = JSONArray.fromObject(response);
 			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO detail = null;
 			for (int i = 0; i < jsonArray.size(); i++) {
-				detail = buildObjFromJsonCustomization(jsonArray.getString(i),
-						CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO.class);
+				detail = new CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO();
+				JSONObject json = jsonArray.getJSONObject(i);
+				detail.setSymbol(json.getString("symbol"));
+				detail.setLongAccount(json.getDouble("longAccount"));
+				detail.setLongShortRatio(json.getDouble("longShortRatio"));
+				detail.setShortAccount(json.getDouble("shortAccount"));
+				detail.setTimestamp(json.getLong("timestamp"));
 				result.add(detail);
 			}
 		} catch (IOException | URISyntaxException e) {
@@ -193,8 +199,13 @@ public class BinanceFutureUmDataApiUnit extends CommonService {
 			JSONArray jsonArray = JSONArray.fromObject(response);
 			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO detail = null;
 			for (int i = 0; i < jsonArray.size(); i++) {
-				detail = buildObjFromJsonCustomization(jsonArray.getString(i),
-						CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO.class);
+				detail = new CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO();
+				JSONObject json = jsonArray.getJSONObject(i);
+				detail.setSymbol(json.getString("symbol"));
+				detail.setLongAccount(json.getDouble("longAccount"));
+				detail.setLongShortRatio(json.getDouble("longShortRatio"));
+				detail.setShortAccount(json.getDouble("shortAccount"));
+				detail.setTimestamp(json.getLong("timestamp"));
 				result.add(detail);
 			}
 		} catch (IOException | URISyntaxException e) {

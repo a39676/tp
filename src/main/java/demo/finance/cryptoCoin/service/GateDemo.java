@@ -1,4 +1,4 @@
-package demo.finance.cryptoCoin;
+package demo.finance.cryptoCoin.service;
 
 import demo.finance.cryptoCoin.pojo.dto.GateKeysDTO;
 import io.gate.gateapi.ApiClient;

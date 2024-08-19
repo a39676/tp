@@ -1,4 +1,4 @@
-package demo.finance.cryptoCoin;
+package demo.finance.cryptoCoin.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,16 +6,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmPriceCacheSubBO;
+import finance.cryptoCoin.binance.future.um.pojo.result.CryptoCoinBinanceFutureUmPriceResult;
+
 public class SymbolCheckComplex {
 
 	private String allListStr = "BTC, ETH, USDT, BNB, SOL, USDC, XRP, DOGE, ADA, TRX, WBTC, AVAX, SHIB, DOT, BCH, LINK, DAI, NEAR, LTC, MATIC, UNI, PEPE, ICP, ETC, WBETH, APT, XLM, FET, STX, MKR, HBAR, ATOM, ARB, FDUSD, RENDER, VET, IMX, INJ, TAO, OP, WIF, SUI, AAVE, AR, BONK, GRT, FLOKI, LDO, RUNE, THETA, JASMY, JUP, NOT, PYTH, FTM, TIA, ALGO, OM, SEI, QNT, EOS, BTTC, EGLD, AXS, BEAMX, ENS, NEO, XTZ, STRK, GALA, SAND, XEC, ORDI, ENA, CFX, NEXO, WLD, RONIN, BOME, MANA, ZEC, CHZ, 1000SATS, BNX, MINA, KLAY, SNX, TUSD, RAY, DEXE, ROSE, PENDLE, GNO, IOTA, PAXG, ZK, FTT, ASTR, CKB, COMP, LPT, CAKE, AXL, APE, LUNC, W, ZRO, 1INCH, TFUEL, TWT, KAVA, IOTX, SFP, AEVO, CRV, PEOPLE, JTO, ELF, GLM, WOO, MANTA, G, DASH, GMT, CVX, KSM, ZIL, MEME, BLUR, LUNA, OSMO, SUPER, ENJ, RPL, ZRX, CELO, JST, ANKR, SC, SKL, ID, DYM, BAT, HOT, DYDX, QTUM, SSV, ILV, RVN, GMX, METIS, ARKM, RSR, GAS, BICO, T, MASK, ETHFI, POLYX, IO, FLUX, DCR, FXS, YFI, LRC, BAND, UMA, ONE, TRB, VTHO, EDU, CHR, SUSHI, ACH, ONT, AMP, GLMR, BB, VANRY, AUDIO, BANANA, STORJ, COTI, ZEN, YGG, ICX, API3, SXP, XAI, KDA, NTRN, BAL, LSK, SAGA, WAXP, PIXEL, IOST, ONG, DGB, JOE, TRU, USDP, POWR, MAGIC, CTSI, ACE, XVS, C98, ALT, RLC, POND, XNO, IQ, PROM, AUCTION, SLP, PUNDIX, GNS, LISTA, SUN, HIVE, USTC, CVC, STMX, DUSK, CELR, NMR, HIGH, RIF, KNC, RDNT, DAR, STRAX, SNT, SPELL, CTK, AI, WIN, STEEM, CYBER, DENT, PHA, MOVR, HOOK, STPT, OMNI, PYR, DODO, PORTAL, SYN, BAKE, REQ, HFT, OXT, STG, PHB, ALICE, LQTY, HIFI, LOOM, BNT, SYS, MTL, BLZ, QI, LEVER, SCRT, ARK, AGLD, ARDR, AEUR, ACA, NFP, FRONT, XVG, RAD, CREAM, REZ, BADGER, QKC, MBOX, ARPA, NKN, GTC, ALPHA, OGN, GHST, TNSR, TKO, RARE, WRX, LTO, MLN, TLM, REI, BETA, FORTH, MBL, CLV, MAV, ATA, ERN, REN, ORN, CTXC, AERGO, DIA, LIT, COS, PERP, FUN, KMD, FLM, VIC, ALCX, DATA, FIS, LINA, PDA, WAN, FIDA, BEL, COMBO, PSG, AMB, UNFI, AVA, DEGO, IDEX, LOKA, GFT, KEY, REEF, NULS, FARM, MDT, BSW, QUICK, VOXEL, AKRO, IRIS, BIFI, VGX, ADX, KP3R, BAR, UTK, DF, CHESS, BURGER, WING, UFT, PIVX, CITY, FIO, FIRO, ALPACA, SANTOS, VIDT, VITE, ASR, OG, ALPINE, VIB, AST, TROY, OOKI, CVP, HARD, FOR, JUV, IDRT, OAX, LAZIO, PROS, PORTO, ACM, ATM, EPX";
 	private String exceptListStr = "USDT, FDUSD, USDC, TUSD, USDP, WBETH,WBTC,USTC";
 
+	static {
+		String proxyHost = "127.0.0.1";
+		String proxyPort = "10809";
+
+		System.setProperty("http.proxyHost", proxyHost);
+		System.setProperty("http.proxyPort", proxyPort);
+
+		System.setProperty("https.proxyHost", proxyHost);
+		System.setProperty("https.proxyPort", proxyPort);
+	}
+
 	public static void main(String[] args) {
-		SymbolCheckComplex c = new SymbolCheckComplex();
+//		SymbolCheckComplex c = new SymbolCheckComplex();
 //		c.splitIntoGroup();
 //		c.checkForFuture();
-		c.findDifferent();
+//		c.findDifferent();
+		test();
+	}
+
+	public static void test() {
+		BinanceFutureUmDataApiUnit api = new BinanceFutureUmDataApiUnit();
+		CryptoCoinBinanceFutureUmPriceResult lastPriceResult = api.getLastPrice();
+		Map<String, CryptoCoinBinanceFutureUmPriceCacheSubBO> priceMap = lastPriceResult.getPriceMap();
+		for (String symbol : priceMap.keySet()) {
+//			BinanceFutureUmLongShortRatio.globalLongShortAccountRatio(symbol);
+			BinanceFutureUmLongShortRatio.topLongShortPositionRatio(symbol);
+		}
 	}
 
 	public void splitIntoGroup() {
