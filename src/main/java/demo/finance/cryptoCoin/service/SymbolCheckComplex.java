@@ -1,18 +1,26 @@
 package demo.finance.cryptoCoin.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmPriceCacheSubBO;
-import finance.cryptoCoin.binance.future.um.pojo.result.CryptoCoinBinanceFutureUmPriceResult;
+import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO;
+import finance.cryptoCoin.pojo.bo.CryptoCoinPriceCommonDataBO;
 
 public class SymbolCheckComplex {
 
 	private String allListStr = "BTC, ETH, USDT, BNB, SOL, USDC, XRP, DOGE, ADA, TRX, WBTC, AVAX, SHIB, DOT, BCH, LINK, DAI, NEAR, LTC, MATIC, UNI, PEPE, ICP, ETC, WBETH, APT, XLM, FET, STX, MKR, HBAR, ATOM, ARB, FDUSD, RENDER, VET, IMX, INJ, TAO, OP, WIF, SUI, AAVE, AR, BONK, GRT, FLOKI, LDO, RUNE, THETA, JASMY, JUP, NOT, PYTH, FTM, TIA, ALGO, OM, SEI, QNT, EOS, BTTC, EGLD, AXS, BEAMX, ENS, NEO, XTZ, STRK, GALA, SAND, XEC, ORDI, ENA, CFX, NEXO, WLD, RONIN, BOME, MANA, ZEC, CHZ, 1000SATS, BNX, MINA, KLAY, SNX, TUSD, RAY, DEXE, ROSE, PENDLE, GNO, IOTA, PAXG, ZK, FTT, ASTR, CKB, COMP, LPT, CAKE, AXL, APE, LUNC, W, ZRO, 1INCH, TFUEL, TWT, KAVA, IOTX, SFP, AEVO, CRV, PEOPLE, JTO, ELF, GLM, WOO, MANTA, G, DASH, GMT, CVX, KSM, ZIL, MEME, BLUR, LUNA, OSMO, SUPER, ENJ, RPL, ZRX, CELO, JST, ANKR, SC, SKL, ID, DYM, BAT, HOT, DYDX, QTUM, SSV, ILV, RVN, GMX, METIS, ARKM, RSR, GAS, BICO, T, MASK, ETHFI, POLYX, IO, FLUX, DCR, FXS, YFI, LRC, BAND, UMA, ONE, TRB, VTHO, EDU, CHR, SUSHI, ACH, ONT, AMP, GLMR, BB, VANRY, AUDIO, BANANA, STORJ, COTI, ZEN, YGG, ICX, API3, SXP, XAI, KDA, NTRN, BAL, LSK, SAGA, WAXP, PIXEL, IOST, ONG, DGB, JOE, TRU, USDP, POWR, MAGIC, CTSI, ACE, XVS, C98, ALT, RLC, POND, XNO, IQ, PROM, AUCTION, SLP, PUNDIX, GNS, LISTA, SUN, HIVE, USTC, CVC, STMX, DUSK, CELR, NMR, HIGH, RIF, KNC, RDNT, DAR, STRAX, SNT, SPELL, CTK, AI, WIN, STEEM, CYBER, DENT, PHA, MOVR, HOOK, STPT, OMNI, PYR, DODO, PORTAL, SYN, BAKE, REQ, HFT, OXT, STG, PHB, ALICE, LQTY, HIFI, LOOM, BNT, SYS, MTL, BLZ, QI, LEVER, SCRT, ARK, AGLD, ARDR, AEUR, ACA, NFP, FRONT, XVG, RAD, CREAM, REZ, BADGER, QKC, MBOX, ARPA, NKN, GTC, ALPHA, OGN, GHST, TNSR, TKO, RARE, WRX, LTO, MLN, TLM, REI, BETA, FORTH, MBL, CLV, MAV, ATA, ERN, REN, ORN, CTXC, AERGO, DIA, LIT, COS, PERP, FUN, KMD, FLM, VIC, ALCX, DATA, FIS, LINA, PDA, WAN, FIDA, BEL, COMBO, PSG, AMB, UNFI, AVA, DEGO, IDEX, LOKA, GFT, KEY, REEF, NULS, FARM, MDT, BSW, QUICK, VOXEL, AKRO, IRIS, BIFI, VGX, ADX, KP3R, BAR, UTK, DF, CHESS, BURGER, WING, UFT, PIVX, CITY, FIO, FIRO, ALPACA, SANTOS, VIDT, VITE, ASR, OG, ALPINE, VIB, AST, TROY, OOKI, CVP, HARD, FOR, JUV, IDRT, OAX, LAZIO, PROS, PORTO, ACM, ATM, EPX";
 	private String exceptListStr = "USDT, FDUSD, USDC, TUSD, USDP, WBETH,WBTC,USTC";
+	protected static final int SCALE_FOR_PRICE_DISPLAY = 8;
+	protected static final int SCALE_FOR_PRICE_CALCULATE = 12;
+	protected static final int SCALE_FOR_RATE_DISPLAY = 2;
+	protected static final int SCALE_FOR_RATE_CALCULATE = 4;
+
+	private static List<String> allTargetFutureUm = new ArrayList<>();
 
 	static {
 		String proxyHost = "127.0.0.1";
@@ -23,6 +31,39 @@ public class SymbolCheckComplex {
 
 		System.setProperty("https.proxyHost", proxyHost);
 		System.setProperty("https.proxyPort", proxyPort);
+
+		allTargetFutureUm.addAll(Arrays.asList("1000BONKUSDT", "1000FLOKIUSDT", "1000LUNCUSDT", "1000PEPEUSDT",
+				"1000RATSUSDT", "1000SATSUSDT", "1000SHIBUSDT", "1000XECUSDT", "1INCHUSDT", "AAVEUSDT", "ACEUSDT",
+				"ACHUSDT", "ADAUSDT", "AEVOUSDT", "AGLDUSDT", "AIUSDT", "ALGOUSDT", "ALICEUSDT", "ALPHAUSDT", "ALTUSDT",
+				"AMBUSDT", "ANKRUSDT", "APEUSDT", "API3USDT", "APTUSDT", "ARBUSDT", "ARKMUSDT", "ARKUSDT", "ARPAUSDT",
+				"ARUSDT", "ASTRUSDT", "ATAUSDT", "ATOMUSDT", "AUCTIONUSDT", "AVAXUSDT", "AXLUSDT", "AXSUSDT",
+				"BADGERUSDT", "BAKEUSDT", "BALUSDT", "BANANAUSDT", "BANDUSDT", "BATUSDT", "BBUSDT", "BCHUSDT",
+				"BEAMXUSDT", "BELUSDT", "BICOUSDT", "BIGTIMEUSDT", "BLURUSDT", "BLZUSDT", "BNBUSDT", "BNTUSDT",
+				"BNXUSDT", "BOMEUSDT", "BONDUSDT", "BSVUSDT", "BTCDOMUSDT", "BTCUSDT", "C98USDT", "CAKEUSDT",
+				"CELOUSDT", "CELRUSDT", "CFXUSDT", "CHRUSDT", "CHZUSDT", "CKBUSDT", "COMBOUSDT", "COMPUSDT", "COTIUSDT",
+				"CRVUSDT", "CTSIUSDT", "CYBERUSDT", "DARUSDT", "DASHUSDT", "DEFIUSDT", "DENTUSDT", "DODOXUSDT",
+				"DOGEUSDT", "DOTUSDT", "DUSKUSDT", "DYDXUSDT", "DYMUSDT", "EDUUSDT", "EGLDUSDT", "ENAUSDT", "ENJUSDT",
+				"ENSUSDT", "EOSUSDT", "ETCUSDT", "ETHBTC", "ETHFIUSDT", "ETHUSDT", "ETHWUSDT", "FETUSDT", "FILUSDT",
+				"FLMUSDT", "FLOWUSDT", "FRONTUSDT", "FTMUSDT", "FXSUSDT", "GALAUSDT", "GASUSDT", "GLMUSDT", "GMTUSDT",
+				"GMXUSDT", "GRTUSDT", "GTCUSDT", "GUSDT", "HBARUSDT", "HFTUSDT", "HIFIUSDT", "HIGHUSDT", "HOOKUSDT",
+				"HOTUSDT", "ICPUSDT", "ICXUSDT", "IDUSDT", "ILVUSDT", "IMXUSDT", "INJUSDT", "IOSTUSDT", "IOTAUSDT",
+				"IOTXUSDT", "IOUSDT", "JASMYUSDT", "JOEUSDT", "JTOUSDT", "JUPUSDT", "KASUSDT", "KAVAUSDT", "KEYUSDT",
+				"KLAYUSDT", "KNCUSDT", "KSMUSDT", "LDOUSDT", "LEVERUSDT", "LINAUSDT", "LINKUSDT", "LISTAUSDT",
+				"LITUSDT", "LOOMUSDT", "LPTUSDT", "LQTYUSDT", "LRCUSDT", "LSKUSDT", "LTCUSDT", "LUNA2USDT", "MAGICUSDT",
+				"MANAUSDT", "MANTAUSDT", "MASKUSDT", "MATICUSDT", "MAVIAUSDT", "MAVUSDT", "MEMEUSDT", "METISUSDT",
+				"MEWUSDT", "MINAUSDT", "MKRUSDT", "MOVRUSDT", "MTLUSDT", "MYROUSDT", "NEARUSDT", "NEOUSDT", "NFPUSDT",
+				"NKNUSDT", "NMRUSDT", "NOTUSDT", "NTRNUSDT", "OGNUSDT", "OMGUSDT", "OMNIUSDT", "OMUSDT", "ONDOUSDT",
+				"ONEUSDT", "ONGUSDT", "ONTUSDT", "OPUSDT", "ORBSUSDT", "ORDIUSDT", "OXTUSDT", "PENDLEUSDT",
+				"PEOPLEUSDT", "PERPUSDT", "PHBUSDT", "PIXELUSDT", "POLYXUSDT", "PORTALUSDT", "POWRUSDT", "PYTHUSDT",
+				"QNTUSDT", "QTUMUSDT", "RAREUSDT", "RDNTUSDT", "REEFUSDT", "RENDERUSDT", "RENUSDT", "REZUSDT",
+				"RIFUSDT", "RLCUSDT", "RONINUSDT", "ROSEUSDT", "RSRUSDT", "RUNEUSDT", "RVNUSDT", "SAGAUSDT", "SANDUSDT",
+				"SEIUSDT", "SFPUSDT", "SKLUSDT", "SNXUSDT", "SOLUSDT", "SPELLUSDT", "SSVUSDT", "STEEMUSDT", "STGUSDT",
+				"STMXUSDT", "STORJUSDT", "STRKUSDT", "STXUSDT", "SUIUSDT", "SUPERUSDT", "SUSHIUSDT", "SXPUSDT",
+				"SYNUSDT", "SYSUSDT", "TAOUSDT", "THETAUSDT", "TIAUSDT", "TLMUSDT", "TNSRUSDT", "TOKENUSDT", "TONUSDT",
+				"TRBUSDT", "TRUUSDT", "TRXUSDT", "TURBOUSDT", "TUSDT", "TWTUSDT", "UMAUSDT", "UNFIUSDT", "UNIUSDT",
+				"USTCUSDT", "VANRYUSDT", "VETUSDT", "WAXPUSDT", "WIFUSDT", "WLDUSDT", "WOOUSDT", "WUSDT", "XAIUSDT",
+				"XEMUSDT", "XLMUSDT", "XMRUSDT", "XRPUSDT", "XTZUSDT", "XVGUSDT", "XVSUSDT", "YFIUSDT", "YGGUSDT",
+				"ZECUSDT", "ZENUSDT", "ZETAUSDT", "ZILUSDT", "ZKUSDT", "ZROUSDT", "ZRXUSDT"));
 	}
 
 	public static void main(String[] args) {
@@ -30,16 +71,60 @@ public class SymbolCheckComplex {
 //		c.splitIntoGroup();
 //		c.checkForFuture();
 //		c.findDifferent();
+//		getKLineFromApiAndSave();
 		test();
 	}
 
 	public static void test() {
-		BinanceFutureUmDataApiUnit api = new BinanceFutureUmDataApiUnit();
-		CryptoCoinBinanceFutureUmPriceResult lastPriceResult = api.getLastPrice();
-		Map<String, CryptoCoinBinanceFutureUmPriceCacheSubBO> priceMap = lastPriceResult.getPriceMap();
-		for (String symbol : priceMap.keySet()) {
+		int dayGap = 0;
+		for (String symbol : allTargetFutureUm) {
+			List<CryptoCoinPriceCommonDataBO> kLine = BinanceFutureUmKLine.getKLineFromLocal(symbol);
+			if (kLine.size() < 10 + dayGap) {
+				System.out.println("K line too short: " + symbol);
+				continue;
+			}
+			List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> globalLongShortAccountRatio = BinanceFutureUmLongShortRatio
+					.globalLongShortAccountRatioFromLocal(symbol);
+			List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> topLongShortRatio = BinanceFutureUmLongShortRatio
+					.topLongShortPositionRatioFromLocal(symbol);
+
+			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO lastGlobalLongShortRatio = globalLongShortAccountRatio
+					.get(globalLongShortAccountRatio.size() - 1 - dayGap);
+			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO lastTopLongShortRatio = topLongShortRatio
+					.get(topLongShortRatio.size() - 1 - dayGap);
+
+			CryptoCoinPriceCommonDataBO tenDaysAgoKline = kLine.get(kLine.size() - 10 - dayGap);
+			CryptoCoinPriceCommonDataBO lastKline = kLine.get(kLine.size() - 1 - dayGap);
+
+			BigDecimal minRiseRatio = new BigDecimal(1.10);
+			BigDecimal startPrice = tenDaysAgoKline.getStartPrice();
+			BigDecimal lastPrice = lastKline.getEndPrice();
+			BigDecimal riseRatio = lastPrice.divide(startPrice, SCALE_FOR_RATE_CALCULATE, RoundingMode.HALF_UP);
+			if (riseRatio.compareTo(minRiseRatio) > 0) {
+//				System.out.println(symbol + ", rise : " + riseRatio);
+				if (lastGlobalLongShortRatio.getLongShortRatio() > 1) {
+//					System.out.println(symbol + ", global ratio: " + lastGlobalLongShortRatio.getLongShortRatio());
+					if (lastTopLongShortRatio.getLongShortRatio() > 1) {
+						System.err.println(symbol);
+					}
+				}
+			}
+		}
+	}
+
+	public static void getKLineFromApiAndSave() {
+		for (String symbol : allTargetFutureUm) {
+			System.out.println("Getting K line data for: " + symbol);
+			BinanceFutureUmKLine.getKLineFromApiAndSave(symbol);
+		}
+	}
+
+//	List<CryptoCoinPriceCommonDataBO> dataList = BinanceFutureUmKLine.getKLineFromLocal(symbol);
+
+	public static void longShortRatio() {
+		for (String symbol : allTargetFutureUm) {
 //			BinanceFutureUmLongShortRatio.globalLongShortAccountRatio(symbol);
-			BinanceFutureUmLongShortRatio.topLongShortPositionRatio(symbol);
+			BinanceFutureUmLongShortRatio.topLongShortPositionRatioFromApiAndSave(symbol);
 		}
 	}
 

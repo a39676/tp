@@ -1,7 +1,7 @@
 package demo.finance.cryptoCoin.service;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import finance.common.pojo.type.IntervalType;
@@ -10,11 +10,9 @@ import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmGe
 import net.sf.json.JSONArray;
 import toolPack.ioHandle.FileUtilCustom;
 
-public class BinanceFutureUmLongShortRatio {
+public class BinanceFutureUmLongShortRatio extends BinanceDataCommonService {
 
-	private static final String FILE_SAVE_PATH = "/tmp/cryptoCoin";
-
-	public static void globalLongShortAccountRatio(String symbol) {
+	public static void globalLongShortAccountRatioFromApiAndSave(String symbol) {
 		BinanceFutureUmDataApiUnit apiUnit = new BinanceFutureUmDataApiUnit();
 		CryptoCoinBinanceFutureUmGetLongShortPositionRatioDTO dto = new CryptoCoinBinanceFutureUmGetLongShortPositionRatioDTO();
 		dto.setSymbol(symbol);
@@ -33,7 +31,23 @@ public class BinanceFutureUmLongShortRatio {
 		fuc.byteToFile(jsonArray.toString().getBytes(StandardCharsets.UTF_8), filePath);
 	}
 
-	public static void topLongShortPositionRatio(String symbol) {
+	public static List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> globalLongShortAccountRatioFromLocal(
+			String symbol) {
+		FileUtilCustom fuc = new FileUtilCustom();
+		String filePath = getFileSavePath() + "/longShortAccountRatio/" + symbol + ".json";
+		String content = fuc.getStringFromFile(filePath);
+		JSONArray jsonArray = JSONArray.fromObject(content);
+
+		List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> dataList = new ArrayList<>();
+		for (int i = 0; i < jsonArray.size(); i++) {
+			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO dto = buildObjFromJsonCustomization(
+					jsonArray.getString(i), CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO.class);
+			dataList.add(dto);
+		}
+		return dataList;
+	}
+
+	public static void topLongShortPositionRatioFromApiAndSave(String symbol) {
 		BinanceFutureUmDataApiUnit apiUnit = new BinanceFutureUmDataApiUnit();
 		CryptoCoinBinanceFutureUmGetLongShortPositionRatioDTO dto = new CryptoCoinBinanceFutureUmGetLongShortPositionRatioDTO();
 		dto.setSymbol(symbol);
@@ -52,13 +66,20 @@ public class BinanceFutureUmLongShortRatio {
 		fuc.byteToFile(jsonArray.toString().getBytes(StandardCharsets.UTF_8), filePath);
 	}
 
-	private static String getFileSavePath() {
-		File z2 = new File("D:/z2");
-		if (z2.exists()) {
-			return "D:" + FILE_SAVE_PATH;
-		} else {
-			return System.getProperty("user.home") + FILE_SAVE_PATH;
+	public static List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> topLongShortPositionRatioFromLocal(
+			String symbol) {
+		FileUtilCustom fuc = new FileUtilCustom();
+		String filePath = getFileSavePath() + "/topLongShortPositionRatio/" + symbol + ".json";
+		String content = fuc.getStringFromFile(filePath);
+		JSONArray jsonArray = JSONArray.fromObject(content);
+
+		List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> dataList = new ArrayList<>();
+		for (int i = 0; i < jsonArray.size(); i++) {
+			CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO dto = buildObjFromJsonCustomization(
+					jsonArray.getString(i), CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO.class);
+			dataList.add(dto);
 		}
+		return dataList;
 	}
 
 }

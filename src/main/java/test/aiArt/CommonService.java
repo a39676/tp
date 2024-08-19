@@ -6,14 +6,12 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import auxiliaryCommon.pojo.result.CommonResult;
 import auxiliaryCommon.pojo.type.BaseResultType;
-import net.sf.json.JSONObject;
 import toolPack.dateTimeHandle.DateHandler;
 import toolPack.dateTimeHandle.LocalDateTimeAdapter;
 import toolPack.dateTimeHandle.LocalDateTimeHandler;
@@ -23,24 +21,13 @@ import tool_package.SnowFlake;
 
 public abstract class CommonService {
 
-	@Autowired
-	protected LocalDateTimeHandler localDateTimeHandler;
-	@Autowired
-	protected DateHandler dateHandler;
-	@Autowired
-	protected LocalDateTimeAdapter localDateTimeAdapter;
-
 	protected final Logger log = LoggerFactory.getLogger(getClass());
-
-	@Autowired
-	protected SnowFlake snowFlake;
-
-	@Autowired
-	protected NumericUtilCustom numericUtil;
-	@Autowired
-	protected FileUtilCustom ioUtil;
-//	@Autowired
-//	private TelegramMessageAckProducer telegramMessageAckProducer;
+	protected static LocalDateTimeHandler localDateTimeHandler = new LocalDateTimeHandler();
+	protected static DateHandler dateHandler = new DateHandler();
+	protected static LocalDateTimeAdapter localDateTimeAdapter = new LocalDateTimeAdapter();
+	protected static SnowFlake snowFlake = new SnowFlake();
+	protected static NumericUtilCustom numericUtil = new NumericUtilCustom();
+	protected static FileUtilCustom ioUtil = new FileUtilCustom();
 
 	protected static final long THE_START_TIME = 946656000000L;
 	protected static final String MAIN_FOLDER_PATH = "/home/u2/bbt";
@@ -135,23 +122,7 @@ public abstract class CommonService {
 		}
 	}
 
-	protected <T> T buildTestEventParamFromJsonCustomization(String jsonStr, Class<T> clazz) {
-		String className = clazz.getSimpleName();
-
-		try {
-			JSONObject paramJson = JSONObject.fromObject(jsonStr);
-
-			return buildObjFromJsonCustomization(paramJson.getString(className), clazz);
-
-		} catch (Exception e) {
-			String msg = String.format("Build gson error, param name: %s ", className);
-			log.error(msg);
-		}
-		return null;
-
-	}
-
-	protected <T> T buildObjFromJsonCustomization(String jsonStr, Class<T> clazz) {
+	protected static <T> T buildObjFromJsonCustomization(String jsonStr, Class<T> clazz) {
 		String className = clazz.getSimpleName();
 
 		try {
@@ -162,7 +133,7 @@ public abstract class CommonService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			String msg = String.format("Build gson error, param name: %s ", className);
-			log.error(msg);
+			System.err.println(msg);
 		}
 		return null;
 
