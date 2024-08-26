@@ -27,7 +27,7 @@ public class BinanceFutureUmDataApiUnit extends CommonService {
 	private static final int BINANCE_DATA_FIELD_COUNT = 12;
 	private static LocalDateTimeHandler localDateTimeHandler = new LocalDateTimeHandler();
 
-	public CryptoCoinBinanceFutureUmPriceResult getLastPrice() {
+	public static CryptoCoinBinanceFutureUmPriceResult getLastPrice() {
 		CryptoCoinBinanceFutureUmPriceResult r = new CryptoCoinBinanceFutureUmPriceResult();
 
 		String response = null;

@@ -1,16 +1,18 @@
 package test;
 
-import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 
 public class Tmp33 {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		File f = new File("D:\\tmp\\cryptoCoin\\kLine");
-		File[] fs = f.listFiles();
-		for (File ele : fs) {
-			System.out.println(ele.getName());
-		}
+		BigDecimal b = new BigDecimal("3.29501966E+11");
+		System.out.println(b);
+		System.out.println(b.divide(new BigDecimal(1000000)));
+		b = new BigDecimal("106025248");
+		System.out.println(b);
+		System.out.println(b.divide(new BigDecimal(1000000)));
+		
 	}
 }

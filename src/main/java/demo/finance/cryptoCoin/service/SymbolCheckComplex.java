@@ -72,10 +72,10 @@ public class SymbolCheckComplex {
 //		c.checkForFuture();
 //		c.findDifferent();
 //		getKLineFromApiAndSave();
-		test();
+		test1();
 	}
 
-	public static void test() {
+	public static void test1() {
 		int dayGap = 0;
 		for (String symbol : allTargetFutureUm) {
 			List<CryptoCoinPriceCommonDataBO> kLine = BinanceFutureUmKLine.getKLineFromLocal(symbol);
