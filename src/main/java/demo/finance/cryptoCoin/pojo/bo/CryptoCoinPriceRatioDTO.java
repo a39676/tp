@@ -32,4 +32,9 @@ public class CryptoCoinPriceRatioDTO implements Comparable<CryptoCoinPriceRatioD
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "CryptoCoinPriceRatioDTO [symbol=" + symbol + ", ratio=" + ratio + "]";
+	}
+
 }

@@ -25,7 +25,7 @@ public class BinanceFutureUmKLine extends BinanceDataCommonService {
 //			getKLineFromApiAndSave(symbol);
 //		}
 
-		checkAllGaps(4);
+		checkAllGaps(14);
 	}
 
 	public static void getKLineFromApiAndSave(String symbol) {
@@ -70,7 +70,7 @@ public class BinanceFutureUmKLine extends BinanceDataCommonService {
 			System.err.println("Symbol: " + symbol + ", data list empty");
 			return null;
 		}
-		if (dataList.size() < dayGap) {
+		if (dataList.size() < dayGap + 1) {
 			System.err.println("Symbol: " + symbol + ", data list too short for: " + dayGap);
 			return null;
 		}
