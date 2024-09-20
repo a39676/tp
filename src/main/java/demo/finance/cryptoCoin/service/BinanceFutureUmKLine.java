@@ -20,12 +20,12 @@ import toolPack.ioHandle.FileUtilCustom;
 public class BinanceFutureUmKLine extends BinanceDataCommonService {
 
 	public static void main(String[] args) {
-//		setProxy();
+		setProxy();
+		refreshSymbolListFromAPI();
 //		for (String symbol : symbols) {
 //			getKLineFromApiAndSave(symbol);
 //		}
-
-		checkAllGaps(14);
+		checkAllGaps(30);
 	}
 
 	public static void getKLineFromApiAndSave(String symbol) {

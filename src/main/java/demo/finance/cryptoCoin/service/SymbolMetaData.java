@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.cloudinary.utils.StringUtils;
+
 import demo.finance.cryptoCoin.pojo.type.CryptoCoinTagType;
-import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmPriceCacheSubBO;
-import finance.cryptoCoin.binance.future.um.pojo.result.CryptoCoinBinanceFutureUmPriceResult;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import toolPack.httpHandel.HttpUtil;
@@ -63,24 +63,26 @@ public class SymbolMetaData extends BinanceDataCommonService {
 	}
 
 	public static void main(String[] args) {
-//		SymbolMetaData t = new SymbolMetaData();
+		SymbolMetaData t = new SymbolMetaData();
 //		loadAllSymbolListFromAPI();
-//		setProxy();
+		setProxy();
+		refreshSymbolListFromAPI();
 //		saveAllMetaData();
-		findAllBigTradeStep();
-//		JSONObject symbolTagJson = t.getSymbolTagJson();
-//		List<String> symbolList = t.filterByTags(symbolTagJson, tagMap.get(CryptoCoinTagType.ETH));
-////		List<String> symbolList = t.filterByTags(symbolTagJson, Arrays.asList("sport","game"));
-//		System.out.println(symbolList);
-	}
+//		findAllBigTradeStep();
+//		for (String symbol : symbols) {
+//			JSONObject symbolTagJson = t.getSymbolMetaDataJson(symbol);
+//			if (symbolTagJson == null) {
+//				System.out.println(symbol + ", Can NOT find meta data");
+//				continue;
+//			}
+//
+//		}
 
-	public static void loadAllSymbolListFromAPI() {
-		CryptoCoinBinanceFutureUmPriceResult lastPriceResult = BinanceFutureUmDataApiUnit.getLastPrice();
-		for (Entry<String, CryptoCoinBinanceFutureUmPriceCacheSubBO> entry : lastPriceResult.getPriceMap().entrySet()) {
-			if (!symbols.contains(entry.getKey())) {
-				symbols.add(entry.getKey());
-			}
-		}
+//		List<String> symbolList = t.filterByTags( tagMap.get(CryptoCoinTagType.ETH));
+//		List<String> symbolList = t.filterByTags( Arrays.asList("sport","game"));
+		List<String> symbolList = t
+				.filterByTags(Arrays.asList("Layer 2", "L2", "Layer2", "2 層", "2層", "二層", "2层", "2 层", "二层"));
+		System.out.println(symbolList);
 	}
 
 	public static void saveAllMetaData() {
@@ -88,16 +90,15 @@ public class SymbolMetaData extends BinanceDataCommonService {
 //		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Set<String> symbolSet = new HashSet<>();
 		for (String symbol : symbols) {
-			symbolSet.add(symbol.replaceAll("USDT", "").replaceAll("USDC", "").replaceAll("1000", ""));
+			symbol = symbol.replaceAll("USDT", "").replaceAll("USDC", "").replaceAll("1000", "");
+			if (StringUtils.isNotBlank(symbol)) {
+				symbolSet.add(symbol);
+			}
 		}
 		for (String symbol : symbolSet) {
 			JSONObject metaData = getMetaDataBySymbolFromAPI(symbol);
-			String filename = symbol + "USDT";
-			if (kSymbols.contains("1000" + symbol)) {
-				filename = "1000" + filename;
-			}
 			ioUtil.byteToFile(metaData.toString().getBytes(StandardCharsets.UTF_8),
-					symbolMetaFilePathPrefix + "/" + filename + ".json");
+					symbolMetaFilePathPrefix + "/" + symbol + ".json");
 		}
 	}
 
@@ -133,7 +134,7 @@ public class SymbolMetaData extends BinanceDataCommonService {
 		return null;
 	}
 
-	public List<CryptoCoinTagType> matchTags(String symbol, String desc) {
+	public List<CryptoCoinTagType> findTagsFromDescription(String desc) {
 		desc = desc.toLowerCase();
 		List<CryptoCoinTagType> tagList = new ArrayList<>();
 		for (Entry<CryptoCoinTagType, List<String>> entry : tagMap.entrySet()) {
@@ -148,26 +149,48 @@ public class SymbolMetaData extends BinanceDataCommonService {
 		return tagList;
 	}
 
-	public JSONObject getSymbolTagJson() {
+	public JSONObject getSymbolMetaDataJson(String symbol) {
 		FileUtilCustom f = new FileUtilCustom();
-		String content = f.getStringFromFile(symbolMetaFilePathPrefix);
-		JSONObject json = JSONObject.fromObject(content);
-		return json;
+		try {
+			String content = f.getStringFromFile(symbolMetaFilePathPrefix + "/" + symbol + ".json");
+			JSONObject json = JSONObject.fromObject(content);
+			return json;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public List<String> filterByTags(JSONObject symbolTagJson, List<String> tags) {
-		@SuppressWarnings("unchecked")
-		Set<Object> keys = symbolTagJson.keySet();
+	public List<String> filterByTags(List<String> tags) {
 		List<String> symbolList = new ArrayList<>();
-		for (Object key : keys) {
-			String desc = String.valueOf(symbolTagJson.get(key));
-			desc = desc.toUpperCase();
-			tagLoop: for (String tag : tags) {
-				if (desc.contains(tag.toUpperCase())) {
-					symbolList.add(String.valueOf(key));
-					break tagLoop;
-				}
+		for (String symbol : symbols) {
+			symbol = symbol.replaceAll("USDT", "").replaceAll("USDC", "").replaceAll("1000", "");
+			JSONObject contentJson = getSymbolMetaDataJson(symbol);
+			if (contentJson == null) {
+				continue;
 			}
+			try {
+				JSONArray data = contentJson.getJSONArray("data");
+				if (data == null || data.isEmpty()) {
+					System.out.println(symbol + ", has NOT data");
+					continue;
+				}
+				JSONObject metaData = data.getJSONObject(0);
+				JSONArray details = metaData.getJSONArray("details");
+				String desc = details.getJSONObject(0).getString("description");
+				desc = desc + details.getJSONObject(1).getString("description");
+				desc = desc.toUpperCase();
+				tagLoop: for (String tag : tags) {
+					if (desc.contains(tag.toUpperCase())) {
+						symbolList.add(String.valueOf(symbol));
+						break tagLoop;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+
 		}
 		return symbolList;
 	}
