@@ -1,12 +1,12 @@
 package test;
 
-import java.util.Date;
-
 public class Tmp32 {
 
 	public static void main(String[] args) {
-		Date d = new Date();
-		System.out.println(d.getTime());
+
+		String str = "abcde";
+		int i = str.indexOf("d");
+		System.out.println(str.substring(0, i));
 	}
-	
+
 }
