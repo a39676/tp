@@ -68,21 +68,20 @@ public class SymbolMetaData extends BinanceDataCommonService {
 		setProxy();
 		refreshSymbolListFromAPI();
 //		saveAllMetaData();
-//		findAllBigTradeStep();
-//		for (String symbol : symbols) {
-//			JSONObject symbolTagJson = t.getSymbolMetaDataJson(symbol);
-//			if (symbolTagJson == null) {
-//				System.out.println(symbol + ", Can NOT find meta data");
-//				continue;
-//			}
-//
-//		}
+		findAllBigTradeStep();
+		for (String symbol : symbols) {
+			JSONObject symbolTagJson = t.getSymbolMetaDataJson(symbol);
+			if (symbolTagJson == null) {
+				System.out.println(symbol + ", Can NOT find meta data");
+				continue;
+			}
+		}
 
 //		List<String> symbolList = t.filterByTags( tagMap.get(CryptoCoinTagType.ETH));
 //		List<String> symbolList = t.filterByTags( Arrays.asList("sport","game"));
-		List<String> symbolList = t
-				.filterByTags(Arrays.asList("Layer 2", "L2", "Layer2", "2 層", "2層", "二層", "2层", "2 层", "二层"));
-		System.out.println(symbolList);
+//		List<String> symbolList = t
+//				.filterByTags(Arrays.asList("Layer 2", "L2", "Layer2", "2 層", "2層", "二層", "2层", "2 层", "二层"));
+//		System.out.println(symbolList);
 	}
 
 	public static void saveAllMetaData() {
@@ -200,7 +199,8 @@ public class SymbolMetaData extends BinanceDataCommonService {
 		BigDecimal rate = new BigDecimal(1000000);
 		for (String symbol : symbols) {
 			try {
-				String content = ioUtil.getStringFromFile(symbolMetaFilePathPrefix + "/" + symbol + ".json");
+				String content = ioUtil
+						.getStringFromFile(symbolMetaFilePathPrefix + "/" + symbol.replaceAll("USDT", "") + ".json");
 				JSONObject json = JSONObject.fromObject(content);
 				JSONObject data = json.getJSONArray("data").getJSONObject(0);
 				BigDecimal marketCap = new BigDecimal(data.getString("marketCap"));
