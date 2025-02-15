@@ -15,7 +15,6 @@ public class JavaCallPythonScript {
 
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
-			;
 			Process p = Runtime.getRuntime().exec("python " + System.getProperty("user.home") + "/tmp/tmp2.py a b c");
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

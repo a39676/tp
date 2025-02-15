@@ -36,20 +36,45 @@ import toolPack.ioHandle.FileUtilCustom;
 public class SubwayPractice {
 
 	private static String mainUrl = "https://api-phx-hw02.yunxuetang.cn";
+	private static String token = "eyJhbGciOiJIUzUxMiJ9.eyJvcmdJZCI6ImQ1YmNiZjhjLWU1OTUtNDBmZi05YzBjLWYzOWE1ZDAyZjFiYyIsInVzZXJJZCI6IjM0YTI3M2Y2LWU4MDgtNDgzYi1iMTAxLTk4NDczM2QxMDIzOCIsImNsdXN0ZXJJZCI6Imh1YXdlaS1pdGFpIiwiZXhwIjoxNzQwNDYwMTUwfQ.mn0uhJ6XgpD-1MB0o1ncLYhNXirlmKZgua41UKiKGBDRdzdPZyOM10jqIOSVBqMx_y0b-7iDftV2rOC9i7nx0g";
 	@SuppressWarnings("unused")
 	private static final int SINGLE_CHOICE = 0;
 	@SuppressWarnings("unused")
 	private static final int MULTIPLE_CHOICE = 1;
 	private static final int JUDGE = 2;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+//		run("C:\\Users\\daven/toolSH/tmp.bat", "a", "b");
+
 		List<String> practiceIdList = getPracticeIdList();
-		for (String practiceId : practiceIdList) {
+		System.out.println(practiceIdList);
+
+		for (int i = 2; i < practiceIdList.size(); i++) {
+			String practiceId = practiceIdList.get(i);
 			handlePractice(practiceId);
 		}
+
+//		handlePractice(practiceIdList.get(0));
 	}
 
-	public static List<String> getPracticeIdList() {
+	public static List<String> getPracticeIdList() throws IOException {
+		String scriptStr = "curl -H \"Content-Type: application/json\" -H \"token: %s\" -H \"source: 501\" --request GET \"https://api-phx-hw02.yunxuetang.cn/ote/upm/list/nocount?status=1&name=&offset=0&limit=12&oteGroupFuncReq=0\"";
+		scriptStr = String.format(scriptStr, token);
+		String response = run(scriptStr);
+		System.out.println(response);
+		List<String> idList = new ArrayList<>();
+		JSONObject ja = JSONObject.fromObject(response);
+		JSONArray datas = ja.getJSONArray("datas");
+		for (int i = 0; i < datas.size(); i++) {
+			JSONObject data = datas.getJSONObject(i);
+			idList.add(data.getString("praId"));
+		}
+
+		return idList;
+	}
+
+	public static List<String> getPracticeIdList_old() {
+		// 2025-02-11 对方 API 有更新
 		String url = mainUrl + "/audit/todos/list";
 		String requestParam = "{\"attributes\":[],\"catgCodes\":[\"practice\"],\"sceneTarget\":\"0\",\"startTime\":\"\",\"endTime\":\"\"}";
 		List<String> idList = new ArrayList<>();
@@ -114,7 +139,38 @@ public class SubwayPractice {
 				(System.getProperty("user.home") + "/tmp/subway/" + practice.getPraName() + "_answer.txt"));
 	}
 
-	public static boolean sendAnswer(String practiceId, SubwayPracticeAnswerDTO dto) {
+	private static boolean sendAnswer(String practiceId, SubwayPracticeAnswerDTO dto, String token) {
+		String response = null;
+		String urlStr = mainUrl + "/ote/upm/%s/users/%s/answer";
+		urlStr = String.format(urlStr, practiceId, dto.getPuId());
+
+		JSONObject mainAnswer = new JSONObject();
+		mainAnswer.put("isH5Exam", 0);
+		mainAnswer.put("uniqueId", dto.getUniqueId());
+		mainAnswer.put("pumId", dto.getPumId());
+		mainAnswer.put("isLastQues", 0);
+		mainAnswer.put("answers", dto.getAnswers());
+
+		String script = "curl -H \"Content-Type: application/json\"" + " -H \"token: %s\"" + " -H \"source: 501\""
+				+ " --data \"%s\"" + " --request PUT \"" + urlStr + "\"";
+		String mainAnswerStr = mainAnswer.toString();
+		mainAnswerStr = mainAnswerStr.replaceAll("\"", "\\\\\"");
+		script = String.format(script, token, mainAnswerStr);
+		response = run(script);
+//		System.err.println(response);
+
+		JSONArray responseJsonArray = JSONArray.fromObject(response.toString());
+		JSONObject answerResult = responseJsonArray.getJSONObject(0);
+		if (answerResult.containsKey("corrected")) {
+			String corrected = answerResult.getString("corrected");
+			return "1".equals(corrected);
+		} else {
+			System.out.println(response);
+		}
+		return false;
+	}
+
+	public static boolean sendAnswer_OLD(String practiceId, SubwayPracticeAnswerDTO dto) {
 		String url = mainUrl + "/ote/upm/%s/users/%s/answer";
 		url = String.format(url, practiceId, dto.getPuId());
 
@@ -191,6 +247,23 @@ public class SubwayPractice {
 	}
 
 	public static SubwayPracticeDTO saveExam(String practiceId) {
+		String script = "curl -H \"Content-Type: application/json\" -H \"token: %s\" -H \"source: 501\" --request GET \"https://api-phx-hw02.yunxuetang.cn/ote/upm/start?praId=%s&usedTime=0&praBatchId=\"";
+		script = String.format(script, token, practiceId);
+		String response = run(script);
+
+		SubwayPracticeDTO practiceDTO = new Gson().fromJson(response, SubwayPracticeDTO.class);
+
+		FileUtilCustom f = new FileUtilCustom();
+		String filePath = System.getProperty("user.home") + "/tmp/subway/" + practiceDTO.getPraName() + "_question.txt";
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String jsonString = gson.toJson(practiceDTO);
+		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8), filePath);
+
+		return practiceDTO;
+	}
+
+	public static SubwayPracticeDTO saveExam_old(String practiceId) {
+		// 2025-02-11 对方 API 更新
 		HttpUtil h = new HttpUtil();
 
 		String url = mainUrl + "/ote/upm/start?praId=%s&usedTime=6&praBatchId=";
@@ -213,7 +286,7 @@ public class SubwayPractice {
 		String filePath = System.getProperty("user.home") + "/tmp/subway/" + practiceDTO.getPraName() + "_question.txt";
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String jsonString = gson.toJson(practiceDTO);
-		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8),filePath);
+		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8), filePath);
 
 		return practiceDTO;
 	}
@@ -248,33 +321,53 @@ public class SubwayPractice {
 		answerDTO.setPuId(puId);
 		answerDTO.setPumId(pumId);
 		answerDTO.setUniqueId(uniqueId);
-		boolean answerFlag = sendAnswer(practice.getPraId(), answerDTO);
+		boolean answerFlag = sendAnswer(practice.getPraId(), answerDTO, token);
 		return answerFlag;
 	}
 
 	public static Map<String, String> getRequestPropertyMap() {
-		String token = "eyJhbGciOiJIUzUxMiJ9.eyJvcmdJZCI6ImQ1YmNiZjhjLWU1OTUtNDBmZi05YzBjLWYzOWE1ZDAyZjFiYyIsInVzZXJJZCI6IjM0YTI3M2Y2LWU4MDgtNDgzYi1iMTAxLTk4NDczM2QxMDIzOCIsImNsdXN0ZXJJZCI6Imh1YXdlaS1pdGFpIiwiZXhwIjoxNzIzMDgyODM4fQ.mhVaWfr2Dj6lG-3UCPju9mZijpGz-W0XTGCP05O4g4YQdIQrdQEEOPDaKV96mBc-tBMSi5arm7O2d_mke7F_aw"; 
-		
 		Map<String, String> requestPropertyMap = new HashMap<>();
 		requestPropertyMap.put("token", token);
-		requestPropertyMap.put("User-Agent",
-				"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0");
-		requestPropertyMap.put("Accept", "application/json, text/plain, */*");
-		requestPropertyMap.put("Accept-Encoding", "gzip, deflate, br, zstd");
-		requestPropertyMap.put("Accept-Language", "en-US,en;q=0.5");
-		requestPropertyMap.put("Connection", "keep-alive");
-		requestPropertyMap.put("Content-Type", "application/json;charset=UTF-8");
-		requestPropertyMap.put("Host", "api-phx-hw02.yunxuetang.cn");
-		requestPropertyMap.put("Origin", "https://gzmtr.yunxuetang.cn");
-		requestPropertyMap.put("Referer", "https://gzmtr.yunxuetang.cn/");
-		requestPropertyMap.put("Sec-Fetch-Dest", "empty");
-		requestPropertyMap.put("Sec-Fetch-Mode", "cors");
-		requestPropertyMap.put("Sec-Fetch-Site", "same-site");
 		requestPropertyMap.put("source", "501");
-		requestPropertyMap.put("TE", "trailers");
-		requestPropertyMap.put("Yxt-OrgDomain", "gzmtr.yunxuetang.cn");
-//		requestParameters.put("YxtSpanId", "f42f0ed6b2132446");
-//		requestParameters.put("YxtTraceId", "5.d5bcbf8c-e595-40ff-9c0c-f39a5d02f1bc.34a273f6-e808-483b-b101-984733d10238.1721873802452.81556025");
+		requestPropertyMap.put("Content-Type", "application/json");
+		requestPropertyMap.put("Accept", "*/*");
+		requestPropertyMap.put("Accept-Encoding", "gzip, deflate, br");
+		requestPropertyMap.put("Connection", "keep-alive");
+		requestPropertyMap.put("Cache-Control", "no-cache");
+		requestPropertyMap.put("User-Agent", "PostmanRuntime/7.43.0");
+//		requestPropertyMap.put("", "");
 		return requestPropertyMap;
+	}
+
+	private static String run(String scriptStr) {
+		System.out.println("command: " + scriptStr);
+		ProcessBuilder processBuilder = new ProcessBuilder(scriptStr.split(" "));
+		try {
+			Process process = processBuilder.start();
+			StringBuilder output = new StringBuilder();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				if (output.length() == 0 && !(line.startsWith("{") || line.startsWith("["))) {
+					continue;
+				}
+				output.append(line + "\n");
+			}
+			int exitVal = process.waitFor();
+			if (exitVal == 0) {
+				return output.toString();
+			} else {
+				// abnormal...
+//				return "error";
+				return output.toString();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "error";
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 }
