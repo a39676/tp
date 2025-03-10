@@ -10,18 +10,20 @@ import java.util.List;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Tmp33 {
+public class ImageToPDF {
 
 	public static void main(String[] args) throws DocumentException, MalformedURLException, IOException {
-		File root = new File(
-				"C:\\Users\\daven\\Downloads\\[藤子·F·不二雄][哆啦A梦大全集 数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu].Vol.04");
+		String sourceFolderPathStr = null;
+//		sourceFolderPathStr = "C:\\Users\\daven\\Downloads\\[藤子·F·不二雄][哆啦A梦大全集 数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu].Vol.04";
+		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\bookForRead\\english\\TheSeedThatGrew";
+		int imageFileSize = 23;
+		File root = new File(sourceFolderPathStr);
 		String outputFile = "output.pdf";
 		List<String> filesPathStrList = new ArrayList<String>();
 		File[] files = root.listFiles();
-		for (int i = 0; i < files.length ; i++) {
+		for (int i = 0; i < files.length; i++) {
 			File f = files[i];
 			if (f.getName().endsWith("jpg")) {
 				filesPathStrList.add(f.getAbsolutePath());
@@ -32,14 +34,17 @@ public class Tmp33 {
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(new File(root, outputFile)));
 		document.open();
-		for (String filePathStr : filesPathStrList) {
+//		for (String filePathStr : filesPathStrList) {
+		for (int i = 0; i < imageFileSize; i++) {
+			String filePathStr = sourceFolderPathStr + "/" + i + ".jpg";
 			System.out.println("Add image: " + filePathStr);
 			document.newPage();
 			Image image = Image.getInstance(filePathStr);
-			image.setRotationDegrees(90);
-			image.setBorderWidth(0);
-			image.setAbsolutePosition(0, 0);
-			image.scaleAbsolute(PageSize.A4.rotate());
+//			image.setRotationDegrees(90);
+//			image.setBorderWidth(0);
+//			image.setAbsolutePosition(0, 0);
+//			image.scaleAbsolute(PageSize.A4.rotate());
+			image.scaleToFit(550, 550);
 			document.add(image);
 		}
 		document.close();
