@@ -1,13 +1,13 @@
 package test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
-import tool_package.SnowFlake;
+import toolPack.numericHandel.NumberToCN;
 
 public class Tmp34 {
 
 	public static void main(String[] args) throws IOException {
-		SnowFlake s = new SnowFlake();
-		System.out.println(s.getNextId());
+		System.out.println(NumberToCN.number2CNMontrayUnit(new BigDecimal(1)));
 	}
 }
