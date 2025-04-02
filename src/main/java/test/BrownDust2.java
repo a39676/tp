@@ -203,6 +203,17 @@ public class BrownDust2 {
 		send(count);
 		updateJson(BrownDust2ItemType.wuPin33);
 		send(count);
+
+		updateJson(BrownDust2ItemType.upgradeStart1);
+		send(count);
+		updateJson(BrownDust2ItemType.upgradeStart2);
+		send(count);
+		updateJson(BrownDust2ItemType.upgradeStart3);
+		send(count);
+		updateJson(BrownDust2ItemType.upgradeStart4);
+		send(count);
+		updateJson(BrownDust2ItemType.upgradeStart5);
+		send(count);
 	}
 
 	public static void sendRice(int count) {
