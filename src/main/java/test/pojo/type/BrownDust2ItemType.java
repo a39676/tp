@@ -57,7 +57,6 @@ public enum BrownDust2ItemType {
 	wuPin30("物品30", 3010, 8),
 	wuPin31("物品31", 3011, 8),
 	wuPin32("物品32", 3012, 8),
-	wuPin33("物品33", 3013, 8),
 
 	moShi1("魔石1", 101, 8),
 	moShi2("魔石2", 102, 8),
