@@ -18,15 +18,21 @@ public class BrownDust2 {
 	}
 
 	public static void main(String[] args) throws IOException {
-		sendTuYang1(1);
+//		sendMainResource(1);
+//		sendTuYang1(1);
+		sendCaiLiao(1);
+//		sendRice(1);
+//		sendRedSlime(1);
 	}
 
 	public static void sendMainResource(int count) {
+		json.put("count", 99999999);
 		updateJson(BrownDust2ItemType.diamond);
 		send(count);
 
 		updateJson(BrownDust2ItemType.money);
 		send(count);
+		json.put("count", 9999);
 	}
 
 	public static void sendCaiLiao(int count) {
@@ -130,7 +136,7 @@ public class BrownDust2 {
 
 		updateJson(BrownDust2ItemType.nvShenZhiLei);
 		send(count);
-		
+
 		updateJson(BrownDust2ItemType.wuPin1);
 		send(count);
 		updateJson(BrownDust2ItemType.wuPin2);
@@ -208,7 +214,7 @@ public class BrownDust2 {
 		updateJson(BrownDust2ItemType.redSlime);
 		send(count);
 	}
-	
+
 	public static void sendTuYang1(int count) {
 		updateJson(BrownDust2ItemType.tuYang1);
 		send(count);
@@ -455,6 +461,7 @@ public class BrownDust2 {
 	private static void send(int count) {
 		System.out.println(json.toString());
 		for (int i = 0; i < count; i++) {
+			System.out.println(i);
 			try {
 				h.sendPostRestful(url, json.toString());
 			} catch (IOException e) {
