@@ -23,6 +23,7 @@ public class BrownDust2 {
 		sendCaiLiao(1);
 //		sendRice(1);
 //		sendRedSlime(1);
+//		sendChouChouLe(1);
 	}
 
 	public static void sendMainResource(int count) {
@@ -223,6 +224,25 @@ public class BrownDust2 {
 		updateJson(BrownDust2ItemType.redSlime);
 		send(count);
 	}
+	
+	public static void sendChouChouLe(int count) {
+		updateJson(BrownDust2ItemType.chouChouLe1);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe2);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe3);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe4);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe5);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe6);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe7);
+		send(count);
+		updateJson(BrownDust2ItemType.chouChouLe8);
+		send(count);
+	}
 
 	public static void sendTuYang1(int count) {
 		updateJson(BrownDust2ItemType.tuYang1);
@@ -294,8 +314,6 @@ public class BrownDust2 {
 		updateJson(BrownDust2ItemType.tuYang34);
 		send(count);
 		updateJson(BrownDust2ItemType.tuYang35);
-		send(count);
-		updateJson(BrownDust2ItemType.tuYang36);
 		send(count);
 		updateJson(BrownDust2ItemType.tuYang37);
 		send(count);

@@ -10,6 +10,11 @@ public enum BrownDust2ItemType {
 	wanNengYaoShi("万能钥匙", 1, 8),
 	jingLianFenMo("精炼粉末", 10, 8),
 
+	tianFuSHu1("天赋技能书1", 3, 8),
+	tianFuSHu2("天赋技能书2", 4, 8),
+	tianFuSHu3("天赋技能书3", 5, 8),
+	tianFuSHu4("天赋技能书4", 6, 8),
+	
 	upgradeStart1("upgradeStart1", 11, 8),
 	upgradeStart2("upgradeStart2", 12, 8),
 	upgradeStart3("upgradeStart3", 13, 8),
@@ -142,7 +147,7 @@ public enum BrownDust2ItemType {
 	tuYang33("图样33", 90063, 8),
 	tuYang34("图样34", 90064, 8),
 	tuYang35("图样35", 90065, 8),
-	tuYang36("图样36", 90066, 8),
+//	tuYang36("图样36", 90066, 8),
 	tuYang37("图样37", 90071, 8),
 	tuYang38("图样38", 90072, 8),
 	tuYang39("图样39", 90073, 8),
@@ -227,6 +232,15 @@ public enum BrownDust2ItemType {
 	tuYang118("图样118", 96072, 8),
 	tuYang119("图样119", 96076, 8),
 	tuYang120("图样120", 96081, 8),
+	
+	chouChouLe1("抽抽乐1", 1000, 8),
+	chouChouLe2("抽抽乐2", 1100, 8),
+	chouChouLe3("抽抽乐3", 1101, 8),
+	chouChouLe4("抽抽乐4", 1102, 8),
+	chouChouLe5("抽抽乐5", 1103, 8),
+	chouChouLe6("抽抽乐6", 1104, 8),
+	chouChouLe7("抽抽乐7", 1105, 8),
+	chouChouLe8("抽抽乐8", 1106, 8),
 	
 	;
 
