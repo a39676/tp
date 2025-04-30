@@ -11,15 +11,16 @@ import java.util.List;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class ImageToPDF {
 
 	public static void main(String[] args) throws DocumentException, MalformedURLException, IOException {
 		String sourceFolderPathStr = null;
-//		sourceFolderPathStr = "C:\\Users\\daven\\Downloads\\[藤子·F·不二雄][哆啦A梦大全集 数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu].Vol.04";
+		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\bookForRead\\comic\\[藤子·F·不二雄][哆啦A梦大全集 数码全彩][青文][双页8K版 by milianaisu][20完]\\[藤子·F·不二雄][哆啦A梦大全集  数码全彩][青文][双页8K版 by milianaisu].Vol.05";
 //		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\bookForRead\\english\\TheSeedThatGrew";
-		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\textbook\\4\\english\\2";
+//		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\textbook\\4\\english\\2";
 		File root = new File(sourceFolderPathStr);
 		String outputFile = "output.pdf";
 		List<String> filesPathStrList = new ArrayList<String>();
@@ -43,10 +44,10 @@ public class ImageToPDF {
 			System.out.println("Add image: " + filePathStr);
 			document.newPage();
 			Image image = Image.getInstance(filePathStr);
-//			image.setRotationDegrees(90);
+			image.setRotationDegrees(90);
 //			image.setBorderWidth(0);
-			image.setAbsolutePosition(25, 20);
-//			image.scaleAbsolute(PageSize.A5.rotate());
+//			image.setAbsolutePosition(25, 20);
+			image.scaleAbsolute(PageSize.A5.rotate());
 //			image.scaleAbsolute(PageSize.A4);
 			image.scaleToFit(700, 750);
 			document.add(image);

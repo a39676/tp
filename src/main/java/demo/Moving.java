@@ -6,7 +6,7 @@ import java.awt.Robot;
 import java.time.LocalDateTime;
 
 public class Moving {
-	private static final int DELAY_SECONDS = 30;
+	private static final int DELAY_SECONDS = 60;
 	@SuppressWarnings("unused")
 	private static final int MAX_X = 3;
 	@SuppressWarnings("unused")
