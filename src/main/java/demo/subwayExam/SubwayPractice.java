@@ -36,12 +36,13 @@ import toolPack.ioHandle.FileUtilCustom;
 public class SubwayPractice {
 
 	private static String mainUrl = "https://api-phx-hw02.yunxuetang.cn";
-	private static String token = "eyJhbGciOiJIUzUxMiJ9.eyJvcmdJZCI6ImQ1YmNiZjhjLWU1OTUtNDBmZi05YzBjLWYzOWE1ZDAyZjFiYyIsInVzZXJJZCI6IjM0YTI3M2Y2LWU4MDgtNDgzYi1iMTAxLTk4NDczM2QxMDIzOCIsImNsdXN0ZXJJZCI6Imh1YXdlaS1pdGFpIiwiZXhwIjoxNzQwNDYwMTUwfQ.mn0uhJ6XgpD-1MB0o1ncLYhNXirlmKZgua41UKiKGBDRdzdPZyOM10jqIOSVBqMx_y0b-7iDftV2rOC9i7nx0g";
+	private static String token = "eyJhbGciOiJIUzUxMiJ9.eyJvcmdJZCI6ImQ1YmNiZjhjLWU1OTUtNDBmZi05YzBjLWYzOWE1ZDAyZjFiYyIsInVzZXJJZCI6IjM0YTI3M2Y2LWU4MDgtNDgzYi1iMTAxLTk4NDczM2QxMDIzOCIsImNsdXN0ZXJJZCI6Imh1YXdlaS1pdGFpIiwiZXhwIjoxNzU0MjgwNTMyfQ.eamU8uhlNqOzBaZcwXMgC6j3nHhaYo9ppAAFKVONqNW_m0ArE8qQ5krRX7ZtsOLDm985NnOQSKsqoM1e3Tapeg";
 	@SuppressWarnings("unused")
 	private static final int SINGLE_CHOICE = 0;
 	@SuppressWarnings("unused")
 	private static final int MULTIPLE_CHOICE = 1;
 	private static final int JUDGE = 2;
+	private static final String LOCAL_SAVE_PATH_STR = System.getProperty("user.home") + "/tmp/subway";
 
 	public static void main(String[] args) throws IOException {
 //		run("C:\\Users\\daven/toolSH/tmp.bat", "a", "b");
@@ -49,7 +50,7 @@ public class SubwayPractice {
 		List<String> practiceIdList = getPracticeIdList();
 		System.out.println(practiceIdList);
 
-		for (int i = 2; i < practiceIdList.size(); i++) {
+		for (int i = 0; i < practiceIdList.size(); i++) {
 			String practiceId = practiceIdList.get(i);
 			handlePractice(practiceId);
 		}
@@ -62,12 +63,13 @@ public class SubwayPractice {
 		scriptStr = String.format(scriptStr, token);
 		String response = run(scriptStr);
 		System.out.println(response);
-		List<String> idList = new ArrayList<>();
 		JSONObject ja = JSONObject.fromObject(response);
 		JSONArray datas = ja.getJSONArray("datas");
+		List<String> idList = new ArrayList<>();
 		for (int i = 0; i < datas.size(); i++) {
 			JSONObject data = datas.getJSONObject(i);
 			idList.add(data.getString("praId"));
+			System.out.println("Find: ID: " + data.getString("praId") + ", " + data.getString("praName"));
 		}
 
 		return idList;
@@ -136,7 +138,7 @@ public class SubwayPractice {
 		String jsonString = gson.toJson(outputDTO);
 		FileUtilCustom f = new FileUtilCustom();
 		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8),
-				(System.getProperty("user.home") + "/tmp/subway/" + practice.getPraName() + "_answer.txt"));
+				(LOCAL_SAVE_PATH_STR + "/" + practice.getPraName() + "_answer.txt"));
 	}
 
 	private static boolean sendAnswer(String practiceId, SubwayPracticeAnswerDTO dto, String token) {
@@ -252,9 +254,10 @@ public class SubwayPractice {
 		String response = run(script);
 
 		SubwayPracticeDTO practiceDTO = new Gson().fromJson(response, SubwayPracticeDTO.class);
+		System.out.println("Save practice, ID: " + practiceId + ", " + practiceDTO.getPraName());
 
 		FileUtilCustom f = new FileUtilCustom();
-		String filePath = System.getProperty("user.home") + "/tmp/subway/" + practiceDTO.getPraName() + "_question.txt";
+		String filePath = LOCAL_SAVE_PATH_STR + "/" + practiceDTO.getPraName() + "_question.txt";
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String jsonString = gson.toJson(practiceDTO);
 		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8), filePath);
@@ -283,7 +286,7 @@ public class SubwayPractice {
 		SubwayPracticeDTO practiceDTO = new Gson().fromJson(response, SubwayPracticeDTO.class);
 
 		FileUtilCustom f = new FileUtilCustom();
-		String filePath = System.getProperty("user.home") + "/tmp/subway/" + practiceDTO.getPraName() + "_question.txt";
+		String filePath = LOCAL_SAVE_PATH_STR + "/" + practiceDTO.getPraName() + "_question.txt";
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String jsonString = gson.toJson(practiceDTO);
 		f.byteToFile(jsonString.toString().getBytes(StandardCharsets.UTF_8), filePath);
@@ -322,6 +325,7 @@ public class SubwayPractice {
 		answerDTO.setPumId(pumId);
 		answerDTO.setUniqueId(uniqueId);
 		boolean answerFlag = sendAnswer(practice.getPraId(), answerDTO, token);
+		System.out.println("sendAnswerForJudgeQuestion, " + question.getContent() + ", " + answerFlag);
 		return answerFlag;
 	}
 

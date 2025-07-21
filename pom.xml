@@ -190,7 +190,11 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.5.13.4</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>1.8.3</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.sun.mail</groupId>
@@ -263,8 +267,6 @@
 			<version>1.0.14</version>
 		</dependency>
 		<!-- cloudinary image end -->
-
-		
 
 		<dependency>
 			<groupId>net.lingala.zip4j</groupId>
@@ -384,6 +386,19 @@
 			<groupId>dev.samstevens.totp</groupId>
 			<artifactId>totp</artifactId>
 			<version>1.7.1</version>
+		</dependency>
+
+		<!-- media player -->
+		<dependency>
+			<groupId>javazoom</groupId>
+			<artifactId>jlayer</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>24.0.1</version>
 		</dependency>
 
 		<dependency>
