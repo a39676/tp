@@ -15,20 +15,17 @@ import com.google.common.io.Files;
 
 public class TemuHelper {
 
-//	private static final String infoExcelName = "3D打印.xls";
-	private static final String infoExcelName = "新建 XLS 工作表.xls";
+	private static final String infoExcelSuffixName = ".xls";
 	private static final String mainFolderStr = "C:/Users/daven/auxiliary/pf/temu/产品素材";
-	private static final String targetDateFolderStr = "7月7号二组(1)";
+	private static final String targetDateFolderStr = "20250721_2";
+	@SuppressWarnings("unused")
 	private static final String subFolderName = "霸王龙骨头";
 	private static List<String> imageSuffixList = new ArrayList<>();
-	private static List<Integer> pcsList = new ArrayList<>();
 	static {
 		imageSuffixList.add("jpg");
 		imageSuffixList.add("jpeg");
 		imageSuffixList.add("png");
 		imageSuffixList.add("webp");
-		pcsList.addAll(List.of(1));
-//		pcsList.add(3);
 	}
 
 	public static void main(String[] args) {
@@ -80,27 +77,43 @@ public class TemuHelper {
 	}
 
 	public void renameImgAndExcelFiles() {
-		String targetFolderStr = mainFolderStr + "/" + targetDateFolderStr + "/" + subFolderName;
-		File folder = new File(targetFolderStr);
-		File[] files = folder.listFiles();
+		String dateFolderStr = mainFolderStr + "/" + targetDateFolderStr;
+		File folders = new File(dateFolderStr);
+		File[] files = folders.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+			if (!file.isDirectory()) {
+				continue;
+			}
+			renameImgAndExcelFiles(file.getAbsolutePath());
+		}
+	}
+
+	public void renameImgAndExcelFiles(String targetFolderStr) {
+		boolean handleImg = true;
+//		String targetFolderStr = mainFolderStr + "/" + targetDateFolderStr + "/" + subFolderName;
+		File targetFolder = new File(targetFolderStr);
+		File[] files = targetFolder.listFiles();
 		List<File> targetImageFileList = new ArrayList<>();
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
 			String fileName = file.getName();
 			System.out.println(file.getName());
-			if (infoExcelName.equals(fileName)) {
-				file.renameTo(new File(file.getParentFile() + "/" + subFolderName + "_info.xls"));
+			if (fileName.endsWith(infoExcelSuffixName)) {
+				file.renameTo(new File(file.getParentFile() + "/" + targetFolder.getName() + "_info.xls"));
 			} else if (!fileName.contains("size") && isEndWithImageSuffix(fileName) != null) {
-				targetImageFileList.add(file);
+				if (handleImg) {
+					targetImageFileList.add(file);
+				}
 			}
 		}
 
+		// rename image files
 		for (int i = 0; i < targetImageFileList.size(); i++) {
 			File oldFile = targetImageFileList.get(i);
 			System.out.println(oldFile.getAbsolutePath());
 			String suffixName = isEndWithImageSuffix(oldFile.getName());
-			File newFile = new File(
-					targetFolderStr + "/" + pcsList.get(0) + "_" + i + "_" + subFolderName + "." + suffixName);
+			File newFile = new File(targetFolderStr + "/" + i + "." + suffixName);
 			try {
 				Files.copy(oldFile, newFile);
 			} catch (IOException e) {
@@ -108,17 +121,18 @@ public class TemuHelper {
 			}
 		}
 
-		for (int c = 1; c < pcsList.size(); c++) {
-			File oldFile = targetImageFileList.get(0);
-			String suffixName = isEndWithImageSuffix(oldFile.getName());
-			File newFile = new File(targetFolderStr + "/" + pcsList.get(c) + "_" + 0 + "." + suffixName);
-			try {
-				Files.copy(oldFile, newFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		for (int c = 1; c < pcsList.size(); c++) {
+//			File oldFile = targetImageFileList.get(0);
+//			String suffixName = isEndWithImageSuffix(oldFile.getName());
+//			File newFile = new File(targetFolderStr + "/" + pcsList.get(c) + "_" + 0 + "." + suffixName);
+//			try {
+//				Files.copy(oldFile, newFile);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 
+		// move backup files
 		File backupFolder = new File(targetFolderStr + "/backup");
 		backupFolder.mkdirs();
 		for (int i = 0; i < targetImageFileList.size(); i++) {
