@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import toolPack.ioHandle.FileUtilCustom;
@@ -22,7 +23,7 @@ public class Tmp32 {
 				intStr = String.format("%06d", i);
 				urlStr = String.format(urlModel, intStr);
 //				System.out.println(urlStr);
-				BufferedInputStream in = new BufferedInputStream(new URL(urlStr).openStream());
+				BufferedInputStream in = new BufferedInputStream(URL.of(URI.create(urlStr), null).openStream());
 				filePathStr = "C:/Users/daven/tmp/tmpLession/" + intStr + ".ts";
 //				System.out.println(filePathStr);
 				System.out.println("file " + "'" + filePathStr + "'");

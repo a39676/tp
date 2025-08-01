@@ -16,8 +16,8 @@ import com.google.common.io.Files;
 public class TemuHelper {
 
 	private static final String infoExcelSuffixName = ".xls";
-	private static final String mainFolderStr = "C:/Users/daven/auxiliary/pf/temu/产品素材";
-	private static final String targetDateFolderStr = "20250721_2";
+	private static final String mainFolderStr = System.getProperty("user.home") + "/auxiliary/pf/temu/products";
+	private static final String targetDateFolderStr = "20250719_3_1688";
 	@SuppressWarnings("unused")
 	private static final String subFolderName = "霸王龙骨头";
 	private static List<String> imageSuffixList = new ArrayList<>();
