@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
@@ -17,7 +18,7 @@ public class TemuHelper {
 
 	private static final String infoExcelSuffixName = ".xls";
 	private static final String mainFolderStr = System.getProperty("user.home") + "/auxiliary/pf/temu/products";
-	private static final String targetDateFolderStr = "20250719_3_1688";
+	private static final String targetDateFolderStr = "20250806_1_1688";
 	@SuppressWarnings("unused")
 	private static final String subFolderName = "霸王龙骨头";
 	private static List<String> imageSuffixList = new ArrayList<>();
@@ -30,6 +31,7 @@ public class TemuHelper {
 
 	public static void main(String[] args) {
 		TemuHelper t = new TemuHelper();
+//		t.renameProductFolder();
 		t.renameImgAndExcelFiles();
 //		t.convertSkcBarcodePdfToImageByDateFolder();
 //		t.convertSkcBarcodePdfToImage(mainFolderStr + "/" + targetDateFolderStr + "/" + subFolderName);
@@ -153,5 +155,27 @@ public class TemuHelper {
 			}
 		}
 		return null;
+	}
+
+	public void renameProductFolder() {
+		String preStr = targetDateFolderStr.substring(0, 10);
+		File dataFolder = new File(mainFolderStr + "/" + targetDateFolderStr);
+		File[] files = dataFolder.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			File sourceFile = files[i];
+			if (sourceFile.isFile()) {
+				continue;
+			}
+			if (sourceFile.getName().startsWith(preStr)) {
+				continue;
+			}
+			File newFolder = new File(
+					mainFolderStr + "/" + targetDateFolderStr + "/" + preStr + "_" + sourceFile.getName());
+			try {
+				FileUtils.moveDirectory(sourceFile, newFolder);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
