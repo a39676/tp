@@ -29,10 +29,11 @@ public class TemuHelper {
 		imageSuffixList.add("webp");
 	}
 
+	// TODO 1.从excel 中直接获取货名, 重命名文件夹; 2.将货品文件夹转移到月份文件夹内 
 	public static void main(String[] args) {
 		TemuHelper t = new TemuHelper();
-//		t.renameProductFolder();
 		t.renameImgAndExcelFiles();
+//		t.renameProductFolder();  // TODO 更新后未测试
 //		t.convertSkcBarcodePdfToImageByDateFolder();
 //		t.convertSkcBarcodePdfToImage(mainFolderStr + "/" + targetDateFolderStr + "/" + subFolderName);
 	}
@@ -159,6 +160,8 @@ public class TemuHelper {
 
 	public void renameProductFolder() {
 		String preStr = targetDateFolderStr.substring(0, 10);
+		String dateEndWithMonthStr = targetDateFolderStr.substring(0, 6);
+//		TODO 未测试
 		File dataFolder = new File(mainFolderStr + "/" + targetDateFolderStr);
 		File[] files = dataFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
@@ -170,7 +173,7 @@ public class TemuHelper {
 				continue;
 			}
 			File newFolder = new File(
-					mainFolderStr + "/" + targetDateFolderStr + "/" + preStr + "_" + sourceFile.getName());
+					mainFolderStr + "/" + dateEndWithMonthStr + "/" + preStr + "_" + sourceFile.getName());
 			try {
 				FileUtils.moveDirectory(sourceFile, newFolder);
 			} catch (IOException e) {
