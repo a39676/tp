@@ -401,6 +401,13 @@
 			<version>24.0.1</version>
 		</dependency>
 
+		<!-- google gemini SDK -->
+		<dependency>
+			<groupId>com.google.genai</groupId>
+			<artifactId>google-genai</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.demo</groupId>
 			<artifactId>ToolPacks</artifactId>
@@ -420,6 +427,11 @@
 			<groupId>com.demo</groupId>
 			<artifactId>WebATTool</artifactId>
 			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.demo</groupId>
+			<artifactId>CryptoCoinMonitor</artifactId>
+			<version>0.0.2</version>
 		</dependency>
 	</dependencies>
 

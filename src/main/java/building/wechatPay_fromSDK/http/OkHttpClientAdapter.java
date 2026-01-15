@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,7 +110,7 @@ public final class OkHttpClientAdapter extends AbstractHttpClient {
 	}
 
 	private Map<String, String> assembleResponseHeader(Response okHttpResponse) {
-		Map<String, String> responseHeaders = new ConcurrentHashMap<>();
+		Map<String, String> responseHeaders = new HashMap<>();
 		// use an OkHttp3.x compatible method
 		int headerSize = okHttpResponse.headers().size();
 		for (int i = 0; i < headerSize; ++i) {
