@@ -47,7 +47,7 @@ public class ImageBlurTool {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String inputDir = "C:\\Users\\daven\\tmp\\胖月亮16mm琉璃珠串珠散珠子弯月牙中孔手工diy手链古风发簪材料\\SKU图片"; // 输入目录
+		String inputDir = "C:\\Users\\daven\\tmp\\古银亮银藏银花托直筒珠隔片diy饰品手工合金串珠挂坠隔珠配件批\\SKU图片"; // 输入目录
 		String outputDir = "C:\\Users\\daven\\tmp\\output"; // 输出目录
 		int radius = 10;
 
