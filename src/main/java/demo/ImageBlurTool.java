@@ -1,4 +1,4 @@
-package test;
+package demo;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import demo.pojo.type.ImageBlurJobType;
 
 public class ImageBlurTool {
 
@@ -47,33 +49,39 @@ public class ImageBlurTool {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String inputDir = "C:\\Users\\daven\\tmp\\古银亮银藏银花托直筒珠隔片diy饰品手工合金串珠挂坠隔珠配件批\\SKU图片"; // 输入目录
+		String inputDir = "C:\\Users\\daven\\tmp\\爱心桃心琉璃12mmdiy手工饰品配件发簪头饰手链串珠材料多色可选\\主图"; // 输入目录
 		String outputDir = "C:\\Users\\daven\\tmp\\output"; // 输出目录
 		int radius = 10;
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
+		ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO;
 
 		if (files != null) {
 			for (File file : files) {
 				BufferedImage img = ImageIO.read(file);
-				int height = img.getHeight();
 
 				BufferedImage result = null;
 
-//				result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
-
-				if (height == 800) {
-					result = blurArea(img, 357, 734, 420, 60, radius); // xy右下水印
-				} else if (height == 1000) {
-					result = blurArea(img, 470, 935, 500, 50, radius); // xy右下水印
-				} else if (height == 1920) {
-					result = blurArea(img, 900, 1800, 960, 80, radius); // xy右下水印
-				} else {
-					System.out.println(file.getName() + ", height:" + height + ", 未设定");
+				if (ImageBlurJobType.XY_LOGO.equals(jobType)) {
+					result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
+				} else if (ImageBlurJobType.XY_BOTTOM_RIGHT.equals(jobType)) {
+					int height = img.getHeight();
+					if (height == 800) {
+						result = blurArea(img, 357, 734, 420, 60, radius); // xy右下水印
+					} else if (height == 1000) {
+						result = blurArea(img, 470, 935, 500, 50, radius); // xy右下水印
+					} else if (height == 1920) {
+						result = blurArea(img, 900, 1800, 960, 80, radius); // xy右下水印
+					} else {
+						System.out.println(file.getName() + ", height:" + height + ", 未设定");
+					}
 				}
 
 				File outputFile = new File(outputDir + "/" + file.getName());
+				if (!outputFile.exists()) {
+					outputFile.mkdirs();
+				}
 				ImageIO.write(result, "jpg", outputFile);
 				System.out.println("处理完成: " + file.getName());
 			}
