@@ -49,13 +49,13 @@ public class ImageBlurTool {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String inputDir = "C:\\Users\\daven\\tmp\\新款10-16mm炫彩欧泊溏心树脂珠手工diy手链项链手机链饰品配件批\\详情\\新建文件夹"; // 输入目录
+		String inputDir = "C:\\Users\\daven\\tmp\\16mm猫眼细闪五角星星树脂珠diy手作项链手机链车挂包挂饰品材料"; // 输入目录
 		String outputDir = "C:\\Users\\daven\\tmp\\output"; // 输出目录
 		int radius = 10;
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
-		ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO;
+		ImageBlurJobType jobType = ImageBlurJobType.XY_BOTTOM_RIGHT;
 
 		if (files != null && files.length > 0) {
 			for (File file : files) {
