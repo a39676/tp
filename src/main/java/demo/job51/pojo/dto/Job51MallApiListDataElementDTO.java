@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Job51MallApiListDataElementDTO {
 
-	private String jobSeekerActiveTypeCode; // 4:24h内活跃, 5:3日内
+	private String jobSeekerActiveTypeCode; // 0:未知 4:24h内活跃, 5:3日内
 	private String jobSeekerActiveType; // 1小时前活跃;
 	private Boolean isHiChat;
 	private Boolean isRead;

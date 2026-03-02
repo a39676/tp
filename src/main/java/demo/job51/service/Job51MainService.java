@@ -46,7 +46,7 @@ public class Job51MainService {
 				continue;
 			}
 			Integer activeTypeCode = Integer.parseInt(ele.getJobSeekerActiveTypeCode());
-			if (activeTypeCode > 4) {
+			if (activeTypeCode == 0 || activeTypeCode > 4) {
 				continue;
 			}
 
