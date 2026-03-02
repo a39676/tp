@@ -45,6 +45,12 @@ public class Job51MainService {
 			if (ele.getIsHiChat() || ele.getIsRead()) {
 				continue;
 			}
+			Integer activeTypeCode = Integer.parseInt(ele.getJobSeekerActiveTypeCode());
+			if (activeTypeCode > 5) {
+				// 3日内未活跃
+				continue;
+			}
+
 			List<Job51MallApiListDataElementWorkDTO> workList = ele.getWork();
 			Job51MallApiListDataElementWorkDTO work1 = workList.get(0);
 			Job51MallApiListDataElementWorkExtendDTO work1Extend = setWorkTimeFields(work1);

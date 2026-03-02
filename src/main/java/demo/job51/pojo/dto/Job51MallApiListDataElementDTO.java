@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Job51MallApiListDataElementDTO {
 
+	private String jobSeekerActiveTypeCode;
 	private String jobSeekerActiveType; // 1小时前活跃;
 	private Boolean isHiChat;
 	private Boolean isRead;
@@ -11,6 +12,14 @@ public class Job51MallApiListDataElementDTO {
 	private Job51MallApiListDataElementResumeExpectInfoDTO resumeExpectInfo;
 	private List<Job51MallApiListDataElementWorkDTO> work;
 	private String labelUserTag; // 急切求职
+
+	public String getJobSeekerActiveTypeCode() {
+		return jobSeekerActiveTypeCode;
+	}
+
+	public void setJobSeekerActiveTypeCode(String jobSeekerActiveTypeCode) {
+		this.jobSeekerActiveTypeCode = jobSeekerActiveTypeCode;
+	}
 
 	public String getJobSeekerActiveType() {
 		return jobSeekerActiveType;
@@ -70,9 +79,10 @@ public class Job51MallApiListDataElementDTO {
 
 	@Override
 	public String toString() {
-		return "Job51MallApiListDataElementDTO [jobSeekerActiveType=" + jobSeekerActiveType + ", isHiChat=" + isHiChat
-				+ ", isRead=" + isRead + ", baseInfo=" + baseInfo + ", resumeExpectInfo=" + resumeExpectInfo + ", work="
-				+ work + ", labelUserTag=" + labelUserTag + "]";
+		return "Job51MallApiListDataElementDTO [jobSeekerActiveTypeCode=" + jobSeekerActiveTypeCode
+				+ ", jobSeekerActiveType=" + jobSeekerActiveType + ", isHiChat=" + isHiChat + ", isRead=" + isRead
+				+ ", baseInfo=" + baseInfo + ", resumeExpectInfo=" + resumeExpectInfo + ", work=" + work
+				+ ", labelUserTag=" + labelUserTag + "]";
 	}
 
 }
