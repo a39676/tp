@@ -38,6 +38,7 @@ public class Job51MainService {
 	}
 
 	private static void filter(Job51MallApiListDTO dto) {
+		StringBuilder sb = new StringBuilder();
 		List<Job51MallApiListDataElementDTO> list = dto.getData().getList();
 		for (int i = 0; i < list.size(); i++) {
 			Job51MallApiListDataElementDTO ele = list.get(i);
@@ -53,15 +54,23 @@ public class Job51MainService {
 
 			Job51MallApiListDataElementResumeExpectInfoDTO resumeExpectInfo = ele.getResumeExpectInfo();
 			Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
-			if (expectMinSalary > 9000) {
+			Integer expectMaxSalary = Integer.parseInt(resumeExpectInfo.getExpectMaxSalary());
+			if (expectMinSalary > 9000 || expectMaxSalary > 11000) {
 				continue;
 			}
 
+			sb.append(ele.getWork().get(0).getCompany() + System.lineSeparator());
 			System.out.println(ele.getWork().get(0).getCompany());
+			sb.append(ele.getWork().get(0).getPosition() + System.lineSeparator());
+			System.out.println(ele.getWork().get(0).getPosition());
+			sb.append(ele.getBaseInfo().getUserName() + System.lineSeparator());
 			System.out.println(ele.getBaseInfo().getUserName());
+			sb.append(System.lineSeparator());
 			System.out.println();
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
+		FileUtilCustom iou = new FileUtilCustom();
+		iou.byteToFile(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
 	}
 
 	private static Job51MallApiListDataElementWorkExtendDTO setWorkTimeFields(Job51MallApiListDataElementWorkDTO work) {
