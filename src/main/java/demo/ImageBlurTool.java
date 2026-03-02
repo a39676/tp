@@ -49,20 +49,34 @@ public class ImageBlurTool {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String inputDir = "C:\\Users\\daven\\tmp\\16mm猫眼细闪五角星星树脂珠diy手作项链手机链车挂包挂饰品材料"; // 输入目录
+		String inputDir = "C:\\Users\\daven\\tmp\\16mm梦幻流光鎏金油画树脂珠diy串珠笔手链手机链车挂材料散珠子\\主图"; // 输入目录
 		String outputDir = "C:\\Users\\daven\\tmp\\output"; // 输出目录
+
+		File outputFolder = new File(outputDir);
+		if (!outputFolder.exists()) {
+			outputFolder.mkdirs();
+		}
+
 		int radius = 10;
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
-		ImageBlurJobType jobType = ImageBlurJobType.XY_BOTTOM_RIGHT;
+		ImageBlurJobType jobType = ImageBlurJobType.KUO_CHENG_BOTTOM_RIGHT;
 
 		if (files != null && files.length > 0) {
 			for (File file : files) {
+				System.out.println("Handle: " + file.getName());
 				if (!file.getName().endsWith("jpg") && !file.getName().endsWith("png")) {
+					System.out.println("Skip: " + file.getName());
 					continue;
 				}
 				BufferedImage img = ImageIO.read(file);
+				int height = img.getHeight();
+				int width = img.getWidth();
+				if (height != width) {
+					System.err.println("Skip, NOT a square: " + file.getName());
+					continue;
+				}
 
 				BufferedImage result = null;
 
@@ -70,28 +84,32 @@ public class ImageBlurTool {
 					result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
 				} else if (ImageBlurJobType.XY_BOTTOM_RIGHT.equals(jobType)) {
 					// xy右下水印
-					int height = img.getHeight();
 					Double xStart = height * 0.455;
 					Double yStart = height * 0.93;
 					Double xLong = height * 0.52;
 					Double yLong = height * 0.055;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
-//					if (height == 800) {
-//						result = blurArea(img, 357, 734, 420, 60, radius); // xy右下水印
-//					} else if (height == 1000) {
-//						result = blurArea(img, 470, 935, 500, 50, radius); // xy右下水印
-//					} else if (height == 1920) {
-//						result = blurArea(img, 900, 1800, 960, 80, radius); // xy右下水印
-//					} else {
-//						System.out.println(file.getName() + ", height:" + height + ", 未设定");
-//					}
-				}
+				} else if (ImageBlurJobType.KUO_CHENG_BOTTOM_RIGHT.equals(jobType)) {
+					// kuo cheng 右下水印
+					Double xStart = height * 0.455;
+					Double yStart = height * 0.92;
+					Double xLong = height * 0.52;
+					Double yLong = height * 0.055;
+					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
+							radius);
+				}else if (ImageBlurJobType.KUO_CHENG_LOGO_TOP_LEFT.equals(jobType)) {
+					// kuo cheng 左上图标
+					Double xStart = height * 0.01;
+					Double yStart = height * 0.01;
+					Double xLong = height * 0.142;
+					Double yLong = height * 0.241;
+					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
+							radius);
+				} 
 
 				File outputFile = new File(outputDir + "/" + file.getName());
-				if (!outputFile.exists()) {
-					outputFile.mkdirs();
-				}
+
 				ImageIO.write(result, "jpg", outputFile);
 				System.out.println("处理完成: " + file.getName());
 			}

@@ -1,0 +1,89 @@
+package demo.job51.service;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+
+import com.google.gson.Gson;
+
+import demo.job51.pojo.dto.Job51MallApiListDTO;
+import demo.job51.pojo.dto.Job51MallApiListDataElementDTO;
+import demo.job51.pojo.dto.Job51MallApiListDataElementResumeExpectInfoDTO;
+import demo.job51.pojo.dto.Job51MallApiListDataElementWorkDTO;
+import demo.job51.pojo.dto.Job51MallApiListDataElementWorkExtendDTO;
+import toolPack.ioHandle.FileUtilCustom;
+
+public class Job51MainService {
+
+	// mallapi.51job.com/mall-portal/resumeRecommend/list
+
+	private static String mainFolderPath = "C:\\Users\\daven\\tmp\\51job";
+	static {
+
+	}
+
+	public static void main(String[] args) {
+		Job51MallApiListDTO dto = loadFile(mainFolderPath + "/04.json");
+//		System.out.println(dto);
+		filter(dto);
+	}
+
+	private static Job51MallApiListDTO loadFile(String filePathStr) {
+		FileUtilCustom iou = new FileUtilCustom();
+		String content = iou.getStringFromFile(filePathStr);
+		Job51MallApiListDTO dto = new Gson().fromJson(content, Job51MallApiListDTO.class);
+		return dto;
+	}
+
+	private static void filter(Job51MallApiListDTO dto) {
+		List<Job51MallApiListDataElementDTO> list = dto.getData().getList();
+		for (int i = 0; i < list.size(); i++) {
+			Job51MallApiListDataElementDTO ele = list.get(i);
+			if (ele.getIsHiChat() || ele.getIsRead()) {
+				continue;
+			}
+			List<Job51MallApiListDataElementWorkDTO> workList = ele.getWork();
+			Job51MallApiListDataElementWorkDTO work1 = workList.get(0);
+			Job51MallApiListDataElementWorkExtendDTO work1Extend = setWorkTimeFields(work1);
+			if (work1Extend.getWorkingMonths() < 18) {
+				continue;
+			}
+
+			Job51MallApiListDataElementResumeExpectInfoDTO resumeExpectInfo = ele.getResumeExpectInfo();
+			Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
+			if (expectMinSalary > 9000) {
+				continue;
+			}
+
+			System.out.println(ele.getWork().get(0).getCompany());
+			System.out.println(ele.getBaseInfo().getUserName());
+			System.out.println();
+//			for (int w = 0; w < workList.size(); w++) {}
+		}
+	}
+
+	private static Job51MallApiListDataElementWorkExtendDTO setWorkTimeFields(Job51MallApiListDataElementWorkDTO work) {
+		Job51MallApiListDataElementWorkExtendDTO result = new Job51MallApiListDataElementWorkExtendDTO();
+		BeanUtils.copyProperties(work, result);
+		String startTimeStr = work.getStartTime();
+		String[] startTimeStrArray = startTimeStr.split("\\.");
+		LocalDate startTime = LocalDate.of(Integer.parseInt(startTimeStrArray[0]),
+				Integer.parseInt(startTimeStrArray[1]), 1);
+		result.setStartTimeLocalDate(startTime);
+
+		String endTimeStr = work.getEndTime();
+		if (!endTimeStr.contains(".")) {
+			result.setEndTimeLocalDate(LocalDate.now());
+		} else {
+			String[] endTimeStrArray = endTimeStr.split("\\.");
+			LocalDate endTime = LocalDate.of(Integer.parseInt(endTimeStrArray[0]), Integer.parseInt(endTimeStrArray[1]),
+					1);
+			result.setEndTimeLocalDate(endTime);
+		}
+		Long months = ChronoUnit.MONTHS.between(result.getStartTimeLocalDate(), result.getEndTimeLocalDate());
+		result.setWorkingMonths(months.intValue());
+		return result;
+	}
+}
