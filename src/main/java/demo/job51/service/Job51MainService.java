@@ -46,8 +46,7 @@ public class Job51MainService {
 				continue;
 			}
 			Integer activeTypeCode = Integer.parseInt(ele.getJobSeekerActiveTypeCode());
-			if (activeTypeCode > 5) {
-				// 3日内未活跃
+			if (activeTypeCode > 4) {
 				continue;
 			}
 
