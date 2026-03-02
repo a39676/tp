@@ -58,10 +58,13 @@ public class Job51MainService {
 			}
 
 			Job51MallApiListDataElementResumeExpectInfoDTO resumeExpectInfo = ele.getResumeExpectInfo();
-			Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
-			Integer expectMaxSalary = Integer.parseInt(resumeExpectInfo.getExpectMaxSalary());
-			if (expectMinSalary > 9000 || expectMaxSalary > 11000) {
-				continue;
+			try {
+				Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
+				Integer expectMaxSalary = Integer.parseInt(resumeExpectInfo.getExpectMaxSalary());
+				if (expectMinSalary > 9000 || expectMaxSalary > 11000) {
+					continue;
+				}
+			} catch (Exception e) {
 			}
 
 			sb.append(ele.getWork().get(0).getCompany() + System.lineSeparator());
@@ -74,6 +77,11 @@ public class Job51MainService {
 			System.out.println();
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
+
+		if (sb.length() < 1) {
+			System.err.println("Can NOT find any match");
+		}
+
 		FileUtilCustom iou = new FileUtilCustom();
 		iou.byteToFile(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
 	}
