@@ -25,7 +25,7 @@ public class Job51MainService {
 	}
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 8; i++) {
+		for (int i = 1; i < 11; i++) {
 			Job51MallApiListDTO dto = loadFile(mainFolderPath + "/" + i + ".json");
 			filter(dto);
 		}
@@ -72,14 +72,14 @@ public class Job51MainService {
 			System.out.println(ele.getWork().get(0).getCompany());
 			sb.append(ele.getWork().get(0).getPosition() + System.lineSeparator());
 			System.out.println(ele.getWork().get(0).getPosition());
-			sb.append(ele.getBaseInfo().getUserName() + System.lineSeparator());
 			if (activeTypeCode == 0) {
 				System.out.println(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
-				sb.append(System.lineSeparator());
+				sb.append(ele.getBaseInfo().getUserName() + "_activeTypeCode=0" + System.lineSeparator());
 			} else {
-				System.out.println(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
-				sb.append(System.lineSeparator());
+				System.out.println(ele.getBaseInfo().getUserName());
+				sb.append(ele.getBaseInfo().getUserName() + System.lineSeparator());
 			}
+			sb.append(System.lineSeparator());
 			System.out.println();
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
