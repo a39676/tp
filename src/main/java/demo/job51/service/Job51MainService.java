@@ -25,9 +25,10 @@ public class Job51MainService {
 	}
 
 	public static void main(String[] args) {
-		Job51MallApiListDTO dto = loadFile(mainFolderPath + "/04.json");
-//		System.out.println(dto);
-		filter(dto);
+		for (int i = 0; i < 8; i++) {
+			Job51MallApiListDTO dto = loadFile(mainFolderPath + "/" + i + ".json");
+			filter(dto);
+		}
 	}
 
 	private static Job51MallApiListDTO loadFile(String filePathStr) {
@@ -46,7 +47,7 @@ public class Job51MainService {
 				continue;
 			}
 			Integer activeTypeCode = Integer.parseInt(ele.getJobSeekerActiveTypeCode());
-			if (activeTypeCode == 0 || activeTypeCode > 4) {
+			if (activeTypeCode > 4) {
 				continue;
 			}
 
@@ -72,8 +73,13 @@ public class Job51MainService {
 			sb.append(ele.getWork().get(0).getPosition() + System.lineSeparator());
 			System.out.println(ele.getWork().get(0).getPosition());
 			sb.append(ele.getBaseInfo().getUserName() + System.lineSeparator());
-			System.out.println(ele.getBaseInfo().getUserName());
-			sb.append(System.lineSeparator());
+			if (activeTypeCode == 0) {
+				System.out.println(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
+				sb.append(System.lineSeparator());
+			} else {
+				System.out.println(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
+				sb.append(System.lineSeparator());
+			}
 			System.out.println();
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
@@ -83,7 +89,7 @@ public class Job51MainService {
 		}
 
 		FileUtilCustom iou = new FileUtilCustom();
-		iou.byteToFile(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
+		iou.byteToFileAppendAtEnd(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
 	}
 
 	private static Job51MallApiListDataElementWorkExtendDTO setWorkTimeFields(Job51MallApiListDataElementWorkDTO work) {
