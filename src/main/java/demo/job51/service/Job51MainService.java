@@ -2,6 +2,7 @@ package demo.job51.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -13,6 +14,7 @@ import demo.job51.pojo.dto.Job51MallApiListDataElementDTO;
 import demo.job51.pojo.dto.Job51MallApiListDataElementResumeExpectInfoDTO;
 import demo.job51.pojo.dto.Job51MallApiListDataElementWorkDTO;
 import demo.job51.pojo.dto.Job51MallApiListDataElementWorkExtendDTO;
+import demo.job51.pojo.dto.Job51OutputInfoDTO;
 import toolPack.ioHandle.FileUtilCustom;
 
 public class Job51MainService {
@@ -20,41 +22,67 @@ public class Job51MainService {
 	// mallapi.51job.com/mall-portal/resumeRecommend/list
 
 	private static String mainFolderPath = "C:\\Users\\daven\\tmp\\51job";
+	private static List<Job51OutputInfoDTO> outputInfoList = new ArrayList<>();
+	private static final int MAX_MONTH_OF_WORK_GAP = 3;
 	static {
 
 	}
 
 	public static void main(String[] args) {
-		for (int i = 1; i < 11; i++) {
-			Job51MallApiListDTO dto = loadFile(mainFolderPath + "/" + i + ".json");
+		List<Job51MallApiListDTO> list = loadFile(mainFolderPath + "/0.json");
+		for (int i = 0; i < list.size(); i++) {
+			Job51MallApiListDTO dto = list.get(i);
 			filter(dto);
 		}
+
+		if (outputInfoList.size() < 1) {
+			System.err.println("Can NOT find any match");
+			return;
+		}
+		FileUtilCustom iou = new FileUtilCustom();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < outputInfoList.size(); i++) {
+			sb.append(outputInfoList.get(i).toString2() + System.lineSeparator());
+			System.out.println(outputInfoList.get(i).toString2());
+		}
+		iou.byteToFileAppendAtEnd(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
 	}
 
-	private static Job51MallApiListDTO loadFile(String filePathStr) {
+	private static List<Job51MallApiListDTO> loadFile(String filePathStr) {
 		FileUtilCustom iou = new FileUtilCustom();
 		String content = iou.getStringFromFile(filePathStr);
-		Job51MallApiListDTO dto = new Gson().fromJson(content, Job51MallApiListDTO.class);
-		return dto;
+		List<Job51MallApiListDTO> list = new ArrayList<>();
+		String[] contentArray = content.split(System.lineSeparator());
+		for (int i = 0; i < contentArray.length; i++) {
+			String subJsonStr = contentArray[i];
+			Job51MallApiListDTO dto = new Gson().fromJson(subJsonStr, Job51MallApiListDTO.class);
+			list.add(dto);
+		}
+		return list;
 	}
 
 	private static void filter(Job51MallApiListDTO dto) {
-		StringBuilder sb = new StringBuilder();
 		List<Job51MallApiListDataElementDTO> list = dto.getData().getList();
 		for (int i = 0; i < list.size(); i++) {
 			Job51MallApiListDataElementDTO ele = list.get(i);
+			Job51OutputInfoDTO infoDTO = new Job51OutputInfoDTO();
+			infoDTO.setCompanyName(ele.getWork().get(0).getCompany());
+			infoDTO.setPostion(ele.getWork().get(0).getPosition());
+			infoDTO.setUsername(ele.getBaseInfo().getUserName());
+			System.out.println(infoDTO.toString2());
+
 			if (ele.getIsHiChat() || ele.getIsRead()) {
+				System.err.println(", 已读或已聊");
 				continue;
 			}
 			Integer activeTypeCode = Integer.parseInt(ele.getJobSeekerActiveTypeCode());
-			if (activeTypeCode > 4) {
+			if (activeTypeCode > 5) {
+				System.err.println(", 长时间不活跃");
 				continue;
 			}
 
-			List<Job51MallApiListDataElementWorkDTO> workList = ele.getWork();
-			Job51MallApiListDataElementWorkDTO work1 = workList.get(0);
-			Job51MallApiListDataElementWorkExtendDTO work1Extend = setWorkTimeFields(work1);
-			if (work1Extend.getWorkingMonths() < 18) {
+			if (!workExpHandle(ele)) {
+				System.err.println(", 频繁换工作");
 				continue;
 			}
 
@@ -62,34 +90,19 @@ public class Job51MainService {
 			try {
 				Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
 				Integer expectMaxSalary = Integer.parseInt(resumeExpectInfo.getExpectMaxSalary());
-				if (expectMinSalary > 9000 || expectMaxSalary > 11000) {
+				if (expectMinSalary > 9000 || expectMaxSalary > 12000) {
+					System.err.println(", 薪资期望过高");
 					continue;
 				}
 			} catch (Exception e) {
 			}
 
-			sb.append(ele.getWork().get(0).getCompany() + System.lineSeparator());
-			System.out.println(ele.getWork().get(0).getCompany());
-			sb.append(ele.getWork().get(0).getPosition() + System.lineSeparator());
-			System.out.println(ele.getWork().get(0).getPosition());
 			if (activeTypeCode == 0) {
-				System.out.println(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
-				sb.append(ele.getBaseInfo().getUserName() + "_activeTypeCode=0" + System.lineSeparator());
-			} else {
-				System.out.println(ele.getBaseInfo().getUserName());
-				sb.append(ele.getBaseInfo().getUserName() + System.lineSeparator());
+				infoDTO.setUsername(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
 			}
-			sb.append(System.lineSeparator());
-			System.out.println();
+			outputInfoList.add(infoDTO);
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
-
-		if (sb.length() < 1) {
-			System.err.println("Can NOT find any match");
-		}
-
-		FileUtilCustom iou = new FileUtilCustom();
-		iou.byteToFileAppendAtEnd(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
 	}
 
 	private static Job51MallApiListDataElementWorkExtendDTO setWorkTimeFields(Job51MallApiListDataElementWorkDTO work) {
@@ -113,5 +126,35 @@ public class Job51MainService {
 		Long months = ChronoUnit.MONTHS.between(result.getStartTimeLocalDate(), result.getEndTimeLocalDate());
 		result.setWorkingMonths(months.intValue());
 		return result;
+	}
+
+	private static boolean workExpHandle(Job51MallApiListDataElementDTO ele) {
+		List<Job51MallApiListDataElementWorkDTO> workList = ele.getWork();
+
+		int minAvgWorkMonths = 18;
+		if ("本科".equals(ele.getBaseInfo().getTopDegreeStr())) {
+			minAvgWorkMonths = 12;
+		}
+
+		if (workList.size() < 1) {
+			return false;
+		}
+
+		Job51MallApiListDataElementWorkDTO work1 = workList.get(0);
+		Job51MallApiListDataElementWorkExtendDTO work1Extend = setWorkTimeFields(work1);
+
+		if (work1Extend.getEndTimeLocalDate().plusMonths(MAX_MONTH_OF_WORK_GAP).isBefore(LocalDate.now())) {
+			return false;
+		}
+
+		if (workList.size() == 1) {
+			return work1Extend.getWorkingMonths() >= minAvgWorkMonths;
+		} else if (workList.size() > 1) {
+			Job51MallApiListDataElementWorkDTO work2 = workList.get(1);
+			Job51MallApiListDataElementWorkExtendDTO work2Extend = setWorkTimeFields(work2);
+			return work1Extend.getWorkingMonths() + work2Extend.getWorkingMonths() >= minAvgWorkMonths * 2;
+		}
+
+		return false;
 	}
 }
