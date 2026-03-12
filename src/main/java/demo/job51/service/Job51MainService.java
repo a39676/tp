@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import com.google.gson.Gson;
@@ -21,15 +22,20 @@ public class Job51MainService {
 
 	// mallapi.51job.com/mall-portal/resumeRecommend/list
 
-	private static String mainFolderPath = "C:\\Users\\daven\\tmp\\51job";
+	private static final String MAIN_FOLDER_PATH = "C:\\Users\\daven\\tmp\\51job";
+	private static final String INPUT_JSON_FILE_PATH = MAIN_FOLDER_PATH + "/0.json";
+	private static final String OUTPUT_TXT_FILE_PATH = MAIN_FOLDER_PATH + "/tmp.txt";
 	private static List<Job51OutputInfoDTO> outputInfoList = new ArrayList<>();
 	private static final int MAX_MONTH_OF_WORK_GAP = 3;
+	private static List<String> positionNameKeyWordList = new ArrayList<>();
 	static {
-
+		positionNameKeyWordList.add("半导体");
+		positionNameKeyWordList.add("非标");
+		positionNameKeyWordList.add("机械结构");
 	}
 
 	public static void main(String[] args) {
-		List<Job51MallApiListDTO> list = loadFile(mainFolderPath + "/0.json");
+		List<Job51MallApiListDTO> list = loadFile(INPUT_JSON_FILE_PATH);
 		for (int i = 0; i < list.size(); i++) {
 			Job51MallApiListDTO dto = list.get(i);
 			filter(dto);
@@ -42,10 +48,19 @@ public class Job51MainService {
 		FileUtilCustom iou = new FileUtilCustom();
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < outputInfoList.size(); i++) {
-			sb.append(outputInfoList.get(i).toString2() + System.lineSeparator());
-			System.out.println(outputInfoList.get(i).toString2());
+			Job51OutputInfoDTO ele = outputInfoList.get(i);
+			for (int positionNameKeyWordIndex = 0; positionNameKeyWordIndex < positionNameKeyWordList
+					.size(); positionNameKeyWordIndex++) {
+				String positionNameKeyWord = positionNameKeyWordList.get(positionNameKeyWordIndex);
+				if (ele.getPostion().contains(positionNameKeyWord)) {
+					ele.setPostion(ele.getPostion() + "+");
+				}
+			}
+			sb.append(ele.toString2() + System.lineSeparator());
+			System.out.println(ele.toString2());
 		}
-		iou.byteToFileAppendAtEnd(sb.toString().getBytes(), mainFolderPath + "/tmp.txt");
+		iou.byteToFile(System.lineSeparator(), OUTPUT_TXT_FILE_PATH);
+		iou.byteToFileAppendAtEnd(sb.toString().getBytes(), OUTPUT_TXT_FILE_PATH);
 	}
 
 	private static List<Job51MallApiListDTO> loadFile(String filePathStr) {
@@ -81,6 +96,11 @@ public class Job51MainService {
 				continue;
 			}
 
+			if (!companyNameFilter(ele)) {
+				System.err.println(", 公司名异常 或 曾经在此公司工作");
+				continue;
+			}
+
 			if (!workExpHandle(ele)) {
 				System.err.println(", 频繁换工作");
 				continue;
@@ -88,9 +108,11 @@ public class Job51MainService {
 
 			Job51MallApiListDataElementResumeExpectInfoDTO resumeExpectInfo = ele.getResumeExpectInfo();
 			try {
+				@SuppressWarnings("unused")
 				Integer expectMinSalary = Integer.parseInt(resumeExpectInfo.getExpectMinSalary());
 				Integer expectMaxSalary = Integer.parseInt(resumeExpectInfo.getExpectMaxSalary());
-				if (expectMinSalary > 9000 || expectMaxSalary > 12000) {
+//				if (expectMinSalary > 10000 || expectMaxSalary > 13000) {
+				if (expectMaxSalary > 13000) {
 					System.err.println(", 薪资期望过高");
 					continue;
 				}
@@ -100,6 +122,7 @@ public class Job51MainService {
 			if (activeTypeCode == 0) {
 				infoDTO.setUsername(ele.getBaseInfo().getUserName() + "_activeTypeCode=0");
 			}
+
 			outputInfoList.add(infoDTO);
 //			for (int w = 0; w < workList.size(); w++) {}
 		}
@@ -156,5 +179,16 @@ public class Job51MainService {
 		}
 
 		return false;
+	}
+
+	private static boolean companyNameFilter(Job51MallApiListDataElementDTO ele) {
+		List<Job51MallApiListDataElementWorkDTO> workList = ele.getWork();
+		for (int i = 0; i < workList.size(); i++) {
+			String companyName = workList.get(i).getCompany();
+			if (StringUtils.isBlank(companyName) || companyName.contains("新凯来")) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
