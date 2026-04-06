@@ -32,6 +32,7 @@ public class Job51MainService {
 		positionNameKeyWordList.add("半导体");
 		positionNameKeyWordList.add("非标");
 		positionNameKeyWordList.add("机械结构");
+		positionNameKeyWordList.add("研发");
 	}
 
 	public static void main(String[] args) {

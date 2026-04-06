@@ -6,12 +6,23 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import demo.pojo.type.ImageBlurJobType;
 
 public class ImageBlurTool {
+
+	private static final String MAIN_FOLDER_PATH_STR = System.getProperty("user.home") + "/tmp";
+	private static final String PRODUCT_NAME_FOLDER = "16mm仿紫水晶粉水晶高白高透珠玻璃珠散珠手工diy手链配件串珠子";
+	private static final List<String> SUB_FOLDER_NAME_LIST = new ArrayList<>();
+	static {
+		SUB_FOLDER_NAME_LIST.add("主图");
+		SUB_FOLDER_NAME_LIST.add("SKU图片");
+		SUB_FOLDER_NAME_LIST.add("详细");
+	}
 
 	/**
 	 * 对指定区域进行高斯模糊
@@ -23,7 +34,7 @@ public class ImageBlurTool {
 	 * @param height 区域高度
 	 * @param radius 模糊半径（数值越大越模糊）
 	 */
-	public static BufferedImage blurArea(BufferedImage source, int x, int y, int width, int height, int radius) {
+	private static BufferedImage blurArea(BufferedImage source, int x, int y, int width, int height, int radius) {
 		// 1. 裁剪出需要模糊的区域
 		BufferedImage subImage = source.getSubimage(x, y, width, height);
 
@@ -48,9 +59,15 @@ public class ImageBlurTool {
 		return source;
 	}
 
-	public static void main(String[] args) throws IOException {
-		String inputDir = "C:\\Users\\daven\\tmp\\16mm梦幻流光鎏金油画树脂珠diy串珠笔手链手机链车挂材料散珠子\\主图"; // 输入目录
-		String outputDir = "C:\\Users\\daven\\tmp\\output"; // 输出目录
+	private static void handler(String subFolderName) throws IOException {
+		String inputDir = MAIN_FOLDER_PATH_STR + "/" + PRODUCT_NAME_FOLDER + "/" + subFolderName; // 输入目录
+		String outputDir = MAIN_FOLDER_PATH_STR + "/output" + "/" + subFolderName; // 输出目录
+
+		File inputFolder = new File(inputDir);
+		if (!inputFolder.exists()) {
+			System.out.println(inputDir + ", NOT exists");
+			return;
+		}
 
 		File outputFolder = new File(outputDir);
 		if (!outputFolder.exists()) {
@@ -61,7 +78,7 @@ public class ImageBlurTool {
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
-		ImageBlurJobType jobType = ImageBlurJobType.KUO_CHENG_BOTTOM_RIGHT;
+		ImageBlurJobType jobType = ImageBlurJobType.XY_BOTTOM_RIGHT;
 
 		if (files != null && files.length > 0) {
 			for (File file : files) {
@@ -98,7 +115,7 @@ public class ImageBlurTool {
 					Double yLong = height * 0.055;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
-				}else if (ImageBlurJobType.KUO_CHENG_LOGO_TOP_LEFT.equals(jobType)) {
+				} else if (ImageBlurJobType.KUO_CHENG_LOGO_TOP_LEFT.equals(jobType)) {
 					// kuo cheng 左上图标
 					Double xStart = height * 0.01;
 					Double yStart = height * 0.01;
@@ -106,13 +123,19 @@ public class ImageBlurTool {
 					Double yLong = height * 0.241;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
-				} 
+				}
 
 				File outputFile = new File(outputDir + "/" + file.getName());
 
 				ImageIO.write(result, "jpg", outputFile);
 				System.out.println("处理完成: " + file.getName());
 			}
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		for (String subFolderName : SUB_FOLDER_NAME_LIST) {
+			handler(subFolderName);
 		}
 	}
 }
