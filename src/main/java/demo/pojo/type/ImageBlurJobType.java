@@ -6,6 +6,7 @@ public enum ImageBlurJobType {
 	XY_BOTTOM_RIGHT("xyBottomRight", 2),
 	KUO_CHENG_BOTTOM_RIGHT("kuoChengBottomRight", 3),
 	KUO_CHENG_LOGO_TOP_LEFT("kuoChengLogoTopLeft", 4),
+	XY_LOGO_BOTTOM_LEFT("xyBottomLeft", 5),
 	
 	;
 	

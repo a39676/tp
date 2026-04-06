@@ -78,7 +78,7 @@ public class ImageBlurTool {
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
-		ImageBlurJobType jobType = ImageBlurJobType.XY_BOTTOM_RIGHT;
+		ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_BOTTOM_LEFT;
 
 		if (files != null && files.length > 0) {
 			for (File file : files) {
@@ -99,6 +99,14 @@ public class ImageBlurTool {
 
 				if (ImageBlurJobType.XY_LOGO.equals(jobType)) {
 					result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
+				} else if (ImageBlurJobType.XY_LOGO_BOTTOM_LEFT.equals(jobType)) {
+					// xy左下水印
+					Double xStart = height * 0.015;
+					Double yStart = height * 0.8;
+					Double xLong = height * 0.3;
+					Double yLong = height * 0.2;
+					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
+							radius);
 				} else if (ImageBlurJobType.XY_BOTTOM_RIGHT.equals(jobType)) {
 					// xy右下水印
 					Double xStart = height * 0.455;
