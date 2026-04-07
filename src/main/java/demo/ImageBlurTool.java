@@ -16,7 +16,8 @@ import demo.pojo.type.ImageBlurJobType;
 public class ImageBlurTool {
 
 	private static final String MAIN_FOLDER_PATH_STR = System.getProperty("user.home") + "/tmp";
-	private static final String PRODUCT_NAME_FOLDER = "16mm仿紫水晶粉水晶高白高透珠玻璃珠散珠手工diy手链配件串珠子";
+	private static final String PRODUCT_NAME_FOLDER = "穿珠子串珠弹力线diy手链项链水晶线紧密松紧手串弹力绳材料手工";
+	private static ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_TOP_LEFT;
 	private static final List<String> SUB_FOLDER_NAME_LIST = new ArrayList<>();
 	static {
 		SUB_FOLDER_NAME_LIST.add("主图");
@@ -62,6 +63,8 @@ public class ImageBlurTool {
 	private static void handler(String subFolderName) throws IOException {
 		String inputDir = MAIN_FOLDER_PATH_STR + "/" + PRODUCT_NAME_FOLDER + "/" + subFolderName; // 输入目录
 		String outputDir = MAIN_FOLDER_PATH_STR + "/output" + "/" + subFolderName; // 输出目录
+		
+		System.out.println("Going to: " + inputDir);
 
 		File inputFolder = new File(inputDir);
 		if (!inputFolder.exists()) {
@@ -78,7 +81,6 @@ public class ImageBlurTool {
 
 		File folder = new File(inputDir);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
-		ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_BOTTOM_LEFT;
 
 		if (files != null && files.length > 0) {
 			for (File file : files) {
@@ -97,7 +99,7 @@ public class ImageBlurTool {
 
 				BufferedImage result = null;
 
-				if (ImageBlurJobType.XY_LOGO.equals(jobType)) {
+				if (ImageBlurJobType.XY_LOGO_TOP_LEFT.equals(jobType)) {
 					result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
 				} else if (ImageBlurJobType.XY_LOGO_BOTTOM_LEFT.equals(jobType)) {
 					// xy左下水印
@@ -107,7 +109,7 @@ public class ImageBlurTool {
 					Double yLong = height * 0.2;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
-				} else if (ImageBlurJobType.XY_BOTTOM_RIGHT.equals(jobType)) {
+				} else if (ImageBlurJobType.NAME_BOTTOM_RIGHT.equals(jobType)) {
 					// xy右下水印
 					Double xStart = height * 0.455;
 					Double yStart = height * 0.93;
