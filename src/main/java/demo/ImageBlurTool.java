@@ -16,8 +16,8 @@ import demo.pojo.type.ImageBlurJobType;
 public class ImageBlurTool {
 
 	private static final String MAIN_FOLDER_PATH_STR = System.getProperty("user.home") + "/tmp";
-	private static final String PRODUCT_NAME_FOLDER = "电镀炫彩米珠4mm超优高品玻璃小珠子手工DIY饰品配件散珠串珠批发";
-	private static ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_TOP_RIGHT;
+	private static final String PRODUCT_NAME_FOLDER = "新款10-16mm炫彩欧泊溏心树脂珠手工diy手链项链手机链饰品配件批";
+	private static ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_TOP_LEFT;
 	private static final List<String> SUB_FOLDER_NAME_LIST = new ArrayList<>();
 	static {
 		SUB_FOLDER_NAME_LIST.add("主图");
