@@ -16,13 +16,13 @@ import demo.pojo.type.ImageBlurJobType;
 public class ImageBlurTool {
 
 	private static final String MAIN_FOLDER_PATH_STR = System.getProperty("user.home") + "/tmp";
-	private static final String PRODUCT_NAME_FOLDER = "穿珠子串珠弹力线diy手链项链水晶线紧密松紧手串弹力绳材料手工";
-	private static ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_TOP_LEFT;
+	private static final String PRODUCT_NAME_FOLDER = "电镀炫彩米珠4mm超优高品玻璃小珠子手工DIY饰品配件散珠串珠批发";
+	private static ImageBlurJobType jobType = ImageBlurJobType.XY_LOGO_TOP_RIGHT;
 	private static final List<String> SUB_FOLDER_NAME_LIST = new ArrayList<>();
 	static {
 		SUB_FOLDER_NAME_LIST.add("主图");
 		SUB_FOLDER_NAME_LIST.add("SKU图片");
-		SUB_FOLDER_NAME_LIST.add("详细");
+		SUB_FOLDER_NAME_LIST.add("详情");
 	}
 
 	/**
@@ -106,6 +106,14 @@ public class ImageBlurTool {
 					Double xStart = height * 0.015;
 					Double yStart = height * 0.8;
 					Double xLong = height * 0.3;
+					Double yLong = height * 0.2;
+					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
+							radius);
+				} else if (ImageBlurJobType.XY_LOGO_TOP_RIGHT.equals(jobType)) {
+					// xy右上水印
+					Double xStart = height * 0.68;
+					Double yStart = height * 0.017;
+					Double xLong = height * 0.32;
 					Double yLong = height * 0.2;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);

@@ -1,6 +1,5 @@
 package demo.finance.cryptoCoin.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 
+import finance.common.tool.KLineToolUnit;
 import finance.cryptoCoin.binance.future.um.pojo.dto.CryptoCoinBinanceFutureUmPriceCacheSubBO;
 import finance.cryptoCoin.binance.future.um.pojo.result.CryptoCoinBinanceFutureUmPriceResult;
 import test.aiArt.CommonService;
@@ -19,19 +19,12 @@ public class BinanceDataCommonService extends CommonService {
 	protected static final int SCALE_FOR_RATE_DISPLAY = 2;
 	protected static final int SCALE_FOR_RATE_CALCULATE = 4;
 
-	private static final String FILE_SAVE_PATH = "/tmp/cryptoCoin";
+	protected static final String FILE_SAVE_PATH = System.getProperty("user.home") + "/tmp/cryptoCoin";
 
 	protected static List<String> symbols = new ArrayList<>();
 	protected static List<String> kSymbols = new ArrayList<>();
 
-	protected static String getFileSavePath() {
-		File z2 = new File("D:/z2");
-		if (z2.exists()) {
-			return "D:" + FILE_SAVE_PATH;
-		} else {
-			return System.getProperty("user.home") + FILE_SAVE_PATH;
-		}
-	}
+	protected static KLineToolUnit kLineToolUnit = new KLineToolUnit();
 
 	protected static void refreshSymbolListFromAPI() {
 		CryptoCoinBinanceFutureUmPriceResult lastPriceResult = BinanceFutureUmDataApiUnit.getLastPrice();

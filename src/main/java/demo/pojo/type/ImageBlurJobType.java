@@ -7,7 +7,7 @@ public enum ImageBlurJobType {
 	KUO_CHENG_BOTTOM_RIGHT("kuoChengBottomRight", 3),
 	KUO_CHENG_LOGO_TOP_LEFT("kuoChengLogoTopLeft", 4),
 	XY_LOGO_BOTTOM_LEFT("xyBottomLeft", 5),
-	
+	XY_LOGO_TOP_RIGHT("xyLogoTopRight", 6),
 	;
 	
 	private String name;

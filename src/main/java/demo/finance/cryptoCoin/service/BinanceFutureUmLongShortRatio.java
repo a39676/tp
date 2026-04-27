@@ -27,14 +27,14 @@ public class BinanceFutureUmLongShortRatio extends BinanceDataCommonService {
 		JSONArray jsonArray = JSONArray.fromObject(dataList);
 
 		FileUtilCustom fuc = new FileUtilCustom();
-		String filePath = getFileSavePath() + "/longShortAccountRatio/" + symbol + ".json";
+		String filePath = FILE_SAVE_PATH + "/longShortAccountRatio/" + symbol + ".json";
 		fuc.byteToFile(jsonArray.toString().getBytes(StandardCharsets.UTF_8), filePath);
 	}
 
 	public static List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> globalLongShortAccountRatioFromLocal(
 			String symbol) {
 		FileUtilCustom fuc = new FileUtilCustom();
-		String filePath = getFileSavePath() + "/longShortAccountRatio/" + symbol + ".json";
+		String filePath = FILE_SAVE_PATH + "/longShortAccountRatio/" + symbol + ".json";
 		String content = fuc.getStringFromFile(filePath);
 		JSONArray jsonArray = JSONArray.fromObject(content);
 
@@ -62,14 +62,14 @@ public class BinanceFutureUmLongShortRatio extends BinanceDataCommonService {
 		JSONArray jsonArray = JSONArray.fromObject(dataList);
 
 		FileUtilCustom fuc = new FileUtilCustom();
-		String filePath = getFileSavePath() + "/topLongShortPositionRatio/" + symbol + ".json";
+		String filePath = FILE_SAVE_PATH + "/topLongShortPositionRatio/" + symbol + ".json";
 		fuc.byteToFile(jsonArray.toString().getBytes(StandardCharsets.UTF_8), filePath);
 	}
 
 	public static List<CryptoCoinBinanceFutureUmGetLongShortPositionRatioDetailDTO> topLongShortPositionRatioFromLocal(
 			String symbol) {
 		FileUtilCustom fuc = new FileUtilCustom();
-		String filePath = getFileSavePath() + "/topLongShortPositionRatio/" + symbol + ".json";
+		String filePath = FILE_SAVE_PATH + "/topLongShortPositionRatio/" + symbol + ".json";
 		String content = fuc.getStringFromFile(filePath);
 		JSONArray jsonArray = JSONArray.fromObject(content);
 
