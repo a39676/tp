@@ -14,8 +14,8 @@ public class ImageEdit2 {
 	private static String mazePath = folderPath + "/绿山墙的安妮_page-*.jpg";
 	private static String mazeResultPath = folderPath + "/*.png";
 	private static String rainbowImg = System.getProperty("user.home") + "/tmp/rainbow.jpg";
-	private static int start = 111;
-	private static int end = 295;
+	private static int start = 2;
+	private static int end = 32;
 
 	private static List<Integer> rainbowRgbList;
 
