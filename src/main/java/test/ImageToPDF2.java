@@ -17,13 +17,12 @@ public class ImageToPDF2 {
 
 	public static void main(String[] args) throws DocumentException, MalformedURLException, IOException {
 		String sourceFolderPathStr = null;
-		sourceFolderPathStr = "C:\\Users\\daven\\tmp\\englishBook\\tmp";
+		sourceFolderPathStr = "C:\\Users\\daven\\nextG\\bookForRead\\绿山墙的安妮\\255";
 		File root = new File(sourceFolderPathStr);
 		String outputFile = "output.pdf";
 		List<String> filesPathStrList = new ArrayList<String>();
-		File[] files = root.listFiles();
-		for (int i = 0; i < files.length - 1; i++) {
-			File f = new File(sourceFolderPathStr + "/" + String.valueOf(i + 1) + ".jpg");
+		for (int i = 255; i < 296 - 1; i++) {
+			File f = new File(sourceFolderPathStr + "/" + String.valueOf(i) + ".png");
 			filesPathStrList.add(f.getAbsolutePath());
 			System.out.println("Find: " + f.getAbsolutePath());
 		}
@@ -39,8 +38,8 @@ public class ImageToPDF2 {
 			Image image = Image.getInstance(filePathStr);
 //			image.setBorderWidth(0);
 //			image.setAbsolutePosition(25, 20);
-			image.scaleAbsolute(PageSize.A5.rotate());
-//			image.scaleAbsolute(PageSize.A4);
+//			image.scaleAbsolute(PageSize.A5.rotate());
+			image.scaleAbsolute(PageSize.A4);
 			image.scaleToFit(700, 750);
 			document.add(image);
 		}
