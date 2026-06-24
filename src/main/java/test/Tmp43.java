@@ -9,39 +9,26 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import toolPack.ioHandle.FileUtilCustom;
+
 public class Tmp43 {
 
 	static List<String> list = new ArrayList<>();
-	static {
-		list.add("26# 西瓜晶色");
-		list.add("27# 玫粉色");
-		list.add("28# 浅紫色");
-		list.add("29# 蓝紫色");
-		list.add("30# 紫蓝色");
-		list.add("31# 紫色");
-		list.add("32# 葡萄紫");
-		list.add("33# 透紫色");
-		list.add("34# 酒红色");
-		list.add("35# 红色");
-		list.add("36# 橙红色");
-		list.add("37# 玛瑙红");
-		list.add("38# 朱砂大红");
-		list.add("39# 朱砂红");
-		list.add("40# 朱砂深红");
-		list.add("41# 淡绿色");
-		list.add("42# 浅绿");
-		list.add("43# 青绿色");
-		list.add("44# 碧玉色");
-		list.add("45# 东陵玉浅色");
-		list.add("46# 东陵玉中色");
-		list.add("47# 东陵玉深色");
-		list.add("48# 和田玉");
-		list.add("49# 绿色");
-		list.add("50# 玛瑙绿");
-		list.add("51# 军绿");
-	}
 
 	public static void main(String[] args) {
+		getLines();
+		copying();
+	}
+	
+	private static void getLines() {
+		FileUtilCustom ioUtil = new FileUtilCustom();
+		String content = ioUtil.getStringFromFile(System.getProperty("user.home") + "/tmp/tmp.txt");
+		String[] linesArray = content.split(System.lineSeparator());
+		list.addAll(List.of(linesArray));
+		System.out.println(list);
+	}
+	
+	private static void copying() {
 		try {
 			// 创建 Robot 实例
 			Robot robot = new Robot();
