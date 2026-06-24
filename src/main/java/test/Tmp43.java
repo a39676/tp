@@ -14,6 +14,7 @@ import toolPack.ioHandle.FileUtilCustom;
 public class Tmp43 {
 
 	static List<String> list = new ArrayList<>();
+	static int delay = 150;
 
 	public static void main(String[] args) {
 		getLines();
@@ -50,31 +51,31 @@ public class Tmp43 {
 				System.out.println("成功将文本放入剪贴板：" + list.get(i));
 				robot.keyPress(KeyEvent.VK_CONTROL);
 				robot.keyPress(KeyEvent.VK_V);
-				robot.delay(200); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
+				robot.delay(delay); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
 				robot.keyRelease(KeyEvent.VK_V); 
 	            robot.keyRelease(KeyEvent.VK_CONTROL);
-	            robot.delay(200); 
+	            robot.delay(delay); 
 	            
 				// 循环按 4 次 TAB 键
 				for (int tabCounting = 0; tabCounting < 4; tabCounting++) {
 					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
 					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
 
-					robot.delay(200); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
+					robot.delay(delay);
 					System.out.println("已发送第 " + (tabCounting + 1) + " 次 TAB");
 				}
 				
 				robot.keyPress(KeyEvent.VK_SPACE);
 	            robot.keyRelease(KeyEvent.VK_SPACE);
-	            robot.delay(200);
+	            robot.delay(delay);
 
 				robot.keyPress(KeyEvent.VK_SHIFT); // 按下 SHIFT 键
 				robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
-				robot.delay(200); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
+				robot.delay(delay);
 				robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
-				robot.delay(200); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
+				robot.delay(delay);
 				robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
-				robot.delay(200); // 每次点击之间稍微停顿 200 毫秒，防止速度过快系统反应不过来
+				robot.delay(delay);
 				robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
 				robot.keyRelease(KeyEvent.VK_SHIFT);
 			}
