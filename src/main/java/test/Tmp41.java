@@ -3,7 +3,6 @@ package test;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
-import java.awt.Robot;
 
 public class Tmp41 {
 

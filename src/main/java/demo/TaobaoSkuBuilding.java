@@ -1,4 +1,4 @@
-package test;
+package demo;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import toolPack.ioHandle.FileUtilCustom;
 
-public class Tmp43 {
+public class TaobaoSkuBuilding {
 
 	static List<String> list = new ArrayList<>();
 	static int delay = 125;

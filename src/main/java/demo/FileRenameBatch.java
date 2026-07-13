@@ -1,4 +1,4 @@
-package test;
+package demo;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Tmp44 {
+public class FileRenameBatch {
 
 	public static void main(String[] args) {
 		// 目标文件夹路径
