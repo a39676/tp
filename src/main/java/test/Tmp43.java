@@ -16,7 +16,7 @@ import toolPack.ioHandle.FileUtilCustom;
 public class Tmp43 {
 
 	static List<String> list = new ArrayList<>();
-	static int delay = 135;
+	static int delay = 125;
 	static boolean createMode = true;
 
 	public static void main(String[] args) {
