@@ -10,8 +10,8 @@ public class FileRenameBatch {
 
 	public static void main(String[] args) {
 		// 目标文件夹路径
-		String folderPath = "C:\\Users\\daven\\tmp\\小猪佩奇\\s8";
-		String keyword = "";
+		String folderPath = "C:\\Users\\daven\\tmp\\小猪佩奇\\s7";
+		String keyword = "YTDown.com_YouTube_Peppa-Pig-";
 		// 正则表达式：匹配类似 _Media_各种字符_001_1080p 的后缀
 		String patternStr = "(_Media_.*_001_1080p)(\\.[a-zA-Z0-9]+)$";
 		Pattern pattern = Pattern.compile(patternStr);
