@@ -126,11 +126,15 @@ public class ImageBlurTool {
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
 				} else if (ImageBlurJobType.NAME_BOTTOM_RIGHT.equals(jobType)) {
-					// xy右下水印
+					// 右下名字水印
 					Double xStart = height * 0.455;
-					Double yStart = height * 0.925;
 					Double xLong = height * 0.52;
-					Double yLong = height * 0.0555;
+					// 单行
+//					Double yStart = height * 0.925;
+//					Double yLong = height * 0.0555;
+					// 双行
+					Double yStart = height * 0.885;
+					Double yLong = height * 0.0959;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
 				} else if (ImageBlurJobType.KUO_CHENG_BOTTOM_RIGHT.equals(jobType)) {
