@@ -14,8 +14,9 @@ public class Tmp43 {
 
 	public static void main(String[] args) {
 		FileUtilCustom ioUtil = new FileUtilCustom();
-		String filePath = System.getProperty("user.home") + "/tmp/tmp.html";
-		String htmlStr = ioUtil.getStringFromFile(filePath);
+		String inputFilePath = System.getProperty("user.home") + "/tmp/tmp.html";
+		String outputFilePath = System.getProperty("user.home") + "/tmp/output.html";
+		String htmlStr = ioUtil.getStringFromFile(inputFilePath);
 		Document doc = Jsoup.parse(htmlStr);
 
 		// 1. 查找元素
@@ -36,6 +37,6 @@ public class Tmp43 {
 
 		// 3. 打印修改后的完整 HTML
 //		System.out.println("修改后 HTML:\n" + doc.body().html());
-		ioUtil.byteToFile(doc.body().html(), filePath);
+		ioUtil.byteToFile(doc.body().html(), outputFilePath);
 	}
 }
