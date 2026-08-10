@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 
 import toolPack.ioHandle.FileUtilCustom;
 
-public class Tmp43 {
+public class MeiTuanHtmlEdit {
 
 	public static void main(String[] args) {
 		FileUtilCustom ioUtil = new FileUtilCustom();
