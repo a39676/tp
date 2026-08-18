@@ -16,7 +16,7 @@ import toolPack.ioHandle.FileUtilCustom;
 public class TaobaoSkuBuilding {
 
 	static List<String> list = new ArrayList<>();
-	static int delay = 60;
+	static int delay = 70;
 	static boolean createMode = true;
 
 	public static void main(String[] args) {

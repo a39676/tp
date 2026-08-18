@@ -415,6 +415,15 @@
 			<version>1.14.0</version>
 		</dependency>
 
+		<!-- Source:
+		https://mvnrepository.com/artifact/org.telegram/telegrambots -->
+		<dependency>
+			<groupId>org.telegram</groupId>
+			<artifactId>telegrambots</artifactId>
+			<version>6.9.7.1</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.demo</groupId>
 			<artifactId>ToolPacks</artifactId>
