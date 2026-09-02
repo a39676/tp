@@ -35,7 +35,7 @@ public class Typing {
 
 //		str= "Basic Field Validation for Excel Upload";
 
-		str = t.getStringFromFile("D:/tmp/tmp.txt");
+		str = t.getStringFromFile(System.getProperty("user.home") + "/tmp/tmp.txt");
 
 		List<String> strList = new ArrayList<>();
 		strList.addAll(Arrays.asList(str.split("")));
