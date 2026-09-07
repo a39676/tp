@@ -18,7 +18,7 @@ import toolPack.ioHandle.FileUtilCustom;
 public class TaobaoSkuBuilding {
 
 	static List<String> list = new ArrayList<>();
-	static int delay = 90;
+	static int delay = 200;
 	static boolean createMode = true;
 
 	private static int mouseX = 0;
@@ -40,7 +40,7 @@ public class TaobaoSkuBuilding {
 			if (StringUtils.isNotBlank(line)) {
 				list.add(line);
 			}
-		}
+	}
 		for (int i = 0; i < list.size(); i++) {
 			String line = list.get(i);
 			if (!line.contains("#")) {
@@ -105,7 +105,6 @@ public class TaobaoSkuBuilding {
 
 				if (createMode) {
 					System.out.println("create mode");
-
 					robot.keyPress(KeyEvent.VK_SPACE);
 					robot.keyRelease(KeyEvent.VK_SPACE);
 					robot.delay(delay);

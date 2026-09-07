@@ -17,8 +17,9 @@ public class MeiTuanHtmlEdit {
 		String inputFilePath = System.getProperty("user.home") + "/tmp/tmp.html";
 		String outputFilePath = System.getProperty("user.home") + "/tmp/output.html";
 		String htmlStr = ioUtil.getStringFromFile(inputFilePath);
+		BigDecimal total = BigDecimal.ZERO;
 		Document doc = Jsoup.parse(htmlStr);
-		Double rate = 2D;
+		Double rate = 1D;
 
 		// 1. 查找元素
 		Elements prices = doc.select("div.foodPrice_qTQKCd");
@@ -30,6 +31,7 @@ public class MeiTuanHtmlEdit {
 			// 直接将文字更改为新的价格
 			BigDecimal price = new BigDecimal(priceEle.text());
 			BigDecimal newPrice = price.multiply(new BigDecimal(rate));
+			total = total.add(newPrice);
 			System.out.println(newPrice);
 			priceEle.text(String.valueOf(newPrice.setScale(2, RoundingMode.HALF_UP)));
 
@@ -39,5 +41,6 @@ public class MeiTuanHtmlEdit {
 		// 3. 打印修改后的完整 HTML
 //		System.out.println("修改后 HTML:\n" + doc.body().html());
 		ioUtil.byteToFile(doc.body().html(), outputFilePath);
+		System.out.println(total);
 	}
 }

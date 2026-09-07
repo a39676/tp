@@ -95,8 +95,9 @@ public class MeiTuanHtmlMenuElementCollect {
 
 		for (Element infoDiv : infoDivs) {
 			// 4. 在 infoDiv 内部查找 data-tag="price" 的 div
-			Element priceEl = infoDiv.selectFirst("div[class^=oprice_]");
+			Element priceEl = infoDiv.selectFirst("div[class^=cprice_]");
 			String price = priceEl != null ? priceEl.text() : "";
+			price = price.replaceAll("¥", "");
 
 			resultList.add(price);
 		}
