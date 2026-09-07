@@ -1,6 +1,8 @@
 package demo;
 
 import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -16,10 +18,14 @@ import toolPack.ioHandle.FileUtilCustom;
 public class TaobaoSkuBuilding {
 
 	static List<String> list = new ArrayList<>();
-	static int delay = 70;
+	static int delay = 90;
 	static boolean createMode = true;
 
-	public static void main(String[] args) {
+	private static int mouseX = 0;
+	private static int mouseY = 0;
+	private static Point point = MouseInfo.getPointerInfo().getLocation();
+
+	public static void main(String[] args) throws InterruptedException {
 		getLines();
 		copying();
 	}
@@ -45,11 +51,24 @@ public class TaobaoSkuBuilding {
 		System.out.println(list);
 	}
 
-	private static void copying() {
+	private static boolean hadMove() {
+		boolean flag = (point.x == mouseX) && (point.y == mouseY);
+		updateMouseLocation(point.x, point.y);
+		return !flag;
+	}
+
+	private static void updateMouseLocation(int x, int y) {
+		mouseX = x;
+		mouseY = y;
+	}
+
+	private static void copying() throws InterruptedException {
 		try {
 			// 创建 Robot 实例
 			Robot robot = new Robot();
 
+			point = MouseInfo.getPointerInfo().getLocation();
+			updateMouseLocation(point.x, point.y);
 			System.out.println("脚本已启动，等待 3 秒以便你切换到目标窗口...");
 			robot.delay(3000); // 延迟 3 秒，留出时间让你把光标放到输入框
 
@@ -60,6 +79,12 @@ public class TaobaoSkuBuilding {
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 			for (int i = 0; i < list.size(); i++) {
+				point = MouseInfo.getPointerInfo().getLocation();
+				if (hadMove()) {
+					System.out.println("Had moved, return");
+					return;
+				}
+
 				stringSelection = new StringSelection(list.get(i));
 				// 3. 将文本设置到剪贴板中（第二个参数通常传入 null）
 				clipboard.setContents(stringSelection, null);

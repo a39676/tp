@@ -7,8 +7,8 @@ public class Tmp42 {
 //		System.out.println(original);
 //		String result = ZhConverterUtil.toTraditional(original);
 //		System.out.println(result);
-		Integer start = 799;
-		Integer end = 924;
+		Integer start = 925;
+		Integer end = 1018;
 		for (int i = start; i <= end; i = i + 2) {
 			System.out.print(i);
 			if (i + 2 < end) {
