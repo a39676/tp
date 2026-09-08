@@ -40,7 +40,7 @@ public class TaobaoSkuBuilding {
 			if (StringUtils.isNotBlank(line)) {
 				list.add(line);
 			}
-	}
+		}
 		for (int i = 0; i < list.size(); i++) {
 			String line = list.get(i);
 			if (!line.contains("#")) {
@@ -84,6 +84,8 @@ public class TaobaoSkuBuilding {
 					System.out.println("Had moved, return");
 					return;
 				}
+
+				System.out.println(i + "/" + list.size());
 
 				stringSelection = new StringSelection(list.get(i));
 				// 3. 将文本设置到剪贴板中（第二个参数通常传入 null）

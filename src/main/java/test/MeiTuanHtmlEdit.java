@@ -19,7 +19,7 @@ public class MeiTuanHtmlEdit {
 		String htmlStr = ioUtil.getStringFromFile(inputFilePath);
 		BigDecimal total = BigDecimal.ZERO;
 		Document doc = Jsoup.parse(htmlStr);
-		Double rate = 1D;
+		Double rate = 2D;
 
 		// 1. 查找元素
 		Elements prices = doc.select("div.foodPrice_qTQKCd");
