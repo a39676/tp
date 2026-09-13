@@ -41,6 +41,8 @@ public class MeiTuanHtmlEdit {
 		// 3. 打印修改后的完整 HTML
 //		System.out.println("修改后 HTML:\n" + doc.body().html());
 		ioUtil.byteToFile(doc.body().html(), outputFilePath);
+		System.out.println();
+		System.out.println();
 		System.out.println(total);
 	}
 }

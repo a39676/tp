@@ -61,8 +61,9 @@ public class OrderTextParser {
 				}
 			}
 
-			// 2. 按商品ID进行排序（支持长整型比较或字典序排序）
-			itemList.sort(Comparator.comparing(item -> item.get("商品ID").asText()));
+			// 2. 优先按商品ID排序，其次按商品规格sku排序（使用 path 防止字段缺失时报错）
+			itemList.sort(Comparator.comparing((ObjectNode item) -> item.path("商品ID").asText())
+					.thenComparing(item -> item.path("商品规格sku").asText()));
 
 			// 3. 将排序后的 List 转为 ArrayNode 添加回根节点
 			ArrayNode sortedItems = mapper.createArrayNode();
