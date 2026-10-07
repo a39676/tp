@@ -85,7 +85,7 @@ public class TaobaoSkuBuilding {
 					return;
 				}
 
-				System.out.println(i + "/" + list.size());
+				System.out.println((i + 1) + "/" + list.size());
 
 				stringSelection = new StringSelection(list.get(i));
 				// 3. 将文本设置到剪贴板中（第二个参数通常传入 null）

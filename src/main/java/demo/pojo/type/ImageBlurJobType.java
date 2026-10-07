@@ -9,6 +9,7 @@ public enum ImageBlurJobType {
 	XY_LOGO_BOTTOM_LEFT("xyBottomLeft", 5),
 	XY_LOGO_TOP_RIGHT("xyLogoTopRight", 6),
 	XY_LOGO_MIDDLE_RIGHT("xyLogoMiddleRight", 7),
+	NAME_BOTTOM_RIGHT_2("nameBottomRight2", 8),
 	;
 	
 	private String name;
