@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import toolPack.ioHandle.FileUtilCustom;
 
-public class TaobaoSkuBuilding {
+public class TaobaoSkuNameBuilding {
 
 	static List<String> list = new ArrayList<>();
 	static int delay = 200;
@@ -24,6 +24,7 @@ public class TaobaoSkuBuilding {
 	private static int mouseX = 0;
 	private static int mouseY = 0;
 	private static Point point = MouseInfo.getPointerInfo().getLocation();
+	private static int startIndex = 0;
 
 	public static void main(String[] args) throws InterruptedException {
 		getLines();
@@ -38,7 +39,11 @@ public class TaobaoSkuBuilding {
 		for (int i = 0; i < linesArray.length; i++) {
 			String line = linesArray[i];
 			if (StringUtils.isNotBlank(line)) {
-				list.add(line);
+				if (line.startsWith("¥") || line.startsWith("库存") || line.equals("0")) {
+					continue;
+				} else {
+					list.add(line);
+				}
 			}
 		}
 		for (int i = 0; i < list.size(); i++) {
@@ -78,7 +83,7 @@ public class TaobaoSkuBuilding {
 			// 2. 获取系统剪贴板
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = startIndex; i < list.size(); i++) {
 				point = MouseInfo.getPointerInfo().getLocation();
 				if (hadMove()) {
 					System.out.println("Had moved, return");
