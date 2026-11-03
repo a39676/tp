@@ -26,8 +26,8 @@ public class ProductSourceChecking {
 		StringSelection stringSelection = null;
 
 		String sourceIdStr = null;
-		for (int i = 0; i < sourceIdList.size(); i++) {
-//		for (int i = 3; i < 7; i++) {
+//		for (int i = 0; i < sourceIdList.size(); i++) {
+		for (int i = 0; i < 1; i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
