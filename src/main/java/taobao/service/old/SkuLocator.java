@@ -34,7 +34,7 @@ public class SkuLocator {
 			// 替换为你本地的 tessdata 文件夹路径（里面需要放对应语言的训练数据包）
 			String tessDataPath = "C:\\Users\\daven\\soft\\tessdata";
 
-			Point coordinate = findTextCoordinate(screenCapture, targetWord, tessDataPath);
+			Point coordinate = findTextCoordinate(grayImage, targetWord, tessDataPath);
 
 			if (coordinate != null) {
 				System.out.println("成功找到目标文字！坐标为: X = " + coordinate.x + ", Y = " + coordinate.y);
