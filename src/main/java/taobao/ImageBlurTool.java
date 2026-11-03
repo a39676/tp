@@ -1,4 +1,4 @@
-package demo;
+package taobao;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -100,9 +100,9 @@ public class ImageBlurTool {
 				BufferedImage result = null;
 
 				if (ImageBlurJobType.XY_LOGO_TOP_LEFT.equals(jobType)) {
-					result = blurArea(img, 0, 0, 250, 165, radius); // xy左上角标
+					result = blurArea(img, 0, 0, 250, 165, radius); // 左上角标
 				} else if (ImageBlurJobType.XY_LOGO_BOTTOM_LEFT.equals(jobType)) {
-					// xy左下水印
+					// 左下水印
 					Double xStart = height * 0.015;
 					Double yStart = height * 0.8;
 					Double xLong = height * 0.3;
@@ -110,7 +110,7 @@ public class ImageBlurTool {
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
 				} else if (ImageBlurJobType.XY_LOGO_TOP_RIGHT.equals(jobType)) {
-					// xy右上水印
+					// 右上水印
 					Double xStart = height * 0.68;
 					Double yStart = height * 0.017;
 					Double xLong = height * 0.32;
@@ -118,7 +118,7 @@ public class ImageBlurTool {
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);
 				} else if (ImageBlurJobType.XY_LOGO_MIDDLE_RIGHT.equals(jobType)) {
-					// xy右中水印
+					// 右中水印
 					Double xStart = height * 0.68;
 					Double yStart = height * 0.287;
 					Double xLong = height * 0.32;
@@ -139,10 +139,10 @@ public class ImageBlurTool {
 							radius);
 				} else if (ImageBlurJobType.NAME_BOTTOM_RIGHT_2.equals(jobType)) {
 					// 右下名字水印
-					Double xStart = height * 0.455;
+					Double xStart = height * 0.468;
 					Double xLong = height * 0.52;
 					// 双行
-					Double yStart = height * 0.860;
+					Double yStart = height * 0.878;
 					Double yLong = height * 0.113;
 					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
 							radius);

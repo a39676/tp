@@ -424,6 +424,25 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<!-- 窗口切换 -->
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>5.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>5.14.0</version>
+		</dependency>
+
+		<!-- OCR Tess4J 依赖 -->
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>5.8.0</version> <!-- 请根据最新版本调整 -->
+		</dependency>
+
 		<dependency>
 			<groupId>com.demo</groupId>
 			<artifactId>ToolPacks</artifactId>
