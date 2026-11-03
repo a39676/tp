@@ -1,4 +1,4 @@
-package taobao;
+package taobao.service;
 
 import java.awt.Robot;
 import java.awt.Toolkit;

@@ -1,4 +1,4 @@
-package taobao;
+package taobao.service;
 
 import java.awt.AWTException;
 import java.awt.MouseInfo;
@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import toolPack.ioHandle.FileUtilCustom;
 
-public class TaobaoSkuNameBuilding {
+public class TaobaoSkuPriceBuilding {
 
 	static List<String> list = new ArrayList<>();
 	static int delay = 200;
@@ -24,7 +26,6 @@ public class TaobaoSkuNameBuilding {
 	private static int mouseX = 0;
 	private static int mouseY = 0;
 	private static Point point = MouseInfo.getPointerInfo().getLocation();
-	private static int startIndex = 0;
 
 	public static void main(String[] args) throws InterruptedException {
 		getLines();
@@ -36,22 +37,16 @@ public class TaobaoSkuNameBuilding {
 		String content = ioUtil.getStringFromFile(System.getProperty("user.home") + "/tmp/tmp.txt");
 		String[] linesArray = content.split(System.lineSeparator());
 
+		String line = null;
+		BigDecimal amount = null;
+		BigDecimal rate = new BigDecimal(1.5);
 		for (int i = 0; i < linesArray.length; i++) {
-			String line = linesArray[i];
-			if (StringUtils.isNotBlank(line)) {
-				if (line.startsWith("¥") || line.startsWith("库存") || line.equals("0")) {
-					continue;
-				} else {
-					list.add(line);
-				}
+			line = linesArray[i];
+			if (StringUtils.isNotBlank(line) && line.startsWith("¥")) {
+				line = line.replaceAll("¥", "");
+				amount = new BigDecimal(line).multiply(rate).setScale(2, RoundingMode.CEILING);
+				list.add(String.valueOf(amount));
 			}
-		}
-		for (int i = 0; i < list.size(); i++) {
-			String line = list.get(i);
-			if (!line.contains("#")) {
-				line = i + "# " + line;
-			}
-			list.set(i, line);
 		}
 		System.out.println(list);
 	}
@@ -83,7 +78,7 @@ public class TaobaoSkuNameBuilding {
 			// 2. 获取系统剪贴板
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-			for (int i = startIndex; i < list.size(); i++) {
+			for (int i = 0; i < list.size(); i++) {
 				point = MouseInfo.getPointerInfo().getLocation();
 				if (hadMove()) {
 					System.out.println("Had moved, return");
@@ -103,31 +98,31 @@ public class TaobaoSkuNameBuilding {
 				robot.keyRelease(KeyEvent.VK_CONTROL);
 				robot.delay(delay);
 
-				// 循环按 4 次 TAB 键
-				for (int tabCounting = 0; tabCounting < 4; tabCounting++) {
+				// 循环按 12 次 TAB 键
+				for (int tabCounting = 0; tabCounting < 12; tabCounting++) {
 					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
 					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
 					robot.delay(delay);
 				}
 
-				if (createMode) {
-					System.out.println("create mode");
-					robot.keyPress(KeyEvent.VK_SPACE);
-					robot.keyRelease(KeyEvent.VK_SPACE);
-					robot.delay(delay);
-
-					robot.keyPress(KeyEvent.VK_SHIFT); // 按下 SHIFT 键
-					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
-					robot.delay(delay);
-					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
-					robot.delay(delay);
-					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
-					robot.delay(delay);
-					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
-					robot.keyRelease(KeyEvent.VK_SHIFT);
-				} else {
-					System.out.println("edit mode");
-				}
+//				if (createMode) {
+//					System.out.println("create mode");
+//					robot.keyPress(KeyEvent.VK_SPACE);
+//					robot.keyRelease(KeyEvent.VK_SPACE);
+//					robot.delay(delay);
+//
+//					robot.keyPress(KeyEvent.VK_SHIFT); // 按下 SHIFT 键
+//					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
+//					robot.delay(delay);
+//					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
+//					robot.delay(delay);
+//					robot.keyPress(KeyEvent.VK_TAB); // 按下 TAB 键
+//					robot.delay(delay);
+//					robot.keyRelease(KeyEvent.VK_TAB); // 释放 TAB 键
+//					robot.keyRelease(KeyEvent.VK_SHIFT);
+//				} else {
+//					System.out.println("edit mode");
+//				}
 
 			}
 

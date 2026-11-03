@@ -1,4 +1,4 @@
-package taobao;
+package taobao.service;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
