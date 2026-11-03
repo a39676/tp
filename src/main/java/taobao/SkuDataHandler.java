@@ -9,7 +9,7 @@ import taobao.pojo.dto.SkuDetailDTO;
 
 public class SkuDataHandler {
 
-	String fileName = "1688批量导出SKU_1062730282544_03_11_2026, 19_04_19.txt";
+//	String fileName = "1688批量导出SKU_1062730282544_03_11_2026, 19_04_19.txt";
 
 	public static SkuDetailDTO getSkuDetailDtoFromFileName(String fileName) {
 		SkuDetailDTO dto = new SkuDetailDTO();
