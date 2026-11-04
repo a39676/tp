@@ -12,6 +12,7 @@ public class RobotScript {
 
 	private static Integer normalDelay = 500;
 	private static Integer pageLoadingDelay = 10000;
+	private static Double randomDelayRate = 0.33;
 	private static final Random random = new Random();
 	
 	/**
@@ -20,7 +21,7 @@ public class RobotScript {
 	 */
 	private static void randomizedDelay(Robot robot, int baseDelay) {
 		// 计算 0% 到 20% 的额外随机毫秒数
-		int additionalDelay = (int) (baseDelay * random.nextDouble() * 0.20);
+		int additionalDelay = (int) (baseDelay * random.nextDouble() * 0.33);
 		int finalDelay = baseDelay + additionalDelay;
 		robot.delay(finalDelay);
 	}

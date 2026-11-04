@@ -1,13 +1,22 @@
 package taobao.service;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 
 import taobao.pojo.dto.SkuDetailDTO;
 import taobao.pojo.dto.SkuFileNameDTO;
+import toolPack.ioHandle.FileUtilCustom;
 
 public class SkuDataHandler {
 
@@ -47,7 +56,7 @@ public class SkuDataHandler {
 		return dto;
 	}
 
-	public static SkuDetailDTO getSkuDtailDtoFromFileContent(String line) {
+	public static SkuDetailDTO buildSkuDtailDtoFromFileContent(String line) {
 		SkuDetailDTO dto = new SkuDetailDTO();
 		String[] strArray = line.split(",");
 		dto.setProductName(strArray[0]);
@@ -61,15 +70,135 @@ public class SkuDataHandler {
 			dto.setAmount(new BigDecimal(9999999));
 		}
 		try {
-			dto.setStoreNumber(Integer.parseInt(strArray[6]));
+			dto.setStoreNumber(Integer.parseInt(strArray[7]));
 		} catch (Exception e) {
 			dto.setStoreNumber(0);
 		}
 		return dto;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void compareSkuDetail(String productId) {
-//		TODO
-		
+		List<SkuDetailDTO> oldDetailList = getSkuDetailList(productId, TaobaoOption.OLD_INFO);
+		if (oldDetailList == null || oldDetailList.isEmpty()) {
+			// 旧文件不存在或内容为空，无法比对
+			System.out.println("Product ID: " + productId + " -> 旧 SKU 信息文件未找到或为空，跳过比对。");
+			return;
+		}
+
+		List<SkuDetailDTO> newDetailList = getSkuDetailList(productId, TaobaoOption.NEW_INFO);
+		if (newDetailList == null) {
+			newDetailList = new ArrayList<>();
+		}
+
+		// 将新 SKU 列表按 skuId 建立映射方便查找
+		Map<String, SkuDetailDTO> newSkuMap = newDetailList.stream()
+				.collect(Collectors.toMap(SkuDetailDTO::getSkuName, dto -> dto, (k1, k2) -> k1));
+
+		StringBuilder messageBuilder = new StringBuilder();
+		String productName = oldDetailList.get(0).getProductName();
+		messageBuilder.append("【商品价格/库存变动通知】\n").append("商品ID: ").append(productId).append("\n").append("商品名称: ")
+				.append(productName).append("\n");
+
+		boolean hasAnomaly = false;
+
+		// 遍历旧 SKU 数据，进行各项规则比对
+		for (SkuDetailDTO oldSku : oldDetailList) {
+			SkuDetailDTO newSku = newSkuMap.get(oldSku.getSkuName());
+
+			List<String> reasons = new ArrayList<>();
+
+			if (newSku == null) {
+				// 情况3：SKU 消失（完全找不到该 skuId）
+				reasons.add("SKU已下架或消失");
+				hasAnomaly = true;
+			} else {
+				// 检查名称是否匹配（如果不匹配也视为 SKU 发生变动/消失）
+				if (!StringUtils.equals(oldSku.getSkuName(), newSku.getSkuName())) {
+					reasons.add(String.format("SKU名称不匹配 (旧: %s, 新: %s)", oldSku.getSkuName(), newSku.getSkuName()));
+					hasAnomaly = true;
+				}
+
+				// 情况1：价格上涨 (新价格 > 旧价格)
+				if (newSku.getAmount() != null && oldSku.getAmount() != null
+						&& newSku.getAmount().compareTo(oldSku.getAmount()) > 0) {
+					reasons.add(String.format("价格上涨 (旧: %s, 新: %s)", oldSku.getAmount(), newSku.getAmount()));
+					hasAnomaly = true;
+				}
+
+				// 情况2：库存少于 200
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() < 200) {
+					reasons.add(String.format("库存不足200 (当前库存: %d)", newSku.getStoreNumber()));
+					hasAnomaly = true;
+				}
+			}
+
+			// 如果当前 SKU 触发了任意异常条件，将其拼接到汇总消息中
+			if (!reasons.isEmpty()) {
+				messageBuilder.append(stringBuilderSkuAnomaly(oldSku, reasons));
+			}
+		}
+
+		// 如果检测到异常，发送该 Product ID 的汇总通知消息
+		if (hasAnomaly) {
+			String finalMessage = messageBuilder.toString();
+			sendNotificationMessage(productId, finalMessage);
+		} else {
+			System.out.println("Product ID: " + productId + " -> 检查正常，无价格上涨、库存少于200或SKU消失情况。");
+		}
+	}
+
+	/**
+	 * 拼凑单个 SKU 的异常明细描述
+	 */
+	private static String stringBuilderSkuAnomaly(SkuDetailDTO oldSku, List<String> reasons) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("  - [SKU ID: ").append(oldSku.getSkuId()).append(" | SKU 名称: ").append(oldSku.getSkuName())
+				.append("]\n");
+		for (String reason : reasons) {
+			sb.append("    * 异常原因: ").append(reason).append("\n");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 发送通知消息的具体实现方法（可根据实际项目对接钉钉、微信、邮件等通知渠道）
+	 */
+	private static void sendNotificationMessage(String productId, String message) {
+		// TODO: 在此处接入你的实际消息发送逻辑
+		System.out.println("========== 发送汇总通知 (Product ID: " + productId + ") ==========");
+		System.out.println(message);
+		System.out.println("===============================================================");
+	}
+
+	private static List<SkuDetailDTO> getSkuDetailList(String productId, Path dirPath) {
+		List<SkuDetailDTO> detailList = new ArrayList<>();
+		FileUtilCustom ioUtil = new FileUtilCustom();
+		File file = new File(dirPath.toString());
+		File[] files = file.listFiles();
+		if (files == null || files.length < 1) {
+			return detailList;
+		}
+		File targetFile = null;
+		String targetPrefix = TaobaoOption.FILE_NAME_PREFIX + productId;
+		for (int i = 0; i < files.length && targetFile == null; i++) {
+			File tmpFile = files[i];
+			if (tmpFile.getName().startsWith(targetPrefix)) {
+				targetFile = tmpFile;
+			}
+		}
+		if (targetFile == null) {
+			return detailList;
+		}
+		String content = ioUtil.getStringFromFile(targetFile.getAbsolutePath());
+		String[] lines = content.split(System.lineSeparator());
+		for (String line : lines) {
+			if (StringUtils.isBlank(line)) {
+				continue;
+			}
+			SkuDetailDTO dto = buildSkuDtailDtoFromFileContent(line);
+			detailList.add(dto);
+		}
+		return detailList;
 	}
 }
