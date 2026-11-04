@@ -31,7 +31,9 @@ public class ProductSourceChecking {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
-			RobotScript.handler(robot, clipboard, stringSelection, sourceIdStr);
+			RobotScript.downloadSkuDetailFile(robot, clipboard, stringSelection, sourceIdStr);
+			SkuDetailFileMoving.moveToOptionFile();
+			
 		}
 
 	}

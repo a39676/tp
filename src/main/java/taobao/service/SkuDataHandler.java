@@ -1,21 +1,23 @@
 package taobao.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import taobao.pojo.dto.SkuDetailDTO;
+import taobao.pojo.dto.SkuFileNameDTO;
 
 public class SkuDataHandler {
 
 //	String fileName = "1688批量导出SKU_1062730282544_03_11_2026, 19_04_19.txt";
 
-	public static SkuDetailDTO getSkuDetailDtoFromFileName(String fileName) {
-		SkuDetailDTO dto = new SkuDetailDTO();
+	public static SkuFileNameDTO getSkuFileNameDtoFromFileName(String fileName) {
+		SkuFileNameDTO dto = new SkuFileNameDTO();
 
 		// 1. 正则表达式提取各部分字符串
-		String regex = "1688批量导出SKU_(\\d+)_(\\d{2}_\\d{2}_\\d{4}),\\s*(\\d{2}_\\d{2}_\\d{2})";
+		String regex = TaobaoOption.FILE_NAME_PREFIX + "(\\d+)_(\\d{2}_\\d{2}_\\d{4}),\\s*(\\d{2}_\\d{2}_\\d{2})";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(fileName);
 
@@ -43,5 +45,31 @@ public class SkuDataHandler {
 			System.out.println("未能匹配到对应的数据");
 		}
 		return dto;
+	}
+
+	public static SkuDetailDTO getSkuDtailDtoFromFileContent(String line) {
+		SkuDetailDTO dto = new SkuDetailDTO();
+		String[] strArray = line.split(",");
+		dto.setProductName(strArray[0]);
+		dto.setProductId(strArray[1]);
+		dto.setSkuId(strArray[2]);
+		dto.setSkuName(strArray[3]);
+		dto.setSkuImgUrl(strArray[4]);
+		try {
+			dto.setAmount(new BigDecimal(strArray[5]));
+		} catch (Exception e) {
+			dto.setAmount(new BigDecimal(9999999));
+		}
+		try {
+			dto.setStoreNumber(Integer.parseInt(strArray[6]));
+		} catch (Exception e) {
+			dto.setStoreNumber(0);
+		}
+		return dto;
+	}
+
+	public static void compareSkuDetail(String productId) {
+//		TODO
+		
 	}
 }

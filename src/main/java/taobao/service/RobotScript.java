@@ -25,7 +25,7 @@ public class RobotScript {
 		robot.delay(finalDelay);
 	}
 
-	public static void handler(Robot robot, Clipboard clipboard, StringSelection stringSelection, String sourceIdStr) {
+	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection, String sourceIdStr) {
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 //		 到地址栏

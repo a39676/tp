@@ -10,9 +10,9 @@ public class SourceIdList {
 
 	private static List<String> idList = new ArrayList<>();
 	private static FileUtilCustom ioUtil = new FileUtilCustom();
-
+	
 	static {
-		String content = ioUtil.getStringFromFile(System.getProperty("user.home") + "/param/sourceIdList.txt");
+		String content = ioUtil.getStringFromFile(TaobaoOption.ID_LIST.toString());
 		idList.addAll(Arrays.asList(content.split(System.lineSeparator())));
 		System.out.println(idList);
 	}
