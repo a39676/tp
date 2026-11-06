@@ -27,9 +27,9 @@ public class RobotScript {
 		robot.delay(finalDelay);
 	}
 
-	public static void downloadSkuDetailFileTmp(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+	public static void downloadSkuDetailFile2(Robot robot, Clipboard clipboard, StringSelection stringSelection,
 			String sourceIdStr) {
-		robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
+		robot.mouseMove(TaobaoOption.closeTagBtn.getX(), TaobaoOption.closeTagBtn.getY());
 	}
 
 	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
@@ -103,29 +103,33 @@ public class RobotScript {
 
 		// 30% 概率调用 scrollToEnd
 		if (random.nextDouble() < 0.3) {
+			robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
+			randomizedDelay(robot, normalDelay);
+
 			scrollToEnd(robot);
 
-			randomizedDelay(robot, normalDelay);
-			robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
 			randomizedDelay(robot, normalDelay);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
 			randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
 
-			// ctrl + w 关闭
-			robot.keyPress(KeyEvent.VK_CONTROL);
-			robot.keyPress(KeyEvent.VK_W);
-			randomizedDelay(robot, normalDelay);
-			robot.keyRelease(KeyEvent.VK_W);
-			robot.keyRelease(KeyEvent.VK_CONTROL);
-			randomizedDelay(robot, normalDelay);
+			// 尝试点击关闭标签, 多次位移点击 防止关闭按钮位移
+			// 如果直接使用 CTRL + W 可能会在未打开新标签的情况下，关闭整个浏览器
+			robot.mouseMove(TaobaoOption.closeTagBtn.getX(), TaobaoOption.closeTagBtn.getY());
+			for (int i = 0; i < 15; i++) {
+				randomizedDelay(robot, normalDelay);
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseMove(TaobaoOption.closeTagBtn.getX() + i * 4, TaobaoOption.closeTagBtn.getY());
+			}
 		}
 	}
 
 	private static void scrollToEnd(Robot robot) {
-		robot.keyPress(KeyEvent.VK_PAGE_DOWN);
-		randomizedDelay(robot, pageLoadingDelay);
-		robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+		for (int i = 0; i < 18; i++) {
+			robot.mouseWheel(28);
+			randomizedDelay(robot, normalDelay);
+		}
 	}
 }

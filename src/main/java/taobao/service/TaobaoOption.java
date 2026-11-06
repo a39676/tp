@@ -12,12 +12,13 @@ public class TaobaoOption {
 	private static String secret;
 	private static String hostname;
 	private static String msgUrl;
-	public static LocationDTO copySkuBtn;
-	public static LocationDTO allSkuCheckBox;
-	public static LocationDTO exportBtn;
-	public static LocationDTO exportAsTextBtn;
-	public static LocationDTO blankPlace;
-	public static LocationDTO bottomRecomendBar;
+	public static LocationDTO copySkuBtn = new LocationDTO();
+	public static LocationDTO allSkuCheckBox = new LocationDTO();
+	public static LocationDTO exportBtn = new LocationDTO();
+	public static LocationDTO exportAsTextBtn = new LocationDTO();
+	public static LocationDTO blankPlace = new LocationDTO();
+	public static LocationDTO bottomRecomendBar = new LocationDTO();
+	public static LocationDTO closeTagBtn = new LocationDTO();
 
 	public static final String FILE_NAME_PREFIX = "1688批量导出SKU_";
 	// 1. 获取系统的 User Home 路径
@@ -37,12 +38,6 @@ public class TaobaoOption {
 		secret = json.getString("secret");
 		hostname = json.getString("hostname");
 		msgUrl = json.getString("msgUrl");
-		copySkuBtn = new LocationDTO();
-		allSkuCheckBox = new LocationDTO();
-		exportBtn = new LocationDTO();
-		exportAsTextBtn = new LocationDTO();
-		blankPlace = new LocationDTO();
-		bottomRecomendBar = new LocationDTO();
 		JSONObject locations = json.getJSONObject("locations");
 		JSONObject tmpLocation = locations.getJSONObject("copySkuBtn");
 		copySkuBtn.setX(tmpLocation.getInt("x"));
@@ -62,6 +57,10 @@ public class TaobaoOption {
 		tmpLocation = locations.getJSONObject("bottomRecomendBar");
 		bottomRecomendBar.setX(tmpLocation.getInt("x"));
 		bottomRecomendBar.setY(tmpLocation.getInt("y"));
+		tmpLocation = locations.getJSONObject("closeTagBtn");
+		closeTagBtn.setX(tmpLocation.getInt("x"));
+		closeTagBtn.setY(tmpLocation.getInt("y"));
+		
 	}
 
 	public static String getSecret() {
