@@ -78,12 +78,12 @@ public class SkuDataHandler {
 	}
 
 	@SuppressWarnings({ "deprecation", "unused" })
-	public static void compareSkuDetail(String productId) {
+	public static String compareSkuDetail(String productId) {
 		List<SkuDetailDTO> oldDetailList = getSkuDetailList(productId, TaobaoOption.OLD_INFO);
 		if (oldDetailList == null || oldDetailList.isEmpty()) {
 			// 旧文件不存在或内容为空，无法比对
 			System.out.println("Product ID: " + productId + " -> 旧 SKU 信息文件未找到或为空，跳过比对。");
-			return;
+			return null;
 		}
 
 		List<SkuDetailDTO> newDetailList = getSkuDetailList(productId, TaobaoOption.NEW_INFO);
@@ -141,10 +141,10 @@ public class SkuDataHandler {
 
 		// 如果检测到异常，发送该 Product ID 的汇总通知消息
 		if (hasAnomaly) {
-			String finalMessage = messageBuilder.toString();
-			sendNotificationMessage(productId, finalMessage);
+			return messageBuilder.toString();
 		} else {
 			System.out.println("Product ID: " + productId + " -> 检查正常，无价格上涨、库存少于200或SKU消失情况。");
+			return null;
 		}
 	}
 
@@ -159,16 +159,6 @@ public class SkuDataHandler {
 			sb.append("    * 异常原因: ").append(reason).append("\n");
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * 发送通知消息的具体实现方法（可根据实际项目对接钉钉、微信、邮件等通知渠道）
-	 */
-	private static void sendNotificationMessage(String productId, String message) {
-		// TODO: 在此处接入你的实际消息发送逻辑
-		System.out.println("========== 发送汇总通知 (Product ID: " + productId + ") ==========");
-		System.out.println(message);
-		System.out.println("===============================================================");
 	}
 
 	private static List<SkuDetailDTO> getSkuDetailList(String productId, Path dirPath) {
