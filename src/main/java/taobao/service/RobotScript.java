@@ -3,7 +3,9 @@ package taobao.service;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -32,11 +34,12 @@ public class RobotScript {
 		robot.mouseMove(TaobaoOption.closeTagBtn.getX(), TaobaoOption.closeTagBtn.getY());
 	}
 
-	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+	public static boolean downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
 			String sourceIdStr) {
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		String targetUrl = "https://detail.1688.com/offer/" + sourceIdStr + ".html";
 
-//		 到地址栏
+//		到地址栏
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_L);
 		randomizedDelay(robot, normalDelay);
@@ -45,7 +48,7 @@ public class RobotScript {
 		randomizedDelay(robot, normalDelay);
 
 		// 更新 URL 到剪贴板
-		stringSelection = new StringSelection("https://detail.1688.com/offer/" + sourceIdStr + ".html");
+		stringSelection = new StringSelection(targetUrl);
 		clipboard.setContents(stringSelection, null);
 
 		// ctrl + a v
@@ -65,6 +68,10 @@ public class RobotScript {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
+
+		if (urlHadChanged(robot, targetUrl)) {
+			return false;
+		}
 
 		// 鼠标移动到 "复制SKU"
 		robot.mouseMove(TaobaoOption.copySkuBtn.getX(), TaobaoOption.copySkuBtn.getY());
@@ -124,6 +131,7 @@ public class RobotScript {
 				robot.mouseMove(TaobaoOption.closeTagBtn.getX() + i * 4, TaobaoOption.closeTagBtn.getY());
 			}
 		}
+		return true;
 	}
 
 	private static void scrollToEnd(Robot robot) {
@@ -131,5 +139,44 @@ public class RobotScript {
 			robot.mouseWheel(28);
 			randomizedDelay(robot, normalDelay);
 		}
+	}
+
+	private static boolean urlHadChanged(Robot robot, String targetUrl) {
+//		到地址栏
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_L);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_L);
+		randomizedDelay(robot, normalDelay);
+
+		robot.keyPress(KeyEvent.VK_A);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_A);
+		randomizedDelay(robot, normalDelay);
+
+		robot.keyPress(KeyEvent.VK_C);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_C);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		randomizedDelay(robot, normalDelay);
+
+		// 1. 获取系统剪贴板实例
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+		// 2. 获取剪贴板中的内容
+		Transferable contents = clipboard.getContents(null);
+
+		// 3. 检查内容是否为空，以及是否支持字符串格式
+		if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+			try {
+				// 4. 提取字符串内容
+				String urlInAddress = String.valueOf(contents.getTransferData(DataFlavor.stringFlavor));
+				return targetUrl.equals(urlInAddress);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 }
