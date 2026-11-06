@@ -12,6 +12,8 @@ public class TaobaoOption {
 	private static String secret;
 	private static String hostname;
 	private static String msgUrl;
+	public static int start = 0;
+	public static int end = 0;
 	public static LocationDTO copySkuBtn = new LocationDTO();
 	public static LocationDTO allSkuCheckBox = new LocationDTO();
 	public static LocationDTO exportBtn = new LocationDTO();
@@ -35,6 +37,8 @@ public class TaobaoOption {
 
 	static {
 		JSONObject json = JSONObject.fromObject(new FileUtilCustom().getStringFromFile(OPTION_FILE.toString()));
+		start = json.getInt("start");
+		end = json.getInt("end");
 		secret = json.getString("secret");
 		hostname = json.getString("hostname");
 		msgUrl = json.getString("msgUrl");
@@ -60,7 +64,7 @@ public class TaobaoOption {
 		tmpLocation = locations.getJSONObject("closeTagBtn");
 		closeTagBtn.setX(tmpLocation.getInt("x"));
 		closeTagBtn.setY(tmpLocation.getInt("y"));
-		
+
 	}
 
 	public static String getSecret() {

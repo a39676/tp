@@ -69,7 +69,7 @@ public class RobotScript {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
 
-		if (urlHadChanged(robot, targetUrl)) {
+		if (!urlNotChange(robot, targetUrl)) {
 			return false;
 		}
 
@@ -141,7 +141,7 @@ public class RobotScript {
 		}
 	}
 
-	private static boolean urlHadChanged(Robot robot, String targetUrl) {
+	private static boolean urlNotChange(Robot robot, String targetUrl) {
 //		到地址栏
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_L);
@@ -178,5 +178,16 @@ public class RobotScript {
 			}
 		}
 		return false;
+	}
+
+	public static void openNewTab(Robot robot) {
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		randomizedDelay(robot, normalDelay);
+		robot.keyPress(KeyEvent.VK_T);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_T);
+		randomizedDelay(robot, normalDelay);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		randomizedDelay(robot, normalDelay);
 	}
 }

@@ -38,7 +38,7 @@ public class ProductSourceChecking {
 
 		String sourceIdStr = null;
 //		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = 29; i < 51; i++) {
+		for (int i = TaobaoOption.start; i < TaobaoOption.end; i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
@@ -61,6 +61,9 @@ public class ProductSourceChecking {
 			}
 			randomizedDelay(robot, nextPageLoadingDelay);
 		}
+
+		RobotScript.openNewTab(robot);
+		RobotScript.openNewTab(robot);
 	}
 
 	private static void saveDetailFile(String productId, String message) {
