@@ -80,6 +80,7 @@ public class ImageBlurTool {
 		int radius = 10;
 
 		File folder = new File(inputDir);
+		@SuppressWarnings("unused")
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
 
 		if (files != null && files.length > 0) {

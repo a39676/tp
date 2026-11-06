@@ -21,7 +21,7 @@ public class RobotScript {
 	 */
 	private static void randomizedDelay(Robot robot, int baseDelay) {
 		// 计算 0% 到 20% 的额外随机毫秒数
-		int additionalDelay = (int) (baseDelay * random.nextDouble() * 0.33);
+		int additionalDelay = (int) (baseDelay * random.nextDouble() * randomDelayRate);
 		int finalDelay = baseDelay + additionalDelay;
 		robot.delay(finalDelay);
 	}

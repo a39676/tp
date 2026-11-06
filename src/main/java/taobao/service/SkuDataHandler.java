@@ -77,7 +77,7 @@ public class SkuDataHandler {
 		return dto;
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused" })
 	public static void compareSkuDetail(String productId) {
 		List<SkuDetailDTO> oldDetailList = getSkuDetailList(productId, TaobaoOption.OLD_INFO);
 		if (oldDetailList == null || oldDetailList.isEmpty()) {
