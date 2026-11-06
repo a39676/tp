@@ -4,7 +4,11 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import toolPack.ioHandle.FileUtilCustom;
 
 public class ProductSourceChecking {
 
@@ -30,7 +34,7 @@ public class ProductSourceChecking {
 
 		String sourceIdStr = null;
 //		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 30; i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
@@ -41,7 +45,20 @@ public class ProductSourceChecking {
 				e.printStackTrace();
 			}
 			SkuDetailFileMoving.moveToOptionFile();
-			SkuDataHandler.compareSkuDetail(sourceIdStr);
+			String msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
+			if (msg != null) {
+				saveDetailFile(sourceIdStr, msg);
+			}
 		}
+	}
+
+	private static void saveDetailFile(String productId, String message) {
+		FileUtilCustom ioUtil = new FileUtilCustom();
+		File folder = new File(TaobaoOption.UPDATE_INFO.toString());
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+		ioUtil.byteToFile(message.getBytes(StandardCharsets.UTF_8),
+				TaobaoOption.UPDATE_INFO.toString() + "/" + productId + ".txt");
 	}
 }
