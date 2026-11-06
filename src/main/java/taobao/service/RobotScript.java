@@ -105,6 +105,7 @@ public class RobotScript {
 		if (random.nextDouble() < 0.3) {
 			scrollToEnd(robot);
 
+			randomizedDelay(robot, normalDelay);
 			robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
 			randomizedDelay(robot, normalDelay);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
