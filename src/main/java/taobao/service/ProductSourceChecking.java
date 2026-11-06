@@ -7,6 +7,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Random;
 
 import toolPack.ioHandle.FileUtilCustom;
 
@@ -14,6 +15,9 @@ public class ProductSourceChecking {
 
 	private static Robot robot = null;
 	private static Clipboard clipboard = null;
+	private static Integer nextPageLoadingDelay = 3000;
+	private static Double randomDelayRate = 3D;
+	private static final Random random = new Random();
 
 	public static void main(String[] args) {
 		try {
@@ -34,7 +38,7 @@ public class ProductSourceChecking {
 
 		String sourceIdStr = null;
 //		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = 0; i < 30; i++) {
+		for (int i = 10; i < 20; i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
@@ -49,6 +53,7 @@ public class ProductSourceChecking {
 			if (msg != null) {
 				saveDetailFile(sourceIdStr, msg);
 			}
+			randomizedDelay(robot, nextPageLoadingDelay);
 		}
 	}
 
@@ -60,5 +65,16 @@ public class ProductSourceChecking {
 		}
 		ioUtil.byteToFile(message.getBytes(StandardCharsets.UTF_8),
 				TaobaoOption.UPDATE_INFO.toString() + "/" + productId + ".txt");
+	}
+
+	/**
+	 * 带有随机浮动的延时方法
+	 * 
+	 * @_param baseDelay 基础延时（毫秒）
+	 */
+	private static void randomizedDelay(Robot robot, int baseDelay) {
+		int additionalDelay = (int) (baseDelay * random.nextDouble() * randomDelayRate);
+		int finalDelay = baseDelay + additionalDelay;
+		robot.delay(finalDelay);
 	}
 }

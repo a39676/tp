@@ -14,9 +14,10 @@ public class RobotScript {
 	private static Integer pageLoadingDelay = 10000;
 	private static Double randomDelayRate = 0.33;
 	private static final Random random = new Random();
-	
+
 	/**
 	 * 带有随机浮动（0% ~ 20%）的延时方法
+	 * 
 	 * @_param baseDelay 基础延时（毫秒）
 	 */
 	private static void randomizedDelay(Robot robot, int baseDelay) {
@@ -26,7 +27,8 @@ public class RobotScript {
 		robot.delay(finalDelay);
 	}
 
-	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection, String sourceIdStr) {
+	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+			String sourceIdStr) {
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 //		 到地址栏
@@ -60,35 +62,40 @@ public class RobotScript {
 		randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
 
 		// 鼠标移动到 "复制SKU"
-		robot.mouseMove(770, 295);
+		robot.mouseMove(770, 295); // main 1
+		robot.mouseMove(960, 260); // z2
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, pageLoadingDelay); // 等待"复制SKU"列表子页面加载
 
 		// 勾选所有SKU
-		robot.mouseMove(245, 275);
+		robot.mouseMove(245, 275); // main 1
+		robot.mouseMove(435, 365); // z2
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
 		// 点击"复制导出"
-		robot.mouseMove(1240, 200);
+		robot.mouseMove(1240, 200); // main 1
+		robot.mouseMove(1450, 300); // z2
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
-		// 点击"导出CSV"
-		robot.mouseMove(1050, 270);
+		// 点击"导出文本"
+		robot.mouseMove(1050, 270); // main 1
+		robot.mouseMove(1250, 355); // z2
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
 		// 点击"空白处"
-		robot.mouseMove(30, 150);
+		robot.mouseMove(30, 150); // main 1
+		robot.mouseMove(30, 150); // z2
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
