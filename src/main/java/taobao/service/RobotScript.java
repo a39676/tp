@@ -62,40 +62,35 @@ public class RobotScript {
 		randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
 
 		// 鼠标移动到 "复制SKU"
-		robot.mouseMove(770, 295); // main 1
-		robot.mouseMove(960, 260); // z2
+		robot.mouseMove(TaobaoOption.copySkuBtn.getX(), TaobaoOption.copySkuBtn.getY());
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, pageLoadingDelay); // 等待"复制SKU"列表子页面加载
 
 		// 勾选所有SKU
-		robot.mouseMove(245, 275); // main 1
-		robot.mouseMove(435, 365); // z2
+		robot.mouseMove(TaobaoOption.allSkuCheckBox.getX(), TaobaoOption.allSkuCheckBox.getY());
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
 		// 点击"复制导出"
-		robot.mouseMove(1240, 200); // main 1
-		robot.mouseMove(1450, 300); // z2
+		robot.mouseMove(TaobaoOption.exportBtn.getX(), TaobaoOption.exportBtn.getY());
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
 		// 点击"导出文本"
-		robot.mouseMove(1050, 270); // main 1
-		robot.mouseMove(1250, 355); // z2
+		robot.mouseMove(TaobaoOption.exportAsTextBtn.getX(), TaobaoOption.exportAsTextBtn.getY());
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
 
 		// 点击"空白处"
-		robot.mouseMove(30, 150); // main 1
-		robot.mouseMove(30, 150); // z2
+		robot.mouseMove(TaobaoOption.blankPlace.getX(), TaobaoOption.blankPlace.getY());
 		randomizedDelay(robot, normalDelay);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
