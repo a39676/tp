@@ -38,7 +38,7 @@ public class ProductSourceChecking {
 
 		String sourceIdStr = null;
 //		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = 10; i < 20; i++) {
+		for (int i = 22; i < 50; i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);

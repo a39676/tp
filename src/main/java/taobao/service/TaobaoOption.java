@@ -42,6 +42,7 @@ public class TaobaoOption {
 		exportBtn = new LocationDTO();
 		exportAsTextBtn = new LocationDTO();
 		blankPlace = new LocationDTO();
+		bottomRecomendBar = new LocationDTO();
 		JSONObject locations = json.getJSONObject("locations");
 		JSONObject tmpLocation = locations.getJSONObject("copySkuBtn");
 		copySkuBtn.setX(tmpLocation.getInt("x"));

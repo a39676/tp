@@ -27,12 +27,12 @@ public class RobotScript {
 		robot.delay(finalDelay);
 	}
 
-	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+	public static void downloadSkuDetailFileTmp(Robot robot, Clipboard clipboard, StringSelection stringSelection,
 			String sourceIdStr) {
 		robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
 	}
 
-	public static void downloadSkuDetailFile2(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
 			String sourceIdStr) {
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
