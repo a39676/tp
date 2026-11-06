@@ -17,6 +17,7 @@ public class TaobaoOption {
 	public static LocationDTO exportBtn;
 	public static LocationDTO exportAsTextBtn;
 	public static LocationDTO blankPlace;
+	public static LocationDTO bottomRecomendBar;
 
 	public static final String FILE_NAME_PREFIX = "1688批量导出SKU_";
 	// 1. 获取系统的 User Home 路径
@@ -57,6 +58,9 @@ public class TaobaoOption {
 		tmpLocation = locations.getJSONObject("blankPlace");
 		blankPlace.setX(tmpLocation.getInt("x"));
 		blankPlace.setY(tmpLocation.getInt("y"));
+		tmpLocation = locations.getJSONObject("bottomRecomendBar");
+		bottomRecomendBar.setX(tmpLocation.getInt("x"));
+		bottomRecomendBar.setY(tmpLocation.getInt("y"));
 	}
 
 	public static String getSecret() {

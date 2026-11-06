@@ -29,6 +29,11 @@ public class RobotScript {
 
 	public static void downloadSkuDetailFile(Robot robot, Clipboard clipboard, StringSelection stringSelection,
 			String sourceIdStr) {
+		robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
+	}
+
+	public static void downloadSkuDetailFile2(Robot robot, Clipboard clipboard, StringSelection stringSelection,
+			String sourceIdStr) {
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 //		 到地址栏
@@ -95,5 +100,31 @@ public class RobotScript {
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		randomizedDelay(robot, normalDelay);
+
+		// 30% 概率调用 scrollToEnd
+		if (random.nextDouble() < 0.3) {
+			scrollToEnd(robot);
+
+			robot.mouseMove(TaobaoOption.bottomRecomendBar.getX(), TaobaoOption.bottomRecomendBar.getY());
+			randomizedDelay(robot, normalDelay);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+			randomizedDelay(robot, pageLoadingDelay); // 等待页面加载
+
+			// ctrl + w 关闭
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_W);
+			randomizedDelay(robot, normalDelay);
+			robot.keyRelease(KeyEvent.VK_W);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			randomizedDelay(robot, normalDelay);
+		}
+	}
+
+	private static void scrollToEnd(Robot robot) {
+		robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+		randomizedDelay(robot, pageLoadingDelay);
+		robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
 	}
 }
