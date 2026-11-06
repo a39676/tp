@@ -42,14 +42,20 @@ public class ProductSourceChecking {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
-			RobotScript.downloadSkuDetailFile(robot, clipboard, stringSelection, sourceIdStr);
+			boolean flag = RobotScript.downloadSkuDetailFile(robot, clipboard, stringSelection, sourceIdStr);
+			String msg = "";
+			if (!flag) {
+				msg = "productID: " + sourceIdStr + ", 已消失";
+				saveDetailFile(sourceIdStr, msg);
+				continue;
+			}
 			try {
 				robot.delay(3000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			SkuDetailFileMoving.moveToOptionFile();
-			String msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
+			msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
 			if (msg != null) {
 				saveDetailFile(sourceIdStr, msg);
 			}
