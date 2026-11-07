@@ -38,7 +38,7 @@ public class ProductSourceChecking {
 
 		String sourceIdStr = null;
 //		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = TaobaoOption.start; i < TaobaoOption.end; i++) {
+		for (int i = TaobaoOption.start; i < TaobaoOption.end || i < sourceIdList.size(); i++) {
 			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
 			sourceIdStr = sourceIdList.get(i);
 			System.out.println(sourceIdStr);
