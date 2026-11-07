@@ -64,7 +64,6 @@ public class TaobaoOption {
 		tmpLocation = locations.getJSONObject("closeTagBtn");
 		closeTagBtn.setX(tmpLocation.getInt("x"));
 		closeTagBtn.setY(tmpLocation.getInt("y"));
-
 	}
 
 	public static String getSecret() {
