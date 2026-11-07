@@ -127,8 +127,14 @@ public class SkuDataHandler {
 				}
 
 				// 情况2：库存少于 200
-				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() < 200) {
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() < 200 && oldSku.getStoreNumber() >= 200) {
 					reasons.add(String.format("库存不足200 (当前库存: %d)", newSku.getStoreNumber()));
+					hasAnomaly = true;
+				}
+				
+				// 情况3: oldSku 原库存 < 200, 现 >= 200
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() >= 200 && oldSku.getStoreNumber() < 200) {
+					reasons.add(String.format("库存重新补充 (当前库存: %d)", newSku.getStoreNumber()));
 					hasAnomaly = true;
 				}
 			}
