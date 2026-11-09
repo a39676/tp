@@ -9,9 +9,8 @@ import toolPack.ioHandle.FileUtilCustom;
 
 public class TaobaoOption {
 
-	private static String secret;
 	private static String hostname;
-	private static String msgUrl;
+	private static String sellingSourceProductUrl;
 	public static int start = 0;
 	public static int end = 0;
 	public static LocationDTO copySkuBtn = new LocationDTO();
@@ -39,9 +38,8 @@ public class TaobaoOption {
 		JSONObject json = JSONObject.fromObject(new FileUtilCustom().getStringFromFile(OPTION_FILE.toString()));
 		start = json.getInt("start");
 		end = json.getInt("end");
-		secret = json.getString("secret");
 		hostname = json.getString("hostname");
-		msgUrl = json.getString("msgUrl");
+		sellingSourceProductUrl = json.getString("sellingSourceProductUrl");
 		JSONObject locations = json.getJSONObject("locations");
 		JSONObject tmpLocation = locations.getJSONObject("copySkuBtn");
 		copySkuBtn.setX(tmpLocation.getInt("x"));
@@ -66,12 +64,9 @@ public class TaobaoOption {
 		closeTagBtn.setY(tmpLocation.getInt("y"));
 	}
 
-	public static String getSecret() {
-		return secret;
-	}
 
-	public static String getMsgUrl() {
-		return msgUrl;
+	public static String getSellingSourceProductUrl() {
+		return sellingSourceProductUrl;
 	}
 
 	public static String getHostname() {
