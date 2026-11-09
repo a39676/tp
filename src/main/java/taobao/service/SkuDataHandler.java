@@ -77,7 +77,7 @@ public class SkuDataHandler {
 		return dto;
 	}
 
-	@SuppressWarnings({ "deprecation", "unused" })
+	@SuppressWarnings({ "deprecation" })
 	public static String compareSkuDetail(String productId) {
 		List<SkuDetailDTO> oldDetailList = getSkuDetailList(productId, TaobaoOption.OLD_INFO);
 		if (oldDetailList == null || oldDetailList.isEmpty()) {
@@ -90,6 +90,10 @@ public class SkuDataHandler {
 		if (newDetailList == null) {
 			newDetailList = new ArrayList<>();
 		}
+
+		// 将旧 SKU 列表按 skuName 建立映射方便查找（用于后续检查新 SKU 是否存在于旧数据中）
+		Map<String, SkuDetailDTO> oldSkuMap = oldDetailList.stream()
+				.collect(Collectors.toMap(SkuDetailDTO::getSkuName, dto -> dto, (k1, k2) -> k1));
 
 		// 将新 SKU 列表按 skuId 建立映射方便查找
 		Map<String, SkuDetailDTO> newSkuMap = newDetailList.stream()
@@ -127,21 +131,36 @@ public class SkuDataHandler {
 				}
 
 				// 情况2：库存少于 200
-				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() < 200 && oldSku.getStoreNumber() >= 200) {
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() < 200
+						&& oldSku.getStoreNumber() >= 200) {
 					reasons.add(String.format("库存不足200 (当前库存: %d)", newSku.getStoreNumber()));
 					hasAnomaly = true;
 				}
-				
+
 				// 情况3: oldSku 原库存 < 200, 现 >= 200
-				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() >= 200 && oldSku.getStoreNumber() < 200) {
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() >= 200
+						&& oldSku.getStoreNumber() < 200) {
 					reasons.add(String.format("库存重新补充 (当前库存: %d)", newSku.getStoreNumber()));
 					hasAnomaly = true;
 				}
 			}
 
-			// 如果当前 SKU 触发了任意异常条件，将其拼接到汇总消息中
+			// 如果当前旧 SKU 触发了任意异常条件，将其拼接到汇总消息中
 			if (!reasons.isEmpty()) {
-				messageBuilder.append(stringBuilderSkuAnomaly(oldSku, reasons));
+				messageBuilder.append(stringBuilderSkuAnomaly(oldSku.getSkuId(), oldSku.getSkuName(), reasons));
+			}
+		}
+
+		// 2. 遍历新 SKU 数据，检查是否有新增的 SKU
+		for (SkuDetailDTO newSku : newDetailList) {
+			if (!oldSkuMap.containsKey(newSku.getSkuName())) {
+				List<String> reasons = new ArrayList<>();
+				reasons.add(
+						String.format("发现新SKU上线 (初始价格: %s, 初始库存: %d)", newSku.getAmount(), newSku.getStoreNumber()));
+				hasAnomaly = true;
+
+				// 拼接到汇总消息中（新增的SKU使用自身的skuId和skuName）
+				messageBuilder.append(stringBuilderSkuAnomaly(newSku.getSkuId(), newSku.getSkuName(), reasons));
 			}
 		}
 
@@ -155,12 +174,11 @@ public class SkuDataHandler {
 	}
 
 	/**
-	 * 拼凑单个 SKU 的异常明细描述
+	 * 拼凑单个 SKU 的异常明细描述（重载或调整参数以支持新SKU传入）
 	 */
-	private static String stringBuilderSkuAnomaly(SkuDetailDTO oldSku, List<String> reasons) {
+	private static String stringBuilderSkuAnomaly(String skuId, String skuName, List<String> reasons) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("  - [SKU ID: ").append(oldSku.getSkuId()).append(" | SKU 名称: ").append(oldSku.getSkuName())
-				.append("]\n");
+		sb.append("  - [SKU ID: ").append(skuId).append(" | SKU 名称: ").append(skuName).append("]\n");
 		for (String reason : reasons) {
 			sb.append("    * 异常原因: ").append(reason).append("\n");
 		}
