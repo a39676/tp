@@ -13,6 +13,7 @@ public class TaobaoOption {
 	private static String sellingSourceProductUrl;
 	public static int start = 0;
 	public static int end = 0;
+	public static boolean randomFlag = true;
 	public static LocationDTO copySkuBtn = new LocationDTO();
 	public static LocationDTO allSkuCheckBox = new LocationDTO();
 	public static LocationDTO exportBtn = new LocationDTO();
@@ -38,6 +39,9 @@ public class TaobaoOption {
 		JSONObject json = JSONObject.fromObject(new FileUtilCustom().getStringFromFile(OPTION_FILE.toString()));
 		start = json.getInt("start");
 		end = json.getInt("end");
+		if (json.containsKey("randomFlag")) {
+			randomFlag = json.getBoolean("randomFlag");
+		}
 		hostname = json.getString("hostname");
 		sellingSourceProductUrl = json.getString("sellingSourceProductUrl");
 		JSONObject locations = json.getJSONObject("locations");
@@ -63,7 +67,6 @@ public class TaobaoOption {
 		closeTagBtn.setX(tmpLocation.getInt("x"));
 		closeTagBtn.setY(tmpLocation.getInt("y"));
 	}
-
 
 	public static String getSellingSourceProductUrl() {
 		return sellingSourceProductUrl;
