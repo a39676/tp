@@ -6,6 +6,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,12 @@ public class ProductSourceChecking {
 		robot.delay(3000); // 延迟 3 秒，留出时间让你把光标放到输入框
 
 		List<String> sourceIdList = SourceIdList.getIdList();
+
+		// 2. 如果 randomFlag 为 true，则对 sourceIdList 进行随机打乱
+		if (TaobaoOption.randomFlag) {
+			Collections.shuffle(sourceIdList, random);
+			System.out.println("已开启随机顺序执行模式 (randomFlag = true)");
+		}
 
 		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		// 将文本封装成 StringSelection 对象
