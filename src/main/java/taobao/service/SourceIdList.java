@@ -14,10 +14,6 @@ public class SourceIdList {
 //	private static FileUtilCustom ioUtil = new FileUtilCustom();
 	private static HttpUtil http = new HttpUtil();
 
-	public static void main(String[] args) {
-
-	}
-
 	static {
 //		String content = ioUtil.getStringFromFile(TaobaoOption.ID_LIST.toString());
 //		idList.addAll(Arrays.asList(content.split(System.lineSeparator())));
