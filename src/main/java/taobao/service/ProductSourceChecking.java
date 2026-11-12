@@ -62,6 +62,7 @@ public class ProductSourceChecking {
 				e.printStackTrace();
 			}
 			SkuDetailFileMoving.moveToOptionFile();
+			robot.delay(1000);
 			msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
 			if (msg != null) {
 				saveDetailFile(sourceIdStr, msg);
