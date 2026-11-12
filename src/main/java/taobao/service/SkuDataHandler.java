@@ -88,7 +88,8 @@ public class SkuDataHandler {
 
 		List<SkuDetailDTO> newDetailList = getSkuDetailList(productId, TaobaoOption.NEW_INFO);
 		if (newDetailList == null) {
-			newDetailList = new ArrayList<>();
+			System.out.println("Product ID: " + productId + " -> 新 SKU 信息文件未找到或为空，跳过比对。请查看是否下载失败");
+			return null;
 		}
 
 		// 将旧 SKU 列表按 skuName 建立映射方便查找（用于后续检查新 SKU 是否存在于旧数据中）
