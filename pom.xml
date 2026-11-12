@@ -442,6 +442,14 @@
 			<artifactId>tess4j</artifactId>
 			<version>5.8.0</version> <!-- 请根据最新版本调整 -->
 		</dependency>
+		
+		<!-- 监听键盘 -->
+		<dependency>
+			<groupId>com.github.kwhat</groupId>
+			<artifactId>jnativehook</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>com.demo</groupId>
