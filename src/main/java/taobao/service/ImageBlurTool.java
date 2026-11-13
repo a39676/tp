@@ -6,6 +6,13 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +70,8 @@ public class ImageBlurTool {
 	private static void handler(String subFolderName) throws IOException {
 		String inputDir = MAIN_FOLDER_PATH_STR + "/" + PRODUCT_NAME_FOLDER + "/" + subFolderName; // 输入目录
 		String outputDir = MAIN_FOLDER_PATH_STR + "/output" + "/" + subFolderName; // 输出目录
+		
+		deleteFilesInDirAndSubDirs(outputDir);
 
 		System.out.println("Going to: " + inputDir);
 
@@ -80,7 +89,6 @@ public class ImageBlurTool {
 		int radius = 10;
 
 		File folder = new File(inputDir);
-		@SuppressWarnings("unused")
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".jpg") || name.endsWith(".png"));
 
 		if (files != null && files.length > 0) {
@@ -173,6 +181,49 @@ public class ImageBlurTool {
 		}
 	}
 
+	private static void deleteFilesInDirAndSubDirs(String targetDirPath) {
+        Path dir = Paths.get(targetDirPath);
+
+        if (!Files.exists(dir) || !Files.isDirectory(dir)) {
+            System.out.println("目标目录不存在或不是一个目录：" + targetDirPath);
+            return;
+        }
+
+        try {
+            // maxDepth设为2：
+            // 深度 0: 目标目录本身
+            // 深度 1: 目标目录下的文件和一级子文件夹
+            // 深度 2: 一级子文件夹下的文件
+            Files.walkFileTree(dir, java.util.EnumSet.noneOf(FileVisitOption.class), 2, new SimpleFileVisitor<Path>() {
+                
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    // 确保我们只删除文件，不误删文件夹本身
+                    if (!file.equals(dir) && !Files.isDirectory(file)) {
+                        Files.delete(file);
+                        System.out.println("已删除文件: " + file);
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult preVisitDirectory(Path subDir, BasicFileAttributes attrs) throws IOException {
+                    // 如果是目标目录本身，直接继续
+                    if (subDir.equals(dir)) {
+                        return FileVisitResult.CONTINUE;
+                    }
+                    // 如果是一级子目录，允许进入访问其内部文件
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+
+            System.out.println("指定目录及其一级子文件夹下的文件清理完成！");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	public static void main(String[] args) throws IOException {
 		for (String subFolderName : SUB_FOLDER_NAME_LIST) {
 			handler(subFolderName);
