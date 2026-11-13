@@ -124,9 +124,9 @@ public class SkuDataHandler {
 					hasAnomaly = true;
 				}
 
-				// 情况1：价格上涨 (新价格 > 旧价格)
+				// 情况1：价格变动
 				if (newSku.getAmount() != null && oldSku.getAmount() != null
-						&& newSku.getAmount().compareTo(oldSku.getAmount()) > 0) {
+						&& newSku.getAmount().compareTo(oldSku.getAmount()) != 0) {
 					reasons.add(String.format("价格上涨 (旧: %s, 新: %s)", oldSku.getAmount(), newSku.getAmount()));
 					hasAnomaly = true;
 				}
