@@ -32,6 +32,7 @@ public class ProductSourceChecking {
 
 	public static void main(String[] args) {
 		initGlobalKeyListener();
+		SkuDetailFileMoving.moveNewDetailToOld();
 		try {
 			robot = new Robot();
 		} catch (Exception e) {
