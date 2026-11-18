@@ -125,9 +125,13 @@ public class SkuDataHandler {
 				}
 
 				// 情况1：价格变动
-				if (newSku.getAmount() != null && oldSku.getAmount() != null
-						&& newSku.getAmount().compareTo(oldSku.getAmount()) != 0) {
-					reasons.add(String.format("价格上涨 (旧: %s, 新: %s)", oldSku.getAmount(), newSku.getAmount()));
+				int priceCompareInt = newSku.getAmount().compareTo(oldSku.getAmount());
+				if (newSku.getAmount() != null && oldSku.getAmount() != null && priceCompareInt != 0) {
+					if (priceCompareInt > 0) {
+						reasons.add(String.format("价格上涨 (旧: %s, 新: %s)", oldSku.getAmount(), newSku.getAmount()));
+					} else {
+						reasons.add(String.format("价格下跌 (旧: %s, 新: %s)", oldSku.getAmount(), newSku.getAmount()));
+					}
 					hasAnomaly = true;
 				}
 
