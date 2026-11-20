@@ -75,6 +75,7 @@ public class ProductSourceChecking {
 
 			checkPaused();
 			try {
+				// 等待下载
 				robot.delay(3000);
 			} catch (Exception e) {
 				e.printStackTrace();

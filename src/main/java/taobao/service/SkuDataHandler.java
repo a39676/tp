@@ -80,16 +80,19 @@ public class SkuDataHandler {
 	@SuppressWarnings({ "deprecation" })
 	public static String compareSkuDetail(String productId) {
 		List<SkuDetailDTO> oldDetailList = getSkuDetailList(productId, TaobaoOption.OLD_INFO);
+		String msg = null;
 		if (oldDetailList == null || oldDetailList.isEmpty()) {
 			// 旧文件不存在或内容为空，无法比对
-			System.out.println("Product ID: " + productId + " -> 旧 SKU 信息文件未找到或为空，跳过比对。");
-			return null;
+			msg = "Product ID: " + productId + " -> 旧 SKU 信息文件未找到或为空，跳过比对。";
+			System.out.println(msg);
+			return msg;
 		}
 
 		List<SkuDetailDTO> newDetailList = getSkuDetailList(productId, TaobaoOption.NEW_INFO);
-		if (newDetailList == null) {
-			System.out.println("Product ID: " + productId + " -> 新 SKU 信息文件未找到或为空，跳过比对。请查看是否下载失败");
-			return null;
+		if (newDetailList == null || newDetailList.size() < 1) {
+			msg = "Product ID: " + productId + " -> 新 SKU 信息文件未找到或为空，跳过比对。请查看是否下载失败";
+			System.out.println(msg);
+			return msg;
 		}
 
 		// 将旧 SKU 列表按 skuName 建立映射方便查找（用于后续检查新 SKU 是否存在于旧数据中）
