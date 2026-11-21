@@ -26,7 +26,6 @@ public class SkuFileCleaner {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	public static void cleanDuplicateSkuFiles(String directoryPath) {
 		Path dir = Paths.get(directoryPath);
 		if (!Files.isDirectory(dir)) {
