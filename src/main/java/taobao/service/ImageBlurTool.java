@@ -24,7 +24,7 @@ public class ImageBlurTool {
 
 	private static final String MAIN_FOLDER_PATH_STR = System.getProperty("user.home") + "/tmp";
 	private static final String PRODUCT_NAME_FOLDER = "tmpInput";
-	private static ImageBlurJobType jobType = ImageBlurJobType.NAME_BOTTOM_RIGHT_2;
+	private static ImageBlurJobType jobType = ImageBlurJobType.TOP_LEFT;
 	private static final List<String> SUB_FOLDER_NAME_LIST = new ArrayList<>();
 	static {
 		SUB_FOLDER_NAME_LIST.add("主图");
@@ -108,8 +108,13 @@ public class ImageBlurTool {
 
 				BufferedImage result = null;
 
-				if (ImageBlurJobType.XY_LOGO_TOP_LEFT.equals(jobType)) {
-					result = blurArea(img, 0, 0, 250, 165, radius); // 左上角标
+				if (ImageBlurJobType.TOP_LEFT.equals(jobType)) {
+					Double xStart = 0D;
+					Double yStart = 0D;
+					Double xLong = height * 0.31;
+					Double yLong = height * 0.11;
+					result = blurArea(img, xStart.intValue(), yStart.intValue(), xLong.intValue(), yLong.intValue(),
+							radius);
 				} else if (ImageBlurJobType.XY_LOGO_BOTTOM_LEFT.equals(jobType)) {
 					// 左下水印
 					Double xStart = height * 0.015;

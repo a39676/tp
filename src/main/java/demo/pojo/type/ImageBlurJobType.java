@@ -2,7 +2,7 @@ package demo.pojo.type;
 
 public enum ImageBlurJobType {
 	
-	XY_LOGO_TOP_LEFT("xyLogoTopLeft", 1),
+	TOP_LEFT("topLeft", 1),
 	NAME_BOTTOM_RIGHT("nameBottomRight", 2),
 	KUO_CHENG_BOTTOM_RIGHT("kuoChengBottomRight", 3),
 	KUO_CHENG_LOGO_TOP_LEFT("kuoChengLogoTopLeft", 4),
