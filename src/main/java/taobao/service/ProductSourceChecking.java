@@ -5,12 +5,22 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
@@ -29,6 +39,7 @@ public class ProductSourceChecking {
 	private static final Random random = new Random();// === 新增：用于控制暂停/继续的变量 ===
 	private static volatile boolean isPaused = false;
 	private static boolean isCtrlPressed = false;
+	private static final Pattern PRODUCT_ID_PATTERN = Pattern.compile("Product ID:\\s*([A-Za-z0-9_-]+)");
 
 	public static void main(String[] args) {
 		initGlobalKeyListener();
@@ -46,49 +57,11 @@ public class ProductSourceChecking {
 		robot.delay(3000); // 延迟 3 秒，留出时间让你把光标放到输入框
 
 		List<String> sourceIdList = SourceIdList.getIdList();
+		handleChecking(sourceIdList);
 
-		// 2. 如果 randomFlag 为 true，则对 sourceIdList 进行随机打乱
-		if (TaobaoOption.randomFlag) {
-			Collections.shuffle(sourceIdList, random);
-			System.out.println("已开启随机顺序执行模式 (randomFlag = true)");
-		}
-
-		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		// 将文本封装成 StringSelection 对象
-		StringSelection stringSelection = null;
-
-		String sourceIdStr = null;
-//		for (int i = 0; i < sourceIdList.size(); i++) {
-		for (int i = TaobaoOption.start; i < TaobaoOption.end && i < sourceIdList.size(); i++) {
-			checkPaused();
-
-			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
-			sourceIdStr = sourceIdList.get(i);
-			System.out.println(sourceIdStr);
-			boolean flag = RobotScript.downloadSkuDetailFile(robot, clipboard, stringSelection, sourceIdStr);
-			String msg = "";
-			if (!flag) {
-				msg = "productID: " + sourceIdStr + ", 已消失";
-				saveDetailFile(sourceIdStr, msg);
-				continue;
-			}
-
-			checkPaused();
-			try {
-				// 等待下载
-				robot.delay(3000);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			SkuDetailFileMoving.moveToOptionFile();
-			robot.delay(1000);
-			msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
-			if (msg != null) {
-				saveDetailFile(sourceIdStr, msg);
-			}
-
-			checkPaused();
-			randomizedDelay(robot, nextPageLoadingDelay);
+		sourceIdList = getFailedCaseSourceIdList();
+		if (sourceIdList != null && sourceIdList.size() > 0) {
+			handleChecking(sourceIdList);
 		}
 
 		RobotScript.openNewTab(robot);
@@ -177,5 +150,116 @@ public class ProductSourceChecking {
 		int additionalDelay = (int) (baseDelay * random.nextDouble() * randomDelayRate);
 		int finalDelay = baseDelay + additionalDelay;
 		robot.delay(finalDelay);
+	}
+
+	private static void handleChecking(List<String> sourceIdList) {
+		// 2. 如果 randomFlag 为 true，则对 sourceIdList 进行随机打乱
+		if (TaobaoOption.randomFlag) {
+			Collections.shuffle(sourceIdList, random);
+			System.out.println("已开启随机顺序执行模式 (randomFlag = true)");
+		}
+
+		clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		// 将文本封装成 StringSelection 对象
+		StringSelection stringSelection = null;
+
+		String sourceIdStr = null;
+//		for (int i = 0; i < sourceIdList.size(); i++) {
+		for (int i = TaobaoOption.start; i < TaobaoOption.end && i < sourceIdList.size(); i++) {
+			checkPaused();
+
+			System.out.println("Index: " + (i + 1) + "/" + sourceIdList.size());
+			sourceIdStr = sourceIdList.get(i);
+			System.out.println(sourceIdStr);
+			boolean flag = RobotScript.downloadSkuDetailFile(robot, clipboard, stringSelection, sourceIdStr);
+			String msg = "";
+			if (!flag) {
+				msg = "productID: " + sourceIdStr + ", 已消失";
+				saveDetailFile(sourceIdStr, msg);
+				continue;
+			}
+
+			checkPaused();
+			try {
+				// 等待下载
+				robot.delay(3000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			SkuDetailFileMoving.moveToOptionFile();
+			robot.delay(1000);
+			msg = SkuDataHandler.compareSkuDetail(sourceIdStr);
+			if (msg != null) {
+				saveDetailFile(sourceIdStr, msg);
+			}
+
+			checkPaused();
+			randomizedDelay(robot, nextPageLoadingDelay);
+		}
+	}
+
+	private static List<String> getFailedCaseSourceIdList() {
+		Path dirPath = Paths.get(TaobaoOption.UPDATE_INFO.toString()); // 例如: Paths.get("D:/logs/products")
+		List<String> productIds = new ArrayList<>();
+		;
+		try {
+			productIds = extractProductIds(dirPath, false, true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("共提取数量: " + productIds.size());
+		productIds.forEach(System.out::println);
+		return productIds;
+	}
+
+	/**
+	 * 从指定目录的 .txt 文件中提取 Product ID
+	 *
+	 * @param directory   目标目录
+	 * @param recursive   是否递归子目录
+	 * @param deduplicate 是否去重（保留首次出现顺序）
+	 * @return Product ID 列表
+	 */
+	public static List<String> extractProductIds(Path directory, boolean recursive, boolean deduplicate)
+			throws IOException {
+		if (!Files.exists(directory) || !Files.isDirectory(directory)) {
+			throw new IllegalArgumentException("目录不存在或不是有效文件夹: " + directory);
+		}
+
+		int maxDepth = recursive ? Integer.MAX_VALUE : 1;
+		Set<String> uniqueIds = new LinkedHashSet<>();
+		List<String> orderedIds = new ArrayList<>();
+
+		try (Stream<Path> walk = Files.walk(directory, maxDepth)) {
+			List<Path> txtFiles = walk.filter(Files::isRegularFile)
+					.filter(p -> p.getFileName().toString().toLowerCase().endsWith(".txt")).toList();
+
+			for (Path file : txtFiles) {
+				extractFromFile(file, deduplicate ? uniqueIds : null, orderedIds);
+			}
+		}
+
+		return deduplicate ? new ArrayList<>(uniqueIds) : orderedIds;
+	}
+
+	private static void extractFromFile(Path file, Set<String> uniqueIds, List<String> orderedIds) {
+		// 使用 BufferedReader 按行读取，避免大文件一次性加载撑爆内存
+		try (var reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				Matcher matcher = PRODUCT_ID_PATTERN.matcher(line);
+				while (matcher.find()) {
+					String id = matcher.group(1);
+					if (uniqueIds != null) {
+						uniqueIds.add(id);
+					} else {
+						orderedIds.add(id);
+					}
+				}
+			}
+		} catch (IOException e) {
+			System.err.println("读取文件失败: " + file + "，原因: " + e.getMessage());
+		}
 	}
 }
