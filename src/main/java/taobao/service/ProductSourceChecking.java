@@ -57,8 +57,8 @@ public class ProductSourceChecking {
 		robot.delay(3000); // 延迟 3 秒，留出时间让你把光标放到输入框
 
 		List<String> sourceIdList = null;
-//		sourceIdList = SourceIdList.getIdList();
-//		handleChecking(sourceIdList);
+		sourceIdList = SourceIdList.getIdList();
+		handleChecking(sourceIdList);
 
 		sourceIdList = getFailedCaseSourceIdList();
 		if (sourceIdList != null && sourceIdList.size() > 0) {
