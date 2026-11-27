@@ -56,8 +56,9 @@ public class ProductSourceChecking {
 		System.out.println("【提示】运行过程中随时可以按 [Ctrl + F8] 暂停或继续任务。");
 		robot.delay(3000); // 延迟 3 秒，留出时间让你把光标放到输入框
 
-		List<String> sourceIdList = SourceIdList.getIdList();
-		handleChecking(sourceIdList);
+		List<String> sourceIdList = null;
+//		sourceIdList = SourceIdList.getIdList();
+//		handleChecking(sourceIdList);
 
 		sourceIdList = getFailedCaseSourceIdList();
 		if (sourceIdList != null && sourceIdList.size() > 0) {
@@ -248,6 +249,9 @@ public class ProductSourceChecking {
 		try (var reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
 			String line;
 			while ((line = reader.readLine()) != null) {
+				if (!line.contains("新 SKU 信息文件未找到或为")) {
+					continue;
+				}
 				Matcher matcher = PRODUCT_ID_PATTERN.matcher(line);
 				while (matcher.find()) {
 					String id = matcher.group(1);
