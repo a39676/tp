@@ -151,6 +151,13 @@ public class SkuDataHandler {
 					reasons.add(String.format("库存重新补充 (当前库存: %d)", newSku.getStoreNumber()));
 					hasAnomaly = true;
 				}
+
+				// 情况4: oldSku 原库存 < 200, 现 >= 5000
+				if (newSku.getStoreNumber() != null && newSku.getStoreNumber() >= 5000
+						&& oldSku.getStoreNumber() < 200) {
+					reasons.add(String.format("库存重新补充(2) (当前库存: %d)", newSku.getStoreNumber()));
+					hasAnomaly = true;
+				}
 			}
 
 			// 如果当前旧 SKU 触发了任意异常条件，将其拼接到汇总消息中
